@@ -1,0 +1,8 @@
+#base "abilities/npc_dota_hero_tinker/730.kv"
+#base "abilities/npc_dota_hero_techies/730.kv"
+#base "abilities/npc_dota_hero_nevermore/730.kv"
+
+"DOTAAbilities"
+{
+
+}

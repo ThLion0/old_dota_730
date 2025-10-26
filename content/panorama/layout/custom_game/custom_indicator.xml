@@ -1,0 +1,14 @@
+<root>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/utils.js" />
+
+        <include src="file://{resources}/scripts/custom_game/types/vectors.js" />
+
+        <include src="file://{resources}/scripts/custom_game/custom_indicator.js" />
+
+        <include src="file://{resources}/scripts/custom_game/indicators/tinker_keen_conveyance.js" />
+        <include src="file://{resources}/scripts/custom_game/indicators/techies_proximity_mines.js" />
+    </scripts>
+    <styles />
+    <Panel hittest="false" />
+</root>

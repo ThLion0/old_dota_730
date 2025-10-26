@@ -1,0 +1,12 @@
+{
+    "css.lint.unknownProperties": "ignore",
+    "cSpell.words": [
+        "casttype",
+        "damagetype",
+        "dispeltype",
+        "extradescription",
+        "keyvalues",
+        "spellimmunity",
+        "targettype"
+    ]
+}

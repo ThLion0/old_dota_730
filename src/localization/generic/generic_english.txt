@@ -1,0 +1,10 @@
+"lang"
+{
+    "Language" "English"
+    "Category" "Generic"
+    "Tokens"
+    {
+        // ADDON NAME
+        "addon_game_name" "Dota 7.30"
+    }
+}

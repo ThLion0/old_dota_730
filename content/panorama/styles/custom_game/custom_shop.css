@@ -1,0 +1,132 @@
+/* Search Input */
+#Custom_SearchContainer {
+    width: 260px;
+    
+    padding-left: 10px;
+    padding-right: 8px;
+    padding-top: 10px;
+    padding-bottom: 6px;
+    
+    vertical-align: top;
+    horizontal-align: left;
+    
+    flow-children: down;
+
+    z-index: 5;
+}
+
+.ShopLarge #Custom_SearchContainer {
+    width: 300px;
+}
+
+.Custom_ShowSearchResults #Custom_SearchContainer {
+    background-color: #3f474d;
+    box-shadow: #00000055 0px 0px 4px 0px ;
+    border-top: 1px solid #373f45;
+}
+
+#Custom_SearchBox {
+    background-color: black;
+    
+    border-radius: 3px;
+    border: 1px solid #3d464c;
+
+    flow-children: right;
+}
+
+#Custom_ShopSearchIcon {
+    height: 26px;
+    width: 26px;
+    
+    margin-left: 4px;
+    
+    background-image: url("s2r://panorama/images/control_icons/icon_search_shadow_psd.vtex");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+
+    vertical-align: center;
+    
+    wash-color: #8da1b1;
+}
+
+#Custom_SearchTextEntry {
+    width: fill-parent-flow( 1.0 );
+
+    background-color: black;
+    border: 0px;
+}
+
+#Custom_SearchTextEntry #Custom_PlaceholderText {
+    color: #57646d;
+
+    font-size: 18px;
+    
+    margin-top: 3px;
+
+    transition-property: opacity;
+    transition-duration: 0.2s;
+
+    opacity: 1.0;
+}
+
+#Custom_SearchTextEntry:focus #Custom_PlaceholderText,
+#Custom_SearchTextEntry.HasInput #Custom_PlaceholderText {
+    opacity: 0.0;
+}
+
+#Custom_ClearSearchButton {
+    width: 12px;
+    height: 12px;
+    
+    margin-right: 10px;
+    
+    vertical-align: middle;
+    
+    visibility: collapse;
+}
+
+.Custom_ShowSearchResults #Custom_ClearSearchButton {
+    visibility: visible;
+}
+
+/* Search Result */
+.Custom_SearchResult {
+    width: 100%;
+}
+
+#Custom_SearchResultContainer {
+    flow-children: right;
+}
+
+.Custom_SearchResult DOTAShopItem {
+    width: 36px;
+    height: width-percentage( 72.7% );
+    margin-bottom: 2px;
+}
+
+.Custom_SearchResult #ItemName {
+    width: fill-parent-flow( 2.5 );
+    max-height: 36px;
+}
+
+.Custom_SearchResult #ItemCost {
+    width: fill-parent-flow( 1.0 );
+    text-align: right;
+}
+
+.Custom_SearchResult Label {
+    color: #888888;
+    font-size: 16px;
+
+    margin-left: 5px;
+    vertical-align: center;
+}
+
+.Custom_SearchResult:hover Label {
+    color: #dddddd;
+}
+
+.Custom_SearchResult:focus Label {
+    color: #ffffff;
+}

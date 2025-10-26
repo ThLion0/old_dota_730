@@ -1,0 +1,8 @@
+#base "heroes/730/npc_dota_hero_tinker.kv"
+#base "heroes/730/npc_dota_hero_techies.kv"
+#base "heroes/730/npc_dota_hero_nevermore.kv"
+
+"DOTAHeroes"
+{
+    
+}

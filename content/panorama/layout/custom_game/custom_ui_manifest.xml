@@ -1,0 +1,20 @@
+<root>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/utils.js" />
+        <include src="file://{resources}/scripts/custom_game/manifest.js" />
+    </scripts>
+    <Panel>
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_indicator.xml" />
+
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_ability_tooltip.xml" />
+        
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
+
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_shop.xml" />
+
+        <!-- Image Precache -->
+        <!--
+        <Image src="file://{resources}/images/custom_game/bg_mainshop_psd.png" style="opacity: 0.0;" hittest="false" />
+        -->
+    </Panel>
+</root>

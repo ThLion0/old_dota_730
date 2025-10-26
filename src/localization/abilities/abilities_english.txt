@@ -1,0 +1,275 @@
+"lang"
+{
+    "Language" "English"
+    "Category" "Abilities"
+    "Tokens"
+    {
+        // TINKER
+        // 7.30
+        // LASER
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730" "Laser"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_Description" "Fires an intense energy beam, dealing damage to the target and all enemy units around it. The main target is blinded, causing them to miss all physical attacks."
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_Scepter_Description" "Upgrades Tinker's Laser into a Shrink Ray, granting +300 cast range and reducing the main target's size and current health by 10% (stacking) if it's a hero. The laser bounces once on the farthest target up to 700 range from the primary one, prioritizing heroes."
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_Lore" "Boush perfected this rock cutting laser in his subterranean laboratory, never considering its combat utility."
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_miss_rate" "%BLIND MISS RATE:"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_duration_hero" "HERO BLIND DURATION:"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_duration_creep" "CREEP BLIND DURATION:"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_laser_damage" "LASER DAMAGE:"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_radius_explosion" "RADIUS SECONDARY DAMAGE:"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_splash_pct" "%SECONDARY DAMAGE:"
+        "DOTA_Tooltip_Ability_tinker_laser_custom_730_AbilityCastRange" "CAST RANGE:"
+        
+        "DOTA_Tooltip_modifier_tinker_laser_custom_730_blind" "Laser Blind"
+        "DOTA_Tooltip_modifier_tinker_laser_custom_730_blind_Description" "Missing %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%% of attacks."
+
+
+        // HEAT SEEKING MISSILE
+        "DOTA_Tooltip_Ability_tinker_heat_seeking_missile_custom_730" "Heat-Seeking Missile"
+        "DOTA_Tooltip_Ability_tinker_heat_seeking_missile_custom_730_Description" "Launches rockets at the nearest visible heroes within %radius% range."
+        "DOTA_Tooltip_Ability_tinker_heat_seeking_missile_custom_730_Lore" "The last contraption Boush was able to save was a retrofitted rocket launcher with a homing mechanism."
+        "DOTA_Tooltip_Ability_tinker_heat_seeking_missile_custom_730_damage" "DAMAGE:"
+        "DOTA_Tooltip_Ability_tinker_heat_seeking_missile_custom_730_targets" "TARGETS:"
+        "DOTA_Tooltip_Ability_tinker_heat_seeking_missile_custom_730_speed" "MISSILE SPEED:"
+        
+        
+        // DEFENSE MATRIX
+        "DOTA_Tooltip_Ability_tinker_defense_matrix_custom_730" "Defense Matrix"
+        "DOTA_Tooltip_Ability_tinker_defense_matrix_custom_730_Description" "Targets an allied unit, applying a barrier to them that blocks some damage and provides Status Resistance."
+        "DOTA_Tooltip_Ability_tinker_defense_matrix_custom_730_damage_absorb" "DAMAGE ABSORB:"
+        "DOTA_Tooltip_Ability_tinker_defense_matrix_custom_730_status_resistance" "STATUS RESISTANCE:"
+        "DOTA_Tooltip_Ability_tinker_defense_matrix_custom_730_barrier_duration" "DURATION:"
+        
+        "DOTA_Tooltip_modifier_tinker_defense_matrix_custom_730" "Defense Matrix"
+        "DOTA_Tooltip_modifier_tinker_defense_matrix_custom_730_Description" "Absorbs incoming damage and provides %dMODIFIER_PROPERTY_STATUS_RESISTANCE_STACKING%%% status resistance."
+
+
+        // MARCH OF THE MACHINES
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730" "March of the Machines"
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730_Description" "Enlists an army of robotic minions to destroy enemy units in an area around Tinker."
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730_Note0" "Robots spawn at a rate of %machines_per_sec% per second."
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730_Lore" "Even though the laboratory has since been sealed off, the ability to radio in robotic drones is still in working order."
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730_radius" "RADIUS:"
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730_duration" "DURATION:"
+        "DOTA_Tooltip_Ability_tinker_march_of_the_machines_custom_730_damage" "DAMAGE:"
+
+
+        // KEEN CONVEYANCE        
+        "DOTA_Tooltip_Ability_tinker_keen_teleport_custom_730" "Keen Conveyance"
+        "DOTA_Tooltip_Ability_tinker_keen_teleport_custom_730_Description" "After channeling for %AbilityChannelTime%s teleport to a target friendly structure. Level 2 allows teleporting to friendly units and Level 3 to friendly heroes."
+        "DOTA_Tooltip_Ability_tinker_keen_teleport_custom_730_Lore" "As Boush likes to say, 'There is nothing the arcane can accomplish that the curious mind cannot reproduce given time. And proper funding, of course.'"
+
+        "DOTA_Tooltip_modifier_tinker_keen_teleport_custom_730_teleporting" "Teleporting"
+        "DOTA_Tooltip_modifier_tinker_keen_teleport_custom_730_incoming" "Boots of Travel Teleport"
+        "DOTA_Tooltip_modifier_tinker_keen_teleport_custom_730_incoming_Description" "An ally is teleporting to your location."
+
+
+        // REARM
+        "DOTA_Tooltip_Ability_tinker_rearm_custom_730" "Rearm"
+        "DOTA_Tooltip_Ability_tinker_rearm_custom_730_Description" "CHANNELED - Resets the cooldown on most of Tinker's items and abilities."
+        "DOTA_Tooltip_Ability_tinker_rearm_custom_730_Note0" "Rearm works on all items except Aeon Disk, Arcane Boots, Black King Bar, Hand of Midas, Helm of the Dominator, Linken's Sphere, Meteor Hammer, Necronomicon, Pipe of Insight, Tome of Knowledge, and Refresher Orb."
+        "DOTA_Tooltip_Ability_tinker_rearm_custom_730_Lore" "A new battery here, another set of rockets there, Boush continually improves on existing technology."
+        "DOTA_Tooltip_Ability_tinker_rearm_custom_730_AbilityChannelTime" "TIME TO REARM:"
+
+        "DOTA_Tooltip_modifier_tinker_rearm_custom_730" "Rearm"
+        "DOTA_Tooltip_modifier_tinker_rearm_custom_730_Description" "Resetting ability cooldowns."
+
+
+        // TALENTS
+        "DOTA_Tooltip_Ability_special_bonus_unique_tinker_730_custom" "+{s:bonus_duration_hero}s Laser Blind Duration"
+        "DOTA_Tooltip_Ability_special_bonus_unique_tinker_730_custom_2" "-{s:bonus_channel_time} Keen Conveyance Channel Time"
+        "DOTA_Tooltip_Ability_special_bonus_unique_tinker_730_custom_3" "+{s:bonus_targets} Heat-Seeking Missile Count"
+        "DOTA_Tooltip_Ability_special_bonus_unique_tinker_730_custom_4" "+{s:bonus_damage_absorb} Defense Matrix Damage Absorbed"
+        "DOTA_Tooltip_Ability_special_bonus_unique_tinker_730_custom_5" "+{s:bonus_laser_damage} Laser Damage"
+        "DOTA_Tooltip_Ability_special_bonus_unique_tinker_730_custom_6" "+{s:bonus_bash_duration}s Heat Seeking Missile Ministun"
+
+
+
+
+
+        // NEVERMORE
+        // 7.30
+        // SHADOWRAZE (NEAR)
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730" "Shadowraze"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_Description" "Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_Note0" "Stack duration refreshes on stack gain."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_Lore" "Nevermore's trademark for harvesting souls."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_shadowraze_range" "RANGE:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_stack_bonus_damage" "BONUS PER STACK:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_duration" "STACK DURATION:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze1_custom_730_shadowraze_damage" "BASE DAMAGE:"
+
+        // SHADOWRAZE (MEDIUM)
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730" "Shadowraze"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_Description" "Shadow Fiend razes the ground a short distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_Note0" "Stack duration refreshes on stack gain."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_Lore" "Nevermore's trademark for harvesting souls."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_shadowraze_range" "RANGE:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_stack_bonus_damage" "BONUS PER STACK:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_duration" "STACK DURATION:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze2_custom_730_shadowraze_damage" "BASE DAMAGE:"
+
+        // SHADOWRAZE (FAR)
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730" "Shadowraze"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_Description" "Shadow Fiend razes the ground a longer distance away from him, dealing damage to enemy units in the area. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_Note0" "Stack duration refreshes on stack gain."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_Lore" "Nevermore's trademark for harvesting souls."
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_shadowraze_range" "RANGE:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_stack_bonus_damage" "BONUS PER STACK:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_duration" "STACK DURATION:"
+        "DOTA_Tooltip_Ability_nevermore_shadowraze3_custom_730_shadowraze_damage" "BASE DAMAGE:"
+
+        "DOTA_Tooltip_modifier_nevermore_shadowraze_custom_730" "Shadowraze"
+        "DOTA_Tooltip_modifier_nevermore_shadowraze_custom_730_description" "Receiving %dMODIFIER_PROPERTY_TOOLTIP% bonus damage from each Shadowraze attack."
+
+
+        // NECROMASTERY
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730" "Necromastery"      
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_Description" "Shadow Fiend steals the soul from units he kills, gaining bonus damage. On death, he releases 40% of them from bondage."
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_Shard_Description" "Shadow Fiend gains 2 souls per kill. Additionally Shadow Fiend can consume 1 soul per attack to deal a 190% damage crit. CD: 3s"
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_Note0" "Denies and neutral creeps also provide bonus damage through Necromastery."
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_Lore" "Harvested souls swirl in and out of the Abysm, empowering the Shadow Fiend to increase the size of his collection."
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_necromastery_max_souls" "MAX SOULS:"
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_necromastery_damage_per_soul" "DAMAGE PER SOUL:"
+        "DOTA_Tooltip_ability_nevermore_necromastery_custom_730_necromastery_max_souls_scepter" "SCEPTER MAX SOULS:"
+
+        "DOTA_Tooltip_modifier_nevermore_necromastery_custom_730" "Necromastery"
+        "DOTA_Tooltip_modifier_nevermore_necromastery_custom_730_Description" "Stored souls granting an additional %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage."
+
+
+        // DARK LORD
+        "DOTA_Tooltip_ability_nevermore_dark_lord_custom_730" "Presence of the Dark Lord"
+        "DOTA_Tooltip_ability_nevermore_dark_lord_custom_730_Description" "Shadow Fiend's presence reduces the armor of nearby enemies."
+        "DOTA_Tooltip_ability_nevermore_dark_lord_custom_730_Note0" "Stacks fully with other armor reduction abilities and aura."
+        "DOTA_Tooltip_ability_nevermore_dark_lord_custom_730_Lore" "Even being near Nevermore eats away at one's soul."
+        "DOTA_Tooltip_ability_nevermore_dark_lord_custom_730_presence_armor_reduction" "REDUCTION:"
+        "DOTA_Tooltip_ability_nevermore_dark_lord_custom_730_presence_radius" "RADIUS:"
+
+        "DOTA_Tooltip_modifier_nevermore_dark_lord_custom_730" "Presence of the Dark Lord"
+        "DOTA_Tooltip_modifier_nevermore_dark_lord_custom_730_Description" "Shadow Fiend's presence reduces your armor by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%."
+
+
+        // REQUIEM
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730" "Requiem of Souls"
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_Description" "Shadow Fiend gathers his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed reduced for %requiem_slow_duration% seconds for each line hit up to a maximum of %requiem_slow_duration_max%. Lines of energy are created for every soul captured through Necromastery. <br><br> Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown."
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_Note0" "One line is generated from Shadow Fiend for every %requiem_soul_conversion% souls in his possession, for a maximum of 18 lines (23 lines with Scepter)."
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_Note1" "The movement reductions from Requiem of Souls go through spell immunity."
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_Note2" "Fear and movement slow do not apply when if the Requiem was released on death."
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_Lore" "The captured souls of those past slain are released to ravage their former allies."
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_scepter_description" "Increases Necromastery Max Souls and causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend deals less damage, but heals Shadow Fiend for all the damage it dealt."
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_AbilityCastPoint" "CAST DELAY:"
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_requiem_damage" "DAMAGE:"
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_requiem_reduction_ms" "%MOVEMENT REDUCTION:"
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_requiem_damage_pct_scepter" "%SCEPTER DAMAGE ON RETURN:"
+        "DOTA_Tooltip_ability_nevermore_requiem_custom_730_requiem_heal_pct_scepter" "%SCEPTER HEAL ON RETURN:"
+
+        "DOTA_Tooltip_modifier_nevermore_requiem_custom_730_debuff" "Requiem of Souls"
+        "DOTA_Tooltip_modifier_nevermore_requiem_custom_730_debuff_Description" "Feared. Movement speed reduced by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%."
+
+
+        // TALENTS
+        "DOTA_Tooltip_Ability_special_bonus_unique_nevermore_730_custom" "Presence Aura Affects Building"
+        "DOTA_Tooltip_Ability_special_bonus_unique_nevermore_730_custom_2" "+{s:bonus_shadowraze_damage} Shadowraze Damage"
+        "DOTA_Tooltip_Ability_special_bonus_unique_nevermore_730_custom_3" "+{s:bonus_necromastery_damage_per_soul} Damage Per Soul"
+        "DOTA_Tooltip_Ability_special_bonus_unique_nevermore_730_custom_4" "+{s:bonus_requiem_slow_duration}s Requiem Fear per line."
+        "DOTA_Tooltip_Ability_special_bonus_unique_nevermore_730_custom_5" "-{s:bonus_presence_armor_reduction} Presence Aura Armor"
+        "DOTA_Tooltip_Ability_special_bonus_unique_nevermore_730_custom_6" "-{s:bonus_AbilityCooldown}s Requiem of Souls Cooldown"
+
+
+
+
+
+        // TECHIES
+        // 7.30
+        // LAND MINES
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730" "Proximity Mines"
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Description" "Plant an invisible mine that cannot be detected by True Sight, but is visible if an enemy is within the active %radius% AoE of the mine. Mines detonate if an enemy is standing within the active AoE for %proximity_threshold% seconds. The explosion deals full damage in the blast radius, and deals %building_damage_pct%%% damage to buildings."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Scepter_Description" "Increases cast range."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note0" "Cannot be placed within active AoE of another Proximity Mine."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note1" "Proximity Mines do not block neutral creep camps from spawning."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note2" "Mines last until they explode or are destroyed."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note3" "Mines are triggered by invisible units."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note4" "Mines will not be triggered by some flying units."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note5" "Grants 30 gold if destroyed by an enemy hero."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Note6" "Mines are triggered by, but do not damage spell-immune units."
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_Lore" "The bane of Toterin!"
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_damage" "DAMAGE:"
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_radius" "RADIUS:"
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_building_damage_pct" "%BUILDING DAMAGE:"
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_activation_delay" "ACTIVATION DELAY:"
+        "DOTA_Tooltip_ability_techies_land_mines_custom_730_cast_range_scepter_bonus" "BONUS SCEPTER CAST RANGE:"
+
+
+        // STASIS TRAP
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730" "Stasis Trap"
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_Description" "Plant an invisible trap that roots nearby enemy units instantly when triggered."
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_Scepter_Description" "Increases cast range."
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_Note0" "Stasis Traps destroy all other Stasis Traps in their area of effect when they detonate."
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_Note1" "Stasis Traps are not triggered by invisible units."
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_Note2" "Stasis Traps do not block neutral creep camps from spawning."
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_Lore" "The scourge of Trapper Town!"
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_activation_radius" "TRIGGER RADIUS:"
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_stun_duration" "ROOT DURATION:"
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_stun_radius" "ROOT RADIUS:"
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_fade_time" "TRAP FADE TIME:"
+        "DOTA_Tooltip_ability_techies_stasis_trap_custom_730_cast_range_scepter_bonus" "BONUS SCEPTER CAST RANGE:"
+
+        "DOTA_Tooltip_modifier_techies_stasis_trap_custom_730_stunned" "Stasis Trap Root"
+        "DOTA_Tooltip_modifier_techies_stasis_trap_custom_730_stunned_Description" "You found one of the Techies' Stasis Traps!"
+
+
+        // SUICIDE
+        "DOTA_Tooltip_ability_techies_suicide_custom_730" "Blast Off!"
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_Description" "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and silence enemies. Upon landing, the assault deals Techies damage equal to 50% of their max health."
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_Shard_Description" "Increases Blast Off! cast range by 300 and applies a 1.75 second stun to affected enemies."
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_Note0" "Dying from this ability counts as suicide, and does not award gold or experience to the enemy team."
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_Note1" "Techies still earn experience for suicide kills made with this ability."
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_Note2" "This ability destroys trees."
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_Lore" "Where we going?"
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_damage" "FULL DAMAGE:"
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_radius" "RADIUS:"
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_silence_duration" "SILENCE DURATION:"
+        "DOTA_Tooltip_ability_techies_suicide_custom_730_hp_cost" "%MAX HP SELF DAMAGE:"
+
+
+        // FOCUSED DETONATE
+        "DOTA_Tooltip_ability_techies_focused_detonate_custom_730" "Focused Detonate"
+        "DOTA_Tooltip_ability_techies_focused_detonate_custom_730_Description" "Detonate all remote mines in the target area."
+        "DOTA_Tooltip_ability_techies_focused_detonate_custom_730_Lore" "Why light one fuse when you can light them all?"
+        "DOTA_Tooltip_ability_techies_focused_detonate_custom_730_radius" "RADIUS:"
+
+
+        // MINEFIELD SIGN
+        "DOTA_Tooltip_ability_techies_minefield_sign_custom_730" "Minefield Sign"
+        "DOTA_Tooltip_ability_techies_minefield_sign_custom_730_Description" "Plant a warning sign to remind enemies to step lightly. Only one sign can exist at a time. Lasts %lifetime% seconds."
+        "DOTA_Tooltip_ability_techies_minefield_sign_custom_730_Scepter_Description" "Allows Minefield Sign to hide any Proximity Mines, Stasis Traps, and Remote Mines in an area around the sign from True Sight."
+        "DOTA_Tooltip_ability_techies_minefield_sign_custom_730_Lore" "Watch your step!"
+        "DOTA_Tooltip_ability_techies_minefield_sign_custom_730_lifetime" "SIGN DURATION:"
+        "DOTA_Tooltip_ability_techies_minefield_sign_custom_730_aura_radius" "EFFECT RADIUS:"
+
+        "DOTA_Tooltip_modifier_techies_minefield_sign_custom_730_aura" "Minefield Sign"
+        "DOTA_Tooltip_modifier_techies_minefield_sign_custom_730_aura_Description" "Hidden by the Techies' Minefield Sign."
+
+
+        // REMOTE MINES
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730" "Remote Mines"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_Description" "Plant an invisible explosive that will only detonate after a brief delay when triggered.  Does not damage buildings."
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_Scepter_Description" "Increases damage and cast range."
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_Note0" "Grants 10 gold if destroyed by an enemy hero."
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_Lore" "The downfall of Dredger's Bight!"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_radius" "EXPLOSION RADIUS:"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_damage" "DAMAGE:"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_activation_time" "FADE TIME:"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_duration" "MINE DURATION:"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_AbilityCastRange" "CAST RANGE:"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_cast_range_scepter_bonus" "BONUS SCEPTER CAST RANGE:"
+        "DOTA_Tooltip_ability_techies_remote_mines_custom_730_damage_scepter" "SCEPTER DAMAGE:"
+
+
+        // TALENTS
+        "DOTA_Tooltip_Ability_special_bonus_unique_techies_730_custom" "-{s:bonus_AbilityChargeRestoreTime}s Proximity Mines Cooldown"
+        "DOTA_Tooltip_Ability_special_bonus_unique_techies_730_custom_2" "+{s:bonus_damage} Blast Off! Damage"
+        "DOTA_Tooltip_Ability_special_bonus_unique_techies_730_custom_3" "-{s:bonus_AbilityCooldown}s Blast Off! Cooldown"
+        "DOTA_Tooltip_Ability_special_bonus_unique_techies_730_custom_4" "+{s:bonus_movement_speed} Mines Movement Speed"
+        "DOTA_Tooltip_Ability_special_bonus_unique_techies_730_custom_4_Description" "All mines, including Stasis Traps, can be ordered to move to a location once placed."
+    }
+}

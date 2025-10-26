@@ -1,0 +1,338 @@
+// abilities for techies 7.30
+
+"DOTAAbilities"
+{
+    "techies_land_mines_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/land_mines"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+
+        "HasScepterUpgrade"             "1"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "4"
+
+        "AbilityCastRange"              "100"
+        "AbilityCharges"                "3"
+        "AbilityManaCost"               "110 130 150 170"
+
+        "AbilityTextureName"            "techies_land_mines"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
+
+        "AbilityValues"
+        {
+            "radius"                    "400"
+            "proximity_threshold"       "1.6"
+            "damage"                    "200 380 560 740"
+            "building_damage_pct"       "30"
+            "activation_delay"          "1.75"
+            "cast_range_scepter_bonus"
+            {
+                "value"                 "300"
+                "RequiresScepter"       "1"
+            }
+
+            "movement_speed"
+            {
+                "special_bonus_unique_techies_730_custom_4" "+60"
+            }
+
+            "AbilityChargeRestoreTime"
+            {
+                "value"                                     "23"
+                "special_bonus_unique_techies_730_custom"   "-3"
+            }
+        }
+
+        "KeyIndexes"
+        {
+            "radius"                    "0"
+            "damage"                    "1"
+            "building_damage_pct"       "2"
+            "activation_delay"          "3"
+            "cast_range_scepter_bonus"  "4"
+        }
+    }
+
+    "techies_stasis_trap_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/stasis_trap"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_AOE"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+
+        "HasScepterUpgrade"             "1"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "4"
+
+        "AbilityCastRange"              "150"
+        "AbilityCastPoint"              "1.0"
+        "AbilityCooldown"               "20 16 13 10"
+        "AbilityManaCost"               "80 110 140 160"
+
+        "AbilityTextureName"            "techies_stasis_trap"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
+
+        "AbilityValues"
+        {
+            "activation_radius"         "400"
+            "stun_radius"               "600"
+            "stun_duration"             "2 3 4 5"
+            "activation_time"           "2"
+            "fade_time"                 "2"
+            "cast_range_scepter_bonus"
+            {
+                "value"                 "300"
+                "RequiresScepter"       "1"
+            }
+
+            "movement_speed"
+            {
+                "special_bonus_unique_techies_730_custom_4" "+60"
+            }
+        }
+
+        "KeyIndexes"
+        {
+            "activation_radius"         "0"
+            "stun_radius"               "1"
+            "stun_duration"             "2"
+            "fade_time"                 "3"
+            "cast_range_scepter_bonus"  "4"
+        }
+    }
+
+    "techies_suicide_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/suicide"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+
+        "HasShardUpgrade"               "1"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "4"
+
+        "AbilityCastRange"              "1000"
+        "AbilityCastPoint"              "1.0"
+        "AbilityManaCost"               "100 125 150 175"
+
+        "AbilityTextureName"            "techies_suicide"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
+
+        "AbilityValues"
+        {
+            "radius"                    "400"
+            "damage"
+            {
+                "value"                                     "300 400 500 600"
+                "special_bonus_unique_techies_730_custom_2" "+300"
+            }
+            "silence_duration"          "4 5 6 7"
+            "hp_cost"                   "50"
+            "duration"                  "0.75"
+
+            "AbilityCooldown"
+            {
+                "value"                                     "35"
+                "special_bonus_unique_techies_730_custom_3" "-22"
+            }
+        }
+
+        "KeyIndexes"
+        {
+            "radius"                    "0"
+            "damage"                    "1"
+            "silence_duration"          "2"
+            "hp_cost"                   "3"
+        }
+    }
+
+    "techies_focused_detonate_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/focused_detonate"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        "MaxLevel"                      "1"
+
+        "AbilityCooldown"               "1"
+
+        "AbilityTextureName"            "techies_focused_detonate"
+        "AbilityCastAnimation"          "ACT_INVALID"
+
+        "AbilityValues"
+        {
+            "radius"                    "700"
+        }
+
+        "KeyIndexes"
+        {
+            "radius"                    "0"
+        }
+    }
+
+    "techies_minefield_sign_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/minefield_sign"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+
+        "HasScepterUpgrade"             "1"
+
+        "MaxLevel"                      "1"
+
+        "AbilityCastRange"              "10"
+        "AbilityCooldown"               "360"
+
+        "AbilityTextureName"            "techies_minefield_sign"
+        "AbilityCastAnimation"          "ACT_INVALID"
+
+        "AbilityValues"
+        {
+            "aura_radius"
+            {
+                "value"                 "125"
+                "RequiresScepter"       "1"
+            }
+            "lifetime"                  "180"
+        }
+
+        "KeyIndexes"
+        {
+            "aura_radius"               "0"
+            "lifetime"                  "1"
+        }
+    }
+
+    "techies_remote_mines_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/remote_mines"
+
+        "AbilityType"                   "ABILITY_TYPE_ULTIMATE"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+
+        "HasScepterUpgrade"             "1"
+
+        "FightRecapLevel"               "2"
+        "MaxLevel"                      "3"
+
+        "AbilityCastRange"              "500"
+        "AbilityCastPoint"              "0.75"
+        "AbilityCooldown"               "8"
+        "AbilityManaCost"               "120 180 240"
+
+        "AbilityTextureName"            "techies_remote_mines"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_6"
+
+        "AbilityValues"
+        {
+            "damage"                    "300 450 600"
+            "radius"                    "425"
+            "duration"                  "600"
+            "activation_time"           "2"
+            "damage_scepter"
+            {
+                "value"                 "450 600 750"
+                "RequiresScepter"       "1"
+            }
+            "cast_range_scepter_bonus"
+            {
+                "value"                 "300"
+                "RequiresScepter"       "1"
+            }
+            "vision_radius"             "500"
+            "vision_duration"           "3"
+            "model_scale"               "0 10 20"
+            "detonate_delay"            "0.25"
+
+            "movement_speed"
+            {
+                "special_bonus_unique_techies_730_custom_4" "+60"
+            }
+        }
+
+        "KeyIndexes"
+        {
+            "damage"                    "0"
+            "radius"                    "1"
+            "duration"                  "2"
+            "activation_time"           "3"
+            "damage_scepter"            "4"
+            "cast_range_scepter_bonus"  "5"
+            "AbilityCastRange"          "6"
+        }
+    }
+
+    "techies_remote_mines_self_detonate_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/techies/remote_mines_self_detonate"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+        "MaxLevel"                      "1"
+
+        "AbilityTextureName"            "techies_remote_mines_self_detonate"
+
+        "AbilityValues"
+        {
+
+        }
+    }
+
+    //=========================//
+    //         TALENTS         //
+    //=========================//
+
+    // -3s Proximity Mines Cooldown
+    "special_bonus_unique_techies_730_custom"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // +300 Blast Off! Damage
+    "special_bonus_unique_techies_730_custom_2"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // -22s Blast Off! Cooldown
+    "special_bonus_unique_techies_730_custom_3"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // +60 Mines Movement Speed
+    "special_bonus_unique_techies_730_custom_4"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+}

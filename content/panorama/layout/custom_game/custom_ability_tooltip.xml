@@ -1,0 +1,8 @@
+<root>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/utils.js" />
+        <include src="file://{resources}/scripts/custom_game/custom_ability_tooltip.js" />
+    </scripts>
+    <styles />
+    <Panel />
+</root>

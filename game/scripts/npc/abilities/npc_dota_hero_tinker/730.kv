@@ -1,0 +1,320 @@
+// abilities for tinker 7.30
+
+"DOTAAbilities"
+{
+    "tinker_laser_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/tinker/laser"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+
+        "HasScepterUpgrade"             "1"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "4"
+
+        "AbilityCastRange"              "650"
+        "AbilityCastPoint"              "0.4"
+        "AbilityCooldown"               "20 18 16 14"
+        "AbilityManaCost"               "110 130 150 170"
+
+        "AbilityTextureName"            "tinker_laser"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
+
+        "AbilityValues"
+        {
+            "miss_rate"                 "100"
+            "duration_hero"
+            {
+                "value"                                     "3 3.5 4 4.5"
+                "special_bonus_unique_tinker_730_custom"    "+2"
+            }
+            "duration_creep"
+            {
+                "value"                                     "6"
+                "special_bonus_unique_tinker_730_custom"    "+2"
+            }
+            "laser_damage"
+            {
+                "value"                                     "80 160 240 320"
+                "special_bonus_unique_tinker_730_custom_5"  "+80"
+            }
+            "radius_explosion"          "250"
+            "splash_pct"                "100"
+            
+            "scepter_bounce_radius"     "700"
+            "scepter_health_reduction"  "10"
+        }
+
+        "KeyIndexes"
+        {
+            "miss_rate"                 "0"
+            "duration_hero"             "1"
+            "duration_creep"            "2"
+            "laser_damage"              "3"
+            "radius_explosion"          "4"
+            "splash_pct"                "5"
+            "AbilityCastRange"          "6"
+        }
+    }
+
+    "tinker_heat_seeking_missile_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/tinker/heat_seeking_missile"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "4"
+
+        "AbilityCooldown"               "18"
+        "AbilityManaCost"               "80 95 110 125"
+
+        "AbilityTextureName"            "tinker_heat_seeking_missile"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
+        
+        "AbilityValues"
+        {
+            "damage"                    "125 200 275 350"
+            "radius"                    "2500"
+            "targets"
+            {
+                "value"                                     "2"
+                "special_bonus_unique_tinker_730_custom_3"  "+1"
+            }
+            "speed"                     "700"
+            "bash_duration"
+            {
+                "value"                                     "0"
+                "special_bonus_unique_tinker_730_custom_6"  "=0.25"
+            }
+        }
+
+        "KeyIndexes"
+        {
+            "damage"                    "0"
+            "targets"                   "1"
+            "speed"                     "2"
+        }
+    }
+
+    "tinker_defense_matrix_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/tinker/defense_matrix"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "4"
+
+        "AbilityCastRange"              "600"
+        "AbilityCastPoint"              "0.2"
+        "AbilityCooldown"               "12"
+        "AbilityManaCost"               "70 80 90 100"
+
+        "AbilityTextureName"            "tinker_defense_matrix"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
+
+        "AbilityValues"
+        {
+            "damage_absorb"
+            {
+                "value"                                     "100 180 240 320"
+                "special_bonus_unique_tinker_730_custom_4"  "+150"
+            }
+            "status_resistance"         "20 30 40 50"
+            "barrier_duration"          "15"
+        }
+
+        "KeyIndexes"
+        {
+            "damage_absorb"             "0"
+            "status_resistance"         "1"
+            "barrier_duration"          "2"
+        }
+    }
+
+    "tinker_march_of_the_machines_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/tinker/march_of_the_machines"
+
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+        "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+
+        "IsGrantedByShard"              "1"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "1"
+
+        "AbilityCastRange"              "300"
+        "AbilityCastPoint"              "0.53"
+        "AbilityCooldown"               "35.0"
+        "AbilityManaCost"               "190"
+
+        "AbilityTextureName"            "tinker_march_of_the_machines"
+        "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
+
+        "AbilityValues"
+        {
+            "radius"                    "900"
+            "collision_radius"          "50"
+            "splash_radius"             "150"
+            "duration"                  "6.0"
+            "speed"                     "400"
+            "machines_per_sec"          "24"
+            "distance"                  "1800"
+            "damage"                    "30"
+        }
+
+        "KeyIndexes"
+        {
+            "radius"                    "0"
+            "duration"                  "1"
+            "damage"                    "2"
+        }
+    }
+
+    "tinker_keen_teleport_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/tinker/keen_teleport"
+
+        "AbilityType"                   "ABILITY_TYPE_ULTIMATE"
+        // "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NOASSIST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NOASSIST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BUILDING"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+
+        "LinkedAbility"                 "tinker_rearm_custom_730"
+
+        "FightRecapLevel"               "1"
+        "MaxLevel"                      "3"
+
+        "AbilityCooldown"               "80.0"
+        "AbilityChannelTime"            "4.5 4.0 3.5"
+        "AbilityManaCost"               "75"
+
+        "AbilityTextureName"            "tinker_keen_teleport"
+
+        "AbilityValues"
+        {
+            "channel_time"
+            {
+                "value"                                     "4.5 4.0 3.5"
+                "special_bonus_unique_tinker_730_custom_2"  "-0.5"
+            }
+            "outpost_channel_time"
+            {
+                "value"                                     "5.0"
+                "special_bonus_unique_tinker_730_custom_2"  "-0.5"
+            }
+            "vision_radius"             "200"
+        }
+
+        "KeyIndexes"
+        {
+
+        }
+    }
+
+    "tinker_rearm_custom_730"
+    {
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/730/tinker/rearm"
+
+        "AbilityType"                   "ABILITY_TYPE_ULTIMATE"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+
+        "LinkedAbility"                 "tinker_keen_teleport_custom_730"
+
+        "FightRecapLevel"               "2"
+        "MaxLevel"                      "3"
+
+        "AbilityChannelTime"            "3.5 2.0 1.25"
+        "AbilityManaCost"               "130 210 290"
+
+        "AbilityTextureName"            "tinker_rearm"
+
+        "AbilityValues"
+        {
+
+        }
+
+        "KeyIndexes"
+        {
+            "AbilityChannelTime"        "0"
+        }
+    }
+
+    //=========================//
+    //         TALENTS         //
+    //=========================//
+
+    // +2 Laser Blind Duration
+    "special_bonus_unique_tinker_730_custom"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // -0.5 Keen Conveyance Channel Time
+    "special_bonus_unique_tinker_730_custom_2"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // +1 Heat-Seeking Missile Count
+    "special_bonus_unique_tinker_730_custom_3"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // +150 Defense Matrix Damage Absorbed
+    "special_bonus_unique_tinker_730_custom_4"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // +80 Laser Damage
+    "special_bonus_unique_tinker_730_custom_5"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    // +0.25 Heat-Seeking Missile Ministun
+    "special_bonus_unique_tinker_730_custom_6"
+    {
+        "BaseClass"                     "special_bonus_base"
+        "AbilityType"                   "ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+}
