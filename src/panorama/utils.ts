@@ -53,12 +53,6 @@ Players.GetPlayerColorHex = (iPlayerID: PlayerID): string => {
     return "#" + hexColor;
 };
 
-// GameUI
-GameUI.IsHudFlipped = (): boolean => {
-    const hud = dotaHud.GetChild(0);
-    return hud?.BHasClass("HUDFlipped") || false;
-};
-
 // $
 const _default_context = $.GetContextPanel();
 

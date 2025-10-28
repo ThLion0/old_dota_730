@@ -27,14 +27,6 @@ interface DollarStatic {
     IsTranslatable(token: string, panel?: PanelBase): boolean;
 }
 
-interface CDOTA_PanoramaScript_GameUI {
-    /**
-     * Returns true, if map position set to 'left'.
-     * Requires a short delay to get correct result.
-     */
-    IsHudFlipped(): boolean;
-}
-
 
 
 //===================//

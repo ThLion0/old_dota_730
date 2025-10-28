@@ -271,7 +271,7 @@ class CustomShop {
         const shop = FindDotaHudElement("shop");
         if (!shop) return;
 
-        const isFlipped = GameUI.IsHudFlipped();
+        const isFlipped = Game.IsHUDFlipped();
 
         const shopWidth = "360px";
         const largeShopWidth = "400px";
