@@ -14,7 +14,7 @@ const dotaHud = ((): Panel => {
 
 // Entities
 Entities.HasShard = (nEntityIndex: EntityIndex): boolean => {
-    return Entities.HasModifierByName(nEntityIndex, "modifier_item_aghanims_shard");
+    return Entities.HasModifierByName(nEntityIndex, BuiltInModifier.ITEM_AGHANIMS_SHARD);
 };
 
 Entities.FindModifierByName = (nEntityIndex: EntityIndex, sModifierName: string): BuffID | null => {

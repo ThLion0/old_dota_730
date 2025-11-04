@@ -1,3 +1,8 @@
+/**
+ * This file contains type declarations for extending the Dota 2 API
+ * and global Lua environment.
+ */
+
 declare const enum BuiltInModifier {
     STUN = "modifier_stunned",
     SILENCE = "modifier_silence",
@@ -8,6 +13,8 @@ declare const enum BuiltInModifier {
     PHASED = "modifier_phased",
     INVULNERABLE = "modifier_invulnerable",
     FOUNTAIN_INVULNERABILITY = "modifier_fountain_invulnerability",
+    
+    ITEM_AGHANIMS_SHARD = "modifier_item_aghanims_shard",
 
     /** @custom */
     HIDDEN_CUSTOM = "modifier_hidden_custom",
@@ -36,4 +43,20 @@ declare const enum PrecacheType {
     PARTICLE = "particle",
     PARTICLE_FOLDER = "particle_folder",
     MODEL = "model",
+}
+
+declare const enum SpellImmunity {
+    NONE = 0,
+    ENEMIES_NO = 1,
+    ENEMIES_YES = 2,
+    ALLIES_NO = 3,
+    ALLIES_YES = 4,
+    ALLIES_YES_ENEMIES_NO = 5,
+}
+
+declare const enum SpellDispellable {
+    NONE = 0,
+    NO = 1,
+    YES = 2,
+    YES_STRONG = 3,
 }

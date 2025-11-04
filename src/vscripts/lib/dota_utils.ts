@@ -37,6 +37,14 @@ const TurnToDummy = (unit: CDOTA_BaseNPC): void => {
 
 
 
+const _EntIndexToHScriptEngine_Server = globalThis.EntIndexToHScript;
+globalThis.EntIndexToHScript = function(entityIndex: EntityIndex): CBaseEntity | undefined {
+    if (entityIndex === undefined) return undefined;
+    return _EntIndexToHScriptEngine_Server(entityIndex);
+};
+
+
+
 //=================//
 //=/ CBaseEntity /=//
 //=================//
@@ -51,7 +59,7 @@ CBaseEntity.IsUnit = function(): boolean {
 //=/ CDOTA BaseNPC /=//
 //===================//
 CDOTA_BaseNPC.HasShard = function(): boolean {
-    return this.HasModifier("modifier_item_aghanims_shard");
+    return this.HasModifier(BuiltInModifier.ITEM_AGHANIMS_SHARD);
 };
 
 CDOTA_BaseNPC.HasTalent = function(name: string): boolean {

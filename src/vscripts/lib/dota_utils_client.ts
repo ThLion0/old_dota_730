@@ -1,8 +1,20 @@
+//===============//
+//=/ Functions /=//
+//===============//
+
+const _EntIndexToHScriptEngine_Client = globalThis.EntIndexToHScript;
+globalThis.EntIndexToHScript = function(entityIndex: EntityIndex): CBaseEntity | undefined {
+    if (entityIndex === undefined) return undefined;
+    return _EntIndexToHScriptEngine_Client(entityIndex);
+};
+
+
+
 //====================//
 //=/ C_DOTA BaseNPC /=//
 //====================//
 C_DOTA_BaseNPC.HasShard = function(): boolean {
-    return this.HasModifier("modifier_item_aghanims_shard");
+    return this.HasModifier(BuiltInModifier.ITEM_AGHANIMS_SHARD);
 };
 
 C_DOTA_BaseNPC.HasTalent = function(name: string): boolean {
