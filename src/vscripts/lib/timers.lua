@@ -156,7 +156,9 @@ function Timers:Think()
 	local nextTickCallbacks = table.merge({}, Timers.nextTickCallbacks)
 	Timers.nextTickCallbacks = {}
 	for _, cb in ipairs(nextTickCallbacks) do
-		local status, result = xpcall(cb, debug.traceback)
+		local status, result = xpcall(cb, function(err)
+			print(tostring(err))
+		end)
 		if not status then
 			Timers:HandleEventError(result)
 		end
@@ -189,9 +191,17 @@ function Timers:ExecuteTimers(timerList, now)
 		-- Run the callback
 		local status, timerResult
 		if currentTimer.context then
-			status, timerResult = xpcall(function() return currentTimer.callback(currentTimer.context, currentTimer) end, debug.traceback)
+			status, timerResult = xpcall(function()
+				return currentTimer.callback(currentTimer.context, currentTimer)
+			end, function(err)
+				print(tostring(err))
+			end)
 		else
-			status, timerResult = xpcall(function() return currentTimer.callback(currentTimer) end, debug.traceback)
+			status, timerResult = xpcall(function()
+				return currentTimer.callback(currentTimer)
+			end, function(err)
+				print(tostring(err))
+			end)
 		end
 
 		Timers.runningTimer = nil

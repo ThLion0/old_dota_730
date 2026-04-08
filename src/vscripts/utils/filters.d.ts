@@ -1,0 +1,1 @@
+declare type FilterCallback<T extends object> = (event: T) => boolean | void;

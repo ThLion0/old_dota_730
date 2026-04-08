@@ -15,6 +15,9 @@ import { ModifierGainFilter } from "./filters/modifier_gain_filter";
 // managers
 import { OldDotaManager } from "./managers/map_manager";
 
+import { MapSettings } from "./maps/settings";
+import { Dota730Map } from "./maps/dota_730";
+
 
 // game mode variables
 declare global {
@@ -23,6 +26,7 @@ declare global {
     interface CDOTAGameRules {
         Addon: GameMode;
         Manager: OldDotaManager;
+        Settings: MapSettings;
     }
 }
 
@@ -33,10 +37,15 @@ export class GameMode {
     }
 
     public static Activate(this: void): void {
-        GameRules.Addon = new GameMode();
         GameRules.Manager = new OldDotaManager();
+        GameRules.Settings = new Dota730Map();
+
+        // Addon should initialize only after all structure configs
+        GameRules.Addon = new GameMode();
 
         SendToServerConsole("tv_delay 0");
+        SendToServerConsole("dota_clientside_wearables false");
+
         if (IsInToolsMode()) {
             SendToServerConsole("dota_easybuy 1");
         }
@@ -86,6 +95,8 @@ export class GameMode {
             
             GameModeEntity.SetFixedRespawnTime(3);
         }
+
+        GameRules.Settings.Configure();
     }
 
     private listenGameEvents(): void {
@@ -96,9 +107,9 @@ export class GameMode {
     }
 
     private setGameFilters(): void {
-        GameModeEntity.SetModifyGoldFilter(event => GoldFilter.filter(event), this);
-        GameModeEntity.SetExecuteOrderFilter(event => OrderFilter.filter(event), this);
-        GameModeEntity.SetModifierGainedFilter(event => ModifierGainFilter.filter(event), this);
+        GoldFilter.Register(this);
+        OrderFilter.Register(this);
+        ModifierGainFilter.Register(this);
     }
 
     public StartGame(): void {
@@ -108,6 +119,6 @@ export class GameMode {
     public Reload(): void {
         print("Script reloaded!");
 
-        GameRules.Manager.SaveKVData();
+        // GameRules.Manager.SaveKVData();
     }
 }

@@ -1,7 +1,7 @@
-import "./lib/timers";
 import "./lib/dota_utils";
+
+import "./lib/timers";
 import "./lib/selection";
-import "./lib/custom_events";
 
 import { GameMode } from "./GameMode";
 

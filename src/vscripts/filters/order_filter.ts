@@ -1,14 +1,21 @@
-import { reloadable } from "../lib/tstl-utils";
+import { DotaFilter, FilterOrder } from "../utils/filters";
 
 import { CustomAbility } from "../lib/ability_extend";
 
-@reloadable
-export class OrderFilter {
-    public static filter(event: ExecuteOrderFilterEvent): boolean {
-        return this.handleCustomAbility(event);
+export class OrderFilter extends DotaFilter<ExecuteOrderFilterEvent> {
+    public static Register(context: {}): void {
+        new OrderFilter().Register(context);
     }
 
-    private static handleCustomAbility(event: ExecuteOrderFilterEvent): boolean {
+    public Register(context: {}): void {
+        GameModeEntity.SetExecuteOrderFilter((event) => this.handle(event), context);
+    }
+
+    protected RegisterOrder(order: FilterOrder<ExecuteOrderFilterEvent>): void {
+        order.set(0, (event) => this.filterCastInRoots(event));
+    }
+
+    private filterCastInRoots(event: ExecuteOrderFilterEvent): boolean | void {
         const hero = PlayerResource.GetSelectedHeroEntity(event.issuer_player_id_const);
         const ability = EntIndexToHScript(event.entindex_ability) as CDOTABaseAbility | undefined;
 
@@ -20,7 +27,5 @@ export class OrderFilter {
             hero.SendCustomError("dota_hud_error_ability_disabled_by_root", event.sequence_number_const);
             return false;
         }
-        
-        return true;
     }
 }

@@ -1,16 +1,15 @@
-
-class Selection {
-    private static readonly entities: Partial<Record<PlayerID, EntityIndex[]>> = {};
+const Selection = new class {
+    private readonly entities: Partial<Record<PlayerID, EntityIndex[]>> = {};
     
-    static {
+    constructor() {
         CustomGameEventManager.RegisterListener("selection_update", (_, event) => this.OnUpdate(event))
     }
 
-    private static OnUpdate(event: NetworkedData<SelectionUpdateEvent> & { PlayerID: PlayerID }): void {
+    private OnUpdate(event: NetworkedData<SelectionUpdateEvent> & { PlayerID: PlayerID }): void {
         this.entities[event.PlayerID] = Object.values(event.entities);
     }
 
-    public static GetSelectedEntities(playerID: PlayerID): EntityIndex[] {
+    public GetSelectedEntities(playerID: PlayerID): EntityIndex[] {
         return this.entities[playerID] || [];
     }
-}
+};
