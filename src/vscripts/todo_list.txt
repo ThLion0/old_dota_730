@@ -1,9 +1,0 @@
-TODO:
-
-Heroes (3) +
-Items (All)
-
-Ability texture manager *
-Ability cast voice lines *
-
-Old map
