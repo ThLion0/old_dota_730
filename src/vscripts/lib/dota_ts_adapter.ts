@@ -95,9 +95,15 @@ export const registerModifier = (name?: string) => (modifier: new () => CDOTA_Mo
         throw "Unable to determine name of this modifier class!";
     }
 
-    const [env, source] = getFileScope();
-    const [fileName] = string.gsub(source, ".*scripts[\\/]vscripts[\\/]", "");
+    // const [env, source] = getFileScope();
+    // const [fileName] = string.gsub(source, ".*scripts[\\/]vscripts[\\/]", "");
 
+    const fileName = (modifier as any).____file_path as string | undefined;
+    if (!fileName) {
+        throw "Unable to determine file path of this modifier class!";
+    }
+    
+    const [env] = getFileScope();
     env[name] = {};
 
     toDotaClassInstance(env[name], modifier);
@@ -147,7 +153,10 @@ function clearTable(table: object) {
     }
 }
 
-export function getFileScope(): [any, string] {
+function getFileScope(): [any, string] {
+    return [getfenv(3), "unknown"];
+
+    /*
     let level = 1;
     while (true) {
         const info = debug.getinfo(level, "S");
@@ -157,6 +166,7 @@ export function getFileScope(): [any, string] {
 
         level += 1;
     }
+     */
 }
 
 export function toDotaClassInstance(instance: any, table: new () => any) {

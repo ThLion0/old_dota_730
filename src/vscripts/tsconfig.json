@@ -7,11 +7,15 @@
         "types": ["@moddota/dota-lua-types/normalized"],
         "plugins": [{ "transform": "@moddota/dota-lua-types/transformer" }],
         "moduleResolution": "node",
-        "strict": true
+        "strict": true,
+        "ignoreDeprecations": "5.0"
     },
     "tstl": {
         "luaTarget": "JIT",
-        "sourceMapTraceback": true
+        "sourceMapTraceback": false,
+        "luaPlugins": [
+            { "name": "@thlion/tstl-dota-debug-fix/transformer" }
+        ]
     },
     "include": ["**/*.ts", "../common/**/*.ts"]
 }
