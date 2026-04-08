@@ -157,7 +157,7 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
         if (this.loopSoundTimer) {
             Timers.RemoveTimer(this.loopSoundTimer);
         }
-        if (this.endSoundTimer && this.currentTeleportTime <= 0.25) {
+        if (this.endSoundTimer && this.currentTeleportTime >= 0.25) {
             Timers.RemoveTimer(this.endSoundTimer);
         }
 

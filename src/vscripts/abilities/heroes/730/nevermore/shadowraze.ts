@@ -1,6 +1,6 @@
 import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
-class Shadowraze extends BaseAbility {
+class NevermoreShadowrazeCustom extends BaseAbility {
     private readonly shadowrazeParticle: string = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf";
     private readonly shadowrazeSound: string = "Hero_Nevermore.Shadowraze";
     
@@ -85,11 +85,11 @@ class Shadowraze extends BaseAbility {
 }
 
 @registerAbility()
-export class nevermore_shadowraze1_custom_730 extends Shadowraze {}
+export class nevermore_shadowraze1_custom_730 extends NevermoreShadowrazeCustom {}
 @registerAbility()
-export class nevermore_shadowraze2_custom_730 extends Shadowraze {}
+export class nevermore_shadowraze2_custom_730 extends NevermoreShadowrazeCustom {}
 @registerAbility()
-export class nevermore_shadowraze3_custom_730 extends Shadowraze {}
+export class nevermore_shadowraze3_custom_730 extends NevermoreShadowrazeCustom {}
 
 
 
