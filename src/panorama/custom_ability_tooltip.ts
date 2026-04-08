@@ -29,7 +29,7 @@ const DEBUG_ABILITIES: string[] = [
 const flagExist = (a: number, b: number): boolean => (a & b) === b;
 const formatValue = (value: number): string => Math.abs(value).toFixed(4).replace(/\.?0+$/, "");
 
-class CustomAbilityTooltip {
+new class {
     private readonly xmlTooltip: string = "file://{resources}/layout/custom_game/tooltips/custom_ability.xml";
     
     private readonly abilitiesKeyValues: Map<string, AbilitiesKeyValueTable>;
@@ -58,25 +58,7 @@ class CustomAbilityTooltip {
     }
 
     private registerShowTooltipEvents(): void {
-        /*
-        const handler = (panel: Panel): void => {
-            if (this.hideTooltipScheduler) {
-                $.CancelScheduled(this.hideTooltipScheduler);
-
-                this.hideTooltipScheduler = undefined;
-            }
-
-            this.injectAbilityTooltip(panel);
-        };
-        
-        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltip", handler);
-        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForEntityIndex", handler);
-        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForLevel", handler);
-        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForGuide", handler);
-        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForHero", handler);
-         */
-
-        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForEntityIndex", (panel: Panel, abilityName: string, entityIndex: EntityIndex) => {
+        const handler = (panel: Panel, abilityName: string, entityIndex: EntityIndex) => {
             if (this.hideTooltipScheduler) {
                 $.CancelScheduled(this.hideTooltipScheduler);
 
@@ -84,7 +66,13 @@ class CustomAbilityTooltip {
             }
 
             this.injectAbilityTooltip(panel, abilityName, entityIndex);
-        });
+        };
+
+        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltip", handler);
+        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForGuide", handler);
+        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForLevel", handler);
+        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForEntityIndex", handler);
+        $.RegisterForUnhandledEvent("DOTAShowAbilityTooltipForHero", handler);
     }
 
     private registerHideTooltipEvent(): void {
@@ -621,6 +609,4 @@ class CustomAbilityTooltip {
 
         return map[dispellableType];
     }
-}
-
-const abilityTooltip = new CustomAbilityTooltip();
+};

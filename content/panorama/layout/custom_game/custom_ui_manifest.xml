@@ -4,13 +4,13 @@
         <include src="file://{resources}/scripts/custom_game/manifest.js" />
     </scripts>
     <Panel>
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
         <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_indicator.xml" />
 
-        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_ability_tooltip.xml" />
-        
-        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/selection.xml" />
+        <!-- TODO: Needs to be completed -->
+        <!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_ability_tooltip.xml" /> -->
 
-        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_shop.xml" />
+        <!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/custom_shop.xml" /> -->
 
         <!-- Image Precache -->
         <!--

@@ -14,54 +14,54 @@ interface AbilityIndicator {
     HideParticles(): void;
 }
 
-class CustomIndicator {
-    private static readonly allIndicators: Record<string, AbilityIndicator> = {};
+const CustomIndicator = new class {
+    private readonly allIndicators: Record<string, AbilityIndicator> = {};
 
-    private static lastState: State;
+    private lastState: State;
     
-    static {
+    constructor() {
         this.lastState = {
             ability: -1 as AbilityEntityIndex,
             behavior: CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE
         };
 
-        this.UpdateMousePosition();
+        this.updateMousePosition();
     }
 
-    public static AddIndicator(abilityName: string, indicator: AbilityIndicator): void {
+    public AddIndicator(abilityName: string, indicator: AbilityIndicator): void {
         this.allIndicators[abilityName] = indicator;
     }
 
-    private static UpdateMousePosition(): void {
+    private updateMousePosition(): void {
         const currentState: State = {
             ability: Abilities.GetLocalPlayerActiveAbility(),
             behavior: GameUI.GetClickBehaviors()
         };
 
-        this.ConsiderBehavior(CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_CAST, currentState);
-        this.ConsiderBehavior(CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_VECTOR_CAST, currentState);
+        this.considerBehavior(CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_CAST, currentState);
+        this.considerBehavior(CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_VECTOR_CAST, currentState);
 
         this.lastState = currentState;
 
-        $.Schedule(0.03, () => this.UpdateMousePosition());
+        $.Schedule(0.03, () => this.updateMousePosition());
     }
 
-    private static ConsiderBehavior(target_behavior: CLICK_BEHAVIORS, currentState: State): void {
+    private considerBehavior(target_behavior: CLICK_BEHAVIORS, currentState: State): void {
         if (currentState.behavior === target_behavior) {
             if (this.lastState.behavior !== target_behavior) {
-                this.FireBehaviorEvent(BehaviorEvent.START, currentState);
+                this.fireBehaviorEvent(BehaviorEvent.START, currentState);
             } else if (this.lastState.ability !== currentState.ability) {
-                this.FireBehaviorEvent(BehaviorEvent.START, currentState);
-                this.FireBehaviorEvent(BehaviorEvent.END, this.lastState);
+                this.fireBehaviorEvent(BehaviorEvent.START, currentState);
+                this.fireBehaviorEvent(BehaviorEvent.END, this.lastState);
             } else {
-                this.FireBehaviorEvent(BehaviorEvent.UPDATE, currentState);
+                this.fireBehaviorEvent(BehaviorEvent.UPDATE, currentState);
             }
         } else if (this.lastState.behavior === target_behavior) {
-            this.FireBehaviorEvent(BehaviorEvent.END, this.lastState);
+            this.fireBehaviorEvent(BehaviorEvent.END, this.lastState);
         }
     }
 
-    private static FireBehaviorEvent(event: BehaviorEvent, state: State): void {
+    private fireBehaviorEvent(event: BehaviorEvent, state: State): void {
         const mousePos = GameUI.GetScreenWorldPosition(GameUI.GetCursorPosition());
         const abilityName = Abilities.GetAbilityName(state.ability);
 

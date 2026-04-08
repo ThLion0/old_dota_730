@@ -1,4 +1,4 @@
-class Manifest {
+new class {
     constructor() {
         this.hideDotaPlusTimers();
         this.hideRoshanTimer();
@@ -51,6 +51,4 @@ class Manifest {
             pipsContainer.style.visibility = "collapse";
         }
     }
-}
-
-new Manifest();
+};

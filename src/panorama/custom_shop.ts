@@ -1,5 +1,4 @@
-
-class CustomShop {
+new class {
     private context: Panel = $.GetContextPanel();
 
     private searchTextEntry?: TextEntry;
@@ -450,6 +449,4 @@ class CustomShop {
                     });
             });
     }
-}
-
-const customShop = new CustomShop();
+};
