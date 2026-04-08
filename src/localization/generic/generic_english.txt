@@ -1,7 +1,6 @@
 "lang"
 {
     "Language" "English"
-    "Category" "Generic"
     "Tokens"
     {
         // ADDON NAME

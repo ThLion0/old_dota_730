@@ -2,13 +2,11 @@ import { KeyValues } from "easy-keyvalues";
 import { writeFile } from "node:fs";
 
 
-type LanguageTokens = { [key: string]: string };
-
 export class LanguageRoot {
-    private static roots = new Map<string, LanguageRoot>();
+    private static readonly rootMap = new Map<string, LanguageRoot>();
 
-    private KV: KeyValues;
-    private tokens: KeyValues;
+    private readonly KV: KeyValues;
+    private readonly tokens: KeyValues;
 
     private constructor(language: string) { 
         this.KV = KeyValues.CreateRoot();
@@ -19,19 +17,29 @@ export class LanguageRoot {
         );
 
         this.tokens = lang.CreateChild("Tokens", []);
+
+        lang.Comments.AppendComment("Localization file has been generated using custom script");
     }
 
-    public setTokens(tokens: LanguageTokens, category: string | undefined): LanguageRoot {
-        Object.entries(tokens)
-            .map(([key, value]) => new KeyValues(key, value))
-            .forEach((token, index) => {
-                this.tokens.Append(token);
-                
-                if (index === 0 && category !== undefined) {
-                    token.Comments.AppendComment(category.toUpperCase());
-                }
-            });
-        
+    public static GetRoot(language: string): LanguageRoot {
+        if (this.rootMap.has(language)) {
+            return this.rootMap.get(language)!;
+        }
+
+        const root = new LanguageRoot(language);
+        this.rootMap.set(language, root);
+        return root;
+    }
+
+    public setTokens(tokens: KeyValues): LanguageRoot {
+        tokens.GetChildren().forEach(child => {
+            if (child.Comments.HasComments()) {
+                this.tokens.Append(KeyValues.CreateRoot());
+            }
+            
+            this.tokens.Append(child);
+        });
+
         return this;
     }
 
@@ -39,15 +47,5 @@ export class LanguageRoot {
         writeFile(filePath, "", () => {
             this.KV.Save(filePath);
         });
-    }
-
-    static getRoot(language: string): LanguageRoot {
-        if (this.roots.has(language)) {
-            return this.roots.get(language)!;
-        }
-
-        const root = new LanguageRoot(language);
-        this.roots.set(language, root);
-        return root;
     }
 }
