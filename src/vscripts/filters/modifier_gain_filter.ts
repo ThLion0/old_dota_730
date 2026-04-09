@@ -1,10 +1,6 @@
 import { DotaFilter, FilterOrder } from "../utils/filters";
 
-export class ModifierGainFilter extends DotaFilter<ModifierGainedFilterEvent> {
-    public static Register(context: {}): void {
-        new ModifierGainFilter().Register(context);
-    }
-
+export const ModifierGainFilter = new class extends DotaFilter<ModifierGainedFilterEvent> {
     public Register(context: {}): void {
         GameModeEntity.SetModifierGainedFilter((event) => this.handle(event), context);
     }

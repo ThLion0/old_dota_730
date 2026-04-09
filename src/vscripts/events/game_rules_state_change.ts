@@ -1,8 +1,11 @@
-import { reloadable } from "../lib/tstl-utils";
+import { DotaEvent } from "../utils/events";
 
-@reloadable
-export class GameRuleChange {
-    public static handle(): void {
+export const GameRuleChange = new class extends DotaEvent {
+    public Register(): void {
+        ListenToGameEvent("game_rules_state_change", () => this.handle(), undefined);
+    }
+
+    private handle(): void {
         const state = GameRules.State_Get();
 
         switch (state) {
@@ -19,17 +22,17 @@ export class GameRuleChange {
         }
     }
 
-    private static setupGame(): void {
+    private setupGame(): void {
         GameRules.Manager.SaveKVData();
     }
 
-    private static preGame(): void {
+    private preGame(): void {
         // Save fountains units
         PlayerResource.GetTeamFountainEntity(DotaTeam.BADGUYS);
         PlayerResource.GetTeamFountainEntity(DotaTeam.GOODGUYS);
     }
 
-    private static startGame(): void {
+    private startGame(): void {
         GameRules.Addon.StartGame();
     }
 }

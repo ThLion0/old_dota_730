@@ -1,8 +1,12 @@
-import { reloadable } from "../lib/tstl-utils";
+import { DotaEvent } from "../utils/events";
 
-@reloadable
-export class NpcSpawned {
-    public static handle(event: NpcSpawnedEvent & GameEventProvidedProperties): void {
+export const NpcSpawned = new class extends DotaEvent {
+    public Register(): void {
+        ListenToGameEvent("npc_spawned", (event) => this.handle(event), undefined);
+        ListenToGameEvent("npc_spawn_finished", (event) => this.handleFinished(event), undefined);
+    }
+
+    private handle(event: NpcSpawnedEvent & GameEventProvidedProperties): void {
         const baseNPC = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC | undefined;
         if (baseNPC === undefined) return;
 
@@ -23,7 +27,7 @@ export class NpcSpawned {
         GameRules.Manager.PushEntityToNetTable(baseNPC);
     }
 
-    public static handleFinished(event: NpcSpawnFinishedEvent & GameEventProvidedProperties): void {
+    private handleFinished(event: NpcSpawnFinishedEvent & GameEventProvidedProperties): void {
         const baseNPC = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC | undefined;
         if (baseNPC === undefined) return;
         
@@ -32,13 +36,13 @@ export class NpcSpawned {
 
     /* Real hero handlers */
 
-    private static handleRealHero(hero: CDOTA_BaseNPC_Hero, isRespawn: boolean): void {
+    private handleRealHero(hero: CDOTA_BaseNPC_Hero, isRespawn: boolean): void {
         if (!isRespawn) {
             this.initRealHero(hero);
         }
     }
 
-    private static handleFakeClient(hero: CDOTA_BaseNPC_Hero): void {
+    private handleFakeClient(hero: CDOTA_BaseNPC_Hero): void {
         const respawnPosition = hero.__custom_data.debug_respawn_pos;
         if (respawnPosition) {
             hero.SetAbsOrigin(respawnPosition);
@@ -46,27 +50,19 @@ export class NpcSpawned {
         }
     }
 
-    private static initRealHero(hero: CDOTA_BaseNPC_Hero): void {
-        const playerId = hero.GetPlayerID();
-
-        CustomNetTables.SetTableValue("hero_values", playerId.toString(), {
-            stats: {
-                cooldownReduction: 0,
-                manaCostReduction: 0,
-                spellAmplification: 0
-            }
-        });
+    private initRealHero(hero: CDOTA_BaseNPC_Hero): void {
+        
     }
 
     /* Creep handlers */
 
-    private static handleCreep(creep: CDOTA_BaseNPC, isRespawn: boolean) {
+    private handleCreep(creep: CDOTA_BaseNPC, isRespawn: boolean) {
         if (!isRespawn) {
             this.initCreep(creep);
         }
     }
 
-    private static initCreep(creep: CDOTA_BaseNPC): void {
+    private initCreep(creep: CDOTA_BaseNPC): void {
         
     }
 }

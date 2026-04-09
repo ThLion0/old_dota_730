@@ -2,11 +2,7 @@ import { DotaFilter, FilterOrder } from "../utils/filters";
 
 import { CustomAbility } from "../lib/ability_extend";
 
-export class OrderFilter extends DotaFilter<ExecuteOrderFilterEvent> {
-    public static Register(context: {}): void {
-        new OrderFilter().Register(context);
-    }
-
+export const OrderFilter = new class extends DotaFilter<ExecuteOrderFilterEvent> {
     public Register(context: {}): void {
         GameModeEntity.SetExecuteOrderFilter((event) => this.handle(event), context);
     }

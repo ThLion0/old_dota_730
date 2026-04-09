@@ -1,8 +1,11 @@
-import { reloadable } from "../lib/tstl-utils";
+import { DotaEvent } from "../utils/events";
 
-@reloadable
-export class EntityKilled {
-    public static handle(event: EntityKilledEvent & GameEventProvidedProperties): void {
+export const EntityKilled = new class extends DotaEvent {
+    public Register(): void {
+        ListenToGameEvent("entity_killed", event => this.handle(event), undefined);
+    }
+
+    private handle(event: EntityKilledEvent & GameEventProvidedProperties): void {
         const killed = EntIndexToHScript(event.entindex_killed) as CDOTA_BaseNPC | undefined;
         if (killed === undefined) return;
 
@@ -19,11 +22,11 @@ export class EntityKilled {
 
     /* Real hero handlers */
 
-    private static handleRealHero(hero: CDOTA_BaseNPC_Hero): void {
+    private handleRealHero(hero: CDOTA_BaseNPC_Hero): void {
         
     }
 
-    private static handleFakeClient(hero: CDOTA_BaseNPC_Hero): void {
+    private handleFakeClient(hero: CDOTA_BaseNPC_Hero): void {
         hero.__custom_data.debug_respawn_pos = hero.GetAbsOrigin();
     }
 }

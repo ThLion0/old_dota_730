@@ -100,10 +100,9 @@ export class GameMode {
     }
 
     private listenGameEvents(): void {
-        ListenToGameEvent("game_rules_state_change", () => GameRuleChange.handle(), undefined);
-        ListenToGameEvent("npc_spawned", event => NpcSpawned.handle(event), undefined);
-        ListenToGameEvent("npc_spawn_finished", event => NpcSpawned.handleFinished(event), undefined);
-        ListenToGameEvent("entity_killed", event => EntityKilled.handle(event), undefined);
+        GameRuleChange.Register();
+        NpcSpawned.Register();
+        EntityKilled.Register();
     }
 
     private setGameFilters(): void {
