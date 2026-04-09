@@ -1,6 +1,6 @@
 import { DotaEvent } from "../utils/events";
 
-export const EntityKilled = new class extends DotaEvent {
+class Event extends DotaEvent {
     public Register(): void {
         ListenToGameEvent("entity_killed", event => this.handle(event), undefined);
     }
@@ -30,3 +30,5 @@ export const EntityKilled = new class extends DotaEvent {
         hero.__custom_data.debug_respawn_pos = hero.GetAbsOrigin();
     }
 }
+
+export const EntityKilled = new Event();

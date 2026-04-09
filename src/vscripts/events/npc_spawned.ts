@@ -1,6 +1,6 @@
 import { DotaEvent } from "../utils/events";
 
-export const NpcSpawned = new class extends DotaEvent {
+class Event extends DotaEvent {
     public Register(): void {
         ListenToGameEvent("npc_spawned", (event) => this.handle(event), undefined);
         ListenToGameEvent("npc_spawn_finished", (event) => this.handleFinished(event), undefined);
@@ -66,3 +66,5 @@ export const NpcSpawned = new class extends DotaEvent {
         
     }
 }
+
+export const NpcSpawned = new Event();

@@ -1,6 +1,6 @@
 import { DotaEvent } from "../utils/events";
 
-export const GameRuleChange = new class extends DotaEvent {
+class Event extends DotaEvent {
     public Register(): void {
         ListenToGameEvent("game_rules_state_change", () => this.handle(), undefined);
     }
@@ -36,3 +36,5 @@ export const GameRuleChange = new class extends DotaEvent {
         GameRules.Addon.StartGame();
     }
 }
+
+export const GameRuleChange = new Event();
