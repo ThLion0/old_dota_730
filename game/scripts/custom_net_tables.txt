@@ -5,6 +5,5 @@
         "custom_shop",
         "entities",
         "key_values",
-        "hero_values",
     ]
 }

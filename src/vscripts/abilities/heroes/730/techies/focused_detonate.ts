@@ -10,7 +10,6 @@ export class techies_focused_detonate_custom_730 extends BaseAbility {
     private readonly unitName: string = "npc_dota_techies_remote_mine_custom_730";
 
     private readonly radius: number = 700;
-
     private readonly detonateDelay: number = 0.25;
     
     GetAOERadius(): number {
@@ -43,7 +42,7 @@ export class techies_focused_detonate_custom_730 extends BaseAbility {
             unit => unit.GetUnitName() === this.unitName && unit.GetOwner() === caster
         );
 
-        mines.forEach(mine => mine.EmitSound("Hero_Techies.RemoteMine.Activate"));
+        mines.forEach(mine => mine.EmitSound(this.activateSound));
 
         Timers.CreateTimer(this.detonateDelay, () => {
             mines.forEach(mine => {

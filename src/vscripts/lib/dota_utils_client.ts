@@ -2,6 +2,9 @@
 //=/ Functions /=//
 //===============//
 
+/**
+ * @deprecated Used to override EntIndexToHScript
+ */
 const _EntIndexToHScriptEngine_Client = globalThis.EntIndexToHScript;
 globalThis.EntIndexToHScript = function(entityIndex: EntityIndex): CBaseEntity | undefined {
     if (entityIndex === undefined) return undefined;

@@ -38,7 +38,7 @@ export class techies_remote_mines_self_detonate_custom_730 extends BaseAbility {
 
             const mine = selectedMines[i];
             if (IsValidEntity(mine) && mine.IsAlive()) {
-                (mine.FindAbilityByName(this.constructor.name) as this).Detonate();
+                (mine.FindAbilityByName(this.GetAbilityName()) as this)?.Detonate();
             }
             
             i++;

@@ -36,7 +36,9 @@ const TurnToDummy = (unit: CDOTA_BaseNPC): void => {
 };
 
 
-
+/**
+ * @deprecated Used to override EntIndexToHScript
+ */
 const _EntIndexToHScriptEngine_Server = globalThis.EntIndexToHScript;
 globalThis.EntIndexToHScript = function(entityIndex: EntityIndex): CBaseEntity | undefined {
     if (entityIndex === undefined) return undefined;
@@ -102,9 +104,9 @@ CDOTA_BaseNPC.IsLeashed = function(): boolean {
 
         const behavior = ability.GetAbilityTargetFlags();
         
-        return isMagicImmune &&
-            (behavior & UnitTargetFlags.MAGIC_IMMUNE_ENEMIES) === 0 &&
-            modifier.HasState(ModifierState.TETHERED);
+        return isMagicImmune
+            && (behavior & UnitTargetFlags.MAGIC_IMMUNE_ENEMIES) === 0
+            && modifier.HasState(ModifierState.TETHERED);
     });
 };
 
@@ -183,6 +185,9 @@ CDOTA_Buff.HasState = function(state: ModifierState): boolean {
 //==========================//
 //=/ CDOTA PlayerResource /=//
 //==========================//
+/**
+ * @deprecated Used only local scope in dota_utils.ts
+ */
 const _teamFountains: Partial<Record<DotaTeam, CDOTA_BaseNPC_Building | undefined>> = {};
 
 CDOTA_PlayerResource.GetTeamFountainEntity = function(team: DotaTeam): CDOTA_BaseNPC_Building | undefined {

@@ -81,6 +81,7 @@ export class OldDotaManager {
     }
 
     private setupNetTables(): void {
+        // TODO: Change to events
         CustomNetTables.SetTableValue("entities", "heroes", { values: {} });
         CustomNetTables.SetTableValue("entities", "creeps", { values: {} });
         CustomNetTables.SetTableValue("entities", "mines", { values: {} });

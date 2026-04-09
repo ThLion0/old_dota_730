@@ -54,6 +54,9 @@ Players.GetPlayerColorHex = (iPlayerID: PlayerID): string => {
 };
 
 // $
+/**
+ * @deprecated Used only in local scope in utils.ts
+ */
 const _default_context = $.GetContextPanel();
 
 if (!$.LocalizeEngine) {

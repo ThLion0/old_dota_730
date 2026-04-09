@@ -24,7 +24,6 @@ interface CustomNetTableDeclarations {
     custom_shop: CustomShopNetTable;
     entities: EntitiesNetTable;
     key_values: KeyValuesNetTable;
-    hero_values: HeroValuesTableKey;
 }
 
 //=/ Custom Shop /=//
@@ -73,16 +72,4 @@ type HeroesKeyValueTable = {
 
 interface KeyValuesNetTable {
     [key: string]: AbilitiesKeyValueTable | ItemsKeyValueTable | HeroesKeyValueTable;
-}
-
-//=/ Hero Values /=//
-
-interface HeroValuesTableKey {
-    [key: string]: {
-        stats: {
-            cooldownReduction: number;
-            manaCostReduction: number;
-            spellAmplification: number;
-        }
-    }
 }
