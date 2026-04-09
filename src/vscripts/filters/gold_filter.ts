@@ -1,6 +1,6 @@
 import { DotaFilter, FilterOrder } from "../utils/filters";
 
-export const GoldFilter = new class extends DotaFilter<ModifyGoldFilterEvent> {
+class Event extends DotaFilter<ModifyGoldFilterEvent> {
     public Register(context: {}): void {
         GameModeEntity.SetModifyGoldFilter((event) => this.handle(event), context);
     }
@@ -9,3 +9,5 @@ export const GoldFilter = new class extends DotaFilter<ModifyGoldFilterEvent> {
         
     }
 }
+
+export const GoldFilter = new Event();
