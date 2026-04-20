@@ -13,32 +13,61 @@ import { OrderFilter } from "./filters/order_filter";
 import { ModifierGainFilter } from "./filters/modifier_gain_filter";
 
 // managers
+import { NeutralCampsManager } from "./managers/neutral_camps_manager";
+import { WearableManager } from "./managers/wearable_manager";
+
 import { OldDotaManager } from "./managers/map_manager";
 
-import { MapSettings } from "./maps/settings";
+import { MapSettings } from "./utils/settings/settings";
 import { Dota730Map } from "./maps/dota_730";
 
 
-// game mode variables
+// Game Mode variables
 declare global {
     const GameModeEntity: CDOTABaseGameMode;
 
     interface CDOTAGameRules {
+        /** @custom */
         Addon: GameMode;
-        Manager: OldDotaManager;
+        /** @custom */
         Settings: MapSettings;
+        
+        /**
+         * @deprecated
+         * @custom
+         */
+        Manager: OldDotaManager;
+
+        WearableManager: WearableManager;
     }
 }
 
 @reloadable
 export class GameMode {
+    public readonly neutralCampManager: NeutralCampsManager;
+
+    constructor() {
+        this.neutralCampManager = new NeutralCampsManager();
+
+        this.configure();
+
+        this.listenGameEvents();
+        this.setGameFilters();
+    }
+
     public static Precache(this: void, context: CScriptPrecacheContext): void {
         PrecacheAllResources(context);
     }
 
     public static Activate(this: void): void {
-        GameRules.Manager = new OldDotaManager();
+        // @ts-ignore
+        GameModeEntity = GameRules.GetGameModeEntity();
+
         GameRules.Settings = new Dota730Map();
+        // TODO: remove
+        GameRules.Manager = new OldDotaManager();
+
+        GameRules.WearableManager = new WearableManager();
 
         // Addon should initialize only after all structure configs
         GameRules.Addon = new GameMode();
@@ -51,20 +80,6 @@ export class GameMode {
         }
     }
 
-    public static ActivateClient(this: any): void {
-        require("./lib/dota_utils_client");
-    }
-
-    constructor() {
-        // @ts-ignore
-        GameModeEntity = GameRules.GetGameModeEntity();
-        
-        this.configure();
-
-        this.listenGameEvents();
-        this.setGameFilters();
-    }
-
     private configure(): void {
         GameRules.SetCustomGameTeamMaxPlayers(DotaTeam.GOODGUYS, 5);
         GameRules.SetCustomGameTeamMaxPlayers(DotaTeam.BADGUYS, 5);
@@ -73,7 +88,7 @@ export class GameMode {
         GameRules.SetSafeToLeave(true);
 
         GameRules.SetEnableAlternateHeroGrids(false);
-        
+
         GameRules.SetGoldPerTick(1);
         GameRules.SetGoldTickTime(0.67);
 
@@ -111,7 +126,24 @@ export class GameMode {
         ModifierGainFilter.Register(this);
     }
 
-    public StartGame(): void {
+    public OnGameSetup(): void {
+        GameRules.WearableManager.Initialize();
+        this.neutralCampManager.Initialize();
+
+        GameRules.Manager.SaveKVData();
+    }
+
+    public OnWaitMapToLoad(): void {
+
+    }
+
+    public OnPreGame(): void {
+        
+    }
+
+    public OnStartGame(): void {
+        this.neutralCampManager.StartCycle();
+        
         GameRules.SetTimeOfDay(0.25);
     }
 

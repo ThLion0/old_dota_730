@@ -55,6 +55,10 @@ CBaseEntity.IsUnit = function(): boolean {
     return !this.IsBuilding() && !this.IsOther();
 };
 
+CBaseEntity.GetBoundingRadius = function(): number {
+    return this.GetBoundingMins().__sub(this.GetBoundingMaxs()).Length2D();
+};
+
 
 
 //===================//
@@ -93,6 +97,11 @@ CDOTA_BaseNPC.IsSomethingWeird = function(): boolean {
 CDOTA_BaseNPC.IsTechiesMine = function(): boolean {
     const unitData = GetUnitKeyValuesByName(this.GetUnitName()) as { CustomData?: { IsMineType?: 0 | 1; }; };
     return unitData?.CustomData?.IsMineType === 1;
+};
+
+CDOTA_BaseNPC.IsBlockingCamp = function(): boolean {
+    const unitData = GetUnitKeyValuesByName(this.GetUnitName()) as { CustomData?: { BlockNeutralCamps?: 0 | 1; }; };
+    return unitData?.CustomData?.BlockNeutralCamps === 1;
 };
 
 CDOTA_BaseNPC.IsLeashed = function(): boolean {

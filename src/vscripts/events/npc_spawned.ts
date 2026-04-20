@@ -1,4 +1,4 @@
-import { DotaEvent } from "../utils/events";
+import { DotaEvent } from "../utils/events/events";
 
 class Event extends DotaEvent {
     public Register(): void {
@@ -51,7 +51,7 @@ class Event extends DotaEvent {
     }
 
     private initRealHero(hero: CDOTA_BaseNPC_Hero): void {
-        
+        GameRules.WearableManager.ParseHeroSkins(hero);
     }
 
     /* Creep handlers */

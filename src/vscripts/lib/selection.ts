@@ -1,4 +1,7 @@
-const Selection = new class {
+/**
+ * @deprecated Used only local scope in selection.ts
+ */
+class _SelectionClass {
     private readonly entities: Partial<Record<PlayerID, EntityIndex[]>> = {};
     
     constructor() {
@@ -12,4 +15,6 @@ const Selection = new class {
     public GetSelectedEntities(playerID: PlayerID): EntityIndex[] {
         return this.entities[playerID] || [];
     }
-};
+}
+
+const Selection = new _SelectionClass();

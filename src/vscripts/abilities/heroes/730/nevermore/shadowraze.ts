@@ -1,6 +1,7 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
-class NevermoreShadowrazeCustom extends BaseAbility {
+class NevermoreShadowrazeCustom extends CustomAbility {
     private readonly shadowrazeParticle: string = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf";
     private readonly shadowrazeSound: string = "Hero_Nevermore.Shadowraze";
     
@@ -67,8 +68,6 @@ class NevermoreShadowrazeCustom extends BaseAbility {
     }
 
     private PlayEffects(position: Vector, radius: number): void {
-        const caster = this.GetCaster();
-
         const ground = GetGroundPosition(position, undefined);
 
         const particle = ParticleManager.CreateParticle(
@@ -80,7 +79,7 @@ class NevermoreShadowrazeCustom extends BaseAbility {
         ParticleManager.SetParticleControl(particle, 1, Vector(radius, 1, 1));
         ParticleManager.ReleaseParticleIndex(particle);
 
-        EmitSoundOnLocationWithCaster(ground, this.shadowrazeSound, caster);
+        EmitSoundOnLocationWithCaster(ground, this.shadowrazeSound, this.GetCaster());
     }
 }
 

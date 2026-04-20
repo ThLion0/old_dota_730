@@ -16,4 +16,4 @@ export function reloadable<T extends { new (...args: any[]): {} }>(constructor: 
 
     Object.assign(global.reloadCache[className].prototype, constructor.prototype);
     return global.reloadCache[className];
-}
+};

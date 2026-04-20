@@ -1,10 +1,10 @@
-import { BaseOrbAbility, BaseOrbModifier } from "../../../../lib/ability_extend";
+import { CustomOrbAbility, CustomOrbModifier } from "../../../../lib/abilities/custom_orb_ability";
 import { registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 import { type nevermore_requiem_custom_730 } from "./requiem";
 
 @registerAbility()
-export class nevermore_necromastery_custom_730 extends BaseOrbAbility {
+export class nevermore_necromastery_custom_730 extends CustomOrbAbility {
     private readonly shardProjectileName: string = "particles/units/heroes/hero_nevermore/sf_necromastery_attack.vpcf";
     
     private readonly shardCooldown: number = 3;
@@ -54,7 +54,7 @@ export class nevermore_necromastery_custom_730 extends BaseOrbAbility {
 
 
 @registerModifier()
-class modifier_nevermore_necromastery_custom_730 extends BaseOrbModifier {
+class modifier_nevermore_necromastery_custom_730 extends CustomOrbModifier {
     private readonly killParticle: string = "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf";
     
     private readonly deathSoulLost: number = 0.6;

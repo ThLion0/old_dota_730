@@ -1,4 +1,4 @@
-import { DotaFilter, FilterOrder } from "../utils/filters";
+import { DotaFilter, FilterOrder } from "../utils/filters/filters";
 
 class Event extends DotaFilter<ModifierGainedFilterEvent> {
     public Register(context: {}): void {

@@ -1,4 +1,4 @@
-import { DotaEvent } from "../utils/events";
+import { DotaEvent } from "../utils/events/events";
 
 class Event extends DotaEvent {
     public Register(): void {
@@ -12,6 +12,9 @@ class Event extends DotaEvent {
             case GameState.CUSTOM_GAME_SETUP:
                 this.setupGame(); break;
 
+            case GameState.WAIT_FOR_MAP_TO_LOAD:
+                this.waitForMapLoad(); break;
+
             case GameState.PRE_GAME:
                 this.preGame(); break;
 
@@ -23,17 +26,23 @@ class Event extends DotaEvent {
     }
 
     private setupGame(): void {
-        GameRules.Manager.SaveKVData();
+        GameRules.Addon.OnGameSetup();
+    }
+
+    private waitForMapLoad(): void {
+        GameRules.Addon.OnWaitMapToLoad();
     }
 
     private preGame(): void {
+        GameRules.Addon.OnPreGame();
+        
         // Save fountains units
         PlayerResource.GetTeamFountainEntity(DotaTeam.BADGUYS);
         PlayerResource.GetTeamFountainEntity(DotaTeam.GOODGUYS);
     }
 
     private startGame(): void {
-        GameRules.Addon.StartGame();
+        GameRules.Addon.OnStartGame();
     }
 }
 

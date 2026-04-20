@@ -6,6 +6,9 @@
 interface CBaseEntity {
     /** @custom */
     IsUnit(): this is CDOTA_BaseNPC;
+
+    /** @custom */
+    GetBoundingRadius(): number;
 }
 
 interface CDOTA_BaseNPC {
@@ -54,6 +57,9 @@ interface CDOTA_BaseNPC {
     
     /** @custom */
     IsTechiesMine(): boolean;
+
+    /** @custom */
+    IsBlockingCamp(): boolean;
 
     /** @custom */
     IsLeashed(): boolean;

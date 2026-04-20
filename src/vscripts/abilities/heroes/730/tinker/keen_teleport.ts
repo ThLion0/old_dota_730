@@ -1,4 +1,4 @@
-import { CustomAbility, CustomModifier } from "../../../../lib/ability_extend";
+import { CustomAbility, CustomModifier } from "../../../../lib/abilities/custom_ability";
 import { registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 interface TeleportTargetResult {
@@ -31,16 +31,16 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
         return modifier_tinker_keen_teleport_custom_730.name;
     }
 
-    IsCastableInRoots(): boolean {
-        return false;
-    }
-
     GetBehavior(): AbilityBehavior | Uint64 {
         return AbilityBehavior.UNIT_TARGET
              | AbilityBehavior.POINT
              | AbilityBehavior.CHANNELLED
              | AbilityBehavior.DONT_RESUME_ATTACK
              | AbilityBehavior.DONT_CANCEL_CHANNEL;
+    }
+
+    GetCustomBehavior(): CustomAbilityBehavior {
+        return CustomAbilityBehavior.ROOT_DISABLES;
     }
 
     OnAbilityPhaseStart(): boolean {
@@ -102,6 +102,7 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
         this.currentTeleportTime = teleportDuration;
 
+        this.DestroyEffects(true, 0);
         this.PlayEffects(this.currentTpTarget);
 
         this.loopSoundTimer = Timers.CreateTimer(0.1, () => {
@@ -361,7 +362,7 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
                 const location = this.ClampVector(
                     this.GetCaster().GetAbsOrigin(),
                     targetResult.target.GetAbsOrigin(),
-                    targetResult.target.GetHullRadius() * 1.5
+                    targetResult.target.GetHullRadius() * 1.45
                 );
 
                 return CreateCompanion(location);

@@ -1,4 +1,4 @@
-import { MapSettings, ModifierHolder } from "./settings";
+import { MapSettings, ModifierHolder } from "../utils/settings/settings";
 
 export class Dota730Map extends MapSettings {
     public ConfigureModifiers(holder: ModifierHolder): void {

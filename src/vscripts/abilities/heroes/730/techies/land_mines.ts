@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class techies_land_mines_custom_730 extends BaseAbility {
+export class techies_land_mines_custom_730 extends CustomAbility {
     private readonly plantSound: string = "Hero_Techies.LandMine.Plant";
 
     private readonly unitName: string = "npc_dota_techies_land_mine_custom_730";
@@ -96,6 +97,10 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
         return false;
     }
 
+    RemoveOnDeath(): boolean {
+        return false;
+    }
+
     OnCreated(params: object): void {
         const parent = this.GetParent();
 
@@ -144,10 +149,9 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
             false
         ).filter(unit => !unit.IsOutpost());
 
-        const isAllImmune = units.every(unit => unit.IsMagicImmune());
         const enemyFound = units.some(
             unit => !unit.HasFlyMovementCapability() ||
-                     unit.HasModifiersState(ModifierState.FLYING_FOR_PATHING_PURPOSES_ONLY)
+                    unit.HasModifiersState(ModifierState.FLYING_FOR_PATHING_PURPOSES_ONLY)
         );
 
         if (!enemyFound) {
@@ -163,15 +167,19 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
             
             EmitSoundOn(this.primingSound, parent);
         } else {
-            if (!isAllImmune) {
-                this.triggerTime += this.tickInterval;
-            }
+            this.triggerTime += this.tickInterval;
 
             if (this.triggerTime >= this.proximityThreshold) {
                 this.exploded = true;
                 
-                this.Detonate(units);
                 this.StopIntervalThink();
+
+                Timers.CreateTimer(0.03, () => {
+                    const parent = this.GetParent();
+                    if (parent && IsValidEntity(parent) && parent.IsAlive()) {
+                        this.Detonate();
+                    }
+                });
             }
         }
     }
@@ -188,7 +196,7 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
             [ModifierState.LOW_ATTACK_PRIORITY]: true
         };
 
-        if (!this.triggered && this.GetElapsedTime() > (this.activationDelay + 0.15)) {
+        if (!this.triggered && this.GetElapsedTime() > (this.activationDelay + 0.1)) {
             states[ModifierState.INVISIBLE] = true;
             states[ModifierState.TRUESIGHT_IMMUNE] = true;
         }
@@ -200,8 +208,47 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
         return this.GetSpecialValueFor("movement_speed");
     }
 
-    private Detonate(units: CDOTA_BaseNPC[]): void {
+    private Detonate(): void {
         const parent = this.GetParent();
+
+        const units = FindUnitsInRadius(
+            parent.GetTeamNumber(),
+            parent.GetAbsOrigin(),
+            undefined,
+            this.radius,
+            UnitTargetTeam.ENEMY,
+            UnitTargetType.HERO | UnitTargetType.BASIC | UnitTargetType.BUILDING | UnitTargetType.COURIER,
+            UnitTargetFlags.MAGIC_IMMUNE_ENEMIES,
+            FindOrder.ANY,
+            false
+        ).filter(unit => !unit.IsOutpost());
+
+        const damage = this.GetSpecialValueFor("damage");
+        const buildingDamage = damage * this.buildingDamagePct;
+
+        const damageTable: ApplyDamageOptions = {
+            attacker: parent,
+            damage: damage,
+            damage_type: DamageTypes.MAGICAL,
+            victim: undefined!,
+            ability: this.GetAbility()
+        };
+
+        units.filter(unit => {
+            const isFlyCapability =
+                !unit.HasFlyMovementCapability() ||
+                unit.HasModifiersState(ModifierState.FLYING_FOR_PATHING_PURPOSES_ONLY);
+            
+            return isFlyCapability
+                && !unit.IsInvulnerable()
+                && !unit.IsCourier()
+                && !unit.IsMagicImmune();
+        }).forEach(unit => {
+            damageTable.damage = unit.IsBuilding() ? buildingDamage : damage;
+            damageTable.victim = unit;
+
+            ApplyDamage(damageTable);
+        });
 
         const particle = ParticleManager.CreateParticle(
             this.detonateParticleName,
@@ -215,34 +262,7 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
         ParticleManager.SetParticleFoWProperties(particle, 0, 2, this.radius);
         ParticleManager.ReleaseParticleIndex(particle);
 
-        EmitSoundOn(this.detonateSound, parent);
-
-        const damage = this.GetSpecialValueFor("damage");
-        const buildingDamage = damage * this.buildingDamagePct;
-
-        const damageTable: ApplyDamageOptions = {
-            attacker: parent,
-            damage: damage,
-            damage_type: DamageTypes.MAGICAL,
-            victim: undefined!,
-            ability: this.GetAbility()
-        };
-
-        units.filter(
-            unit =>
-                (
-                    !unit.HasFlyMovementCapability() ||
-                    unit.HasModifiersState(ModifierState.FLYING_FOR_PATHING_PURPOSES_ONLY)
-                ) &&
-                !unit.IsInvulnerable() &&
-                !unit.IsCourier() &&
-                !unit.IsMagicImmune()
-        ).forEach(unit => {
-            damageTable.damage = unit.IsBuilding() ? buildingDamage : damage;
-            damageTable.victim = unit;
-
-            ApplyDamage(damageTable);
-        });
+        parent.EmitSound(this.detonateSound);
 
         AddFOWViewer(parent.GetTeamNumber(), parent.GetAbsOrigin(), 300, 1, false);
 

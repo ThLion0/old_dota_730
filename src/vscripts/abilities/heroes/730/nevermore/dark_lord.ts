@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class nevermore_dark_lord_custom_730 extends BaseAbility {
+export class nevermore_dark_lord_custom_730 extends CustomAbility {
     private readonly radius: number = this.GetSpecialValueFor("presence_radius");
     
     GetAOERadius(): number {

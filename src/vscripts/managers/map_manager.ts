@@ -138,10 +138,10 @@ export class OldDotaManager {
     }
 
     public SaveKVData(): void {
-        this.SaveShopData();
-        this.SaveAbilitiesKeyValue();
-        this.SaveHeroKeyValue();
-        this.SaveItemKeyValue();
+        // this.SaveShopData();
+        // this.SaveAbilitiesKeyValue();
+        // this.SaveHeroKeyValue();
+        // this.SaveItemKeyValue();
     }
 
     public SaveShopData(): void {

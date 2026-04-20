@@ -1,24 +1,8 @@
-import { BaseAbility, BaseModifier } from "./dota_ts_adapter";
-
-export class CustomAbility extends BaseAbility {
-    /**
-     * True/false if this ability can be casted while rooted.
-     *
-     * @custom
-     * @both
-     */
-    IsCastableInRoots(): boolean {
-        return true;
-    }
-}
-
-export class CustomModifier extends BaseModifier {
-
-}
+import { CustomAbility, CustomModifier } from "./custom_ability";
 
 /* Orb effect classes */
 
-export interface BaseOrbAbility extends CustomAbility {
+export interface CustomOrbAbility {
     /**
      * @custom
      * @abstract
@@ -40,7 +24,7 @@ export interface BaseOrbAbility extends CustomAbility {
      */
     GetOrbProjectileName?(): string;
 }
-export class BaseOrbAbility {
+export class CustomOrbAbility extends CustomAbility {
     /**
      * @custom
      * @both
@@ -50,11 +34,11 @@ export class BaseOrbAbility {
     }
 }
 
-export interface BaseOrbModifier extends CustomModifier {
+export interface CustomOrbModifier {
     /** @override changed type */
-    GetAbility(): BaseOrbAbility | undefined;
+    GetAbility(): CustomOrbAbility | undefined;
 }
-export class BaseOrbModifier extends CustomModifier {
+export class CustomOrbModifier extends CustomModifier {
     private readonly MOVEMENT_ORDERS: UnitOrder[] = [
         UnitOrder.MOVE_TO_POSITION,
         UnitOrder.MOVE_TO_TARGET,
@@ -160,7 +144,6 @@ export class BaseOrbModifier extends CustomModifier {
      * use `ShouldLaunch` with the target of the attack.
      * 
      * @custom
-     * @both
      */
     protected IsRecordedAttack(event: object & { record: number; }): boolean {
         return this.attackRecords.has(event.record);
@@ -173,6 +156,7 @@ export class BaseOrbModifier extends CustomModifier {
         const ability = this.GetAbility();
         const caster = this.GetCaster();
         if (ability === undefined || caster === undefined) return false;
+        if (!ability.IsFullyCastable()) return false;
 
         if (ability.GetAutoCastState()) {
             if (ability.CastFilterResultTarget !== CDOTA_Ability_Lua.CastFilterResultTarget) {
@@ -194,6 +178,6 @@ export class BaseOrbModifier extends CustomModifier {
             }
         }
 
-        return this.cast && ability.IsFullyCastable() && ability.CanLaunchOrb(this.GetParent());
+        return this.cast && ability.CanLaunchOrb(this.GetParent());
     }
 }

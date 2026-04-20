@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class techies_minefield_sign_custom_730 extends BaseAbility {
+export class techies_minefield_sign_custom_730 extends CustomAbility {
     private readonly placeSound: string = "Hero_Techies.Sign";
     
     private readonly unitName: string = "npc_dota_techies_minefield_sign_custom_730";
@@ -82,6 +83,12 @@ export class techies_minefield_sign_custom_730 extends BaseAbility {
         FindClearSpaceForUnit(sign, sign.GetAbsOrigin(), true);
 
         sign.SetForwardVector(Vector(RandomFloat(-0.5, 0.5), RandomFloat(-0.5, 0.5), 0));
+
+        Timers.CreateTimer(0.1, () => {
+            if (sign && IsValidEntity(sign)) {
+                sign.StartGesture(GameActivity.DOTA_IDLE);
+            }
+        });
 
         caster.EmitSound(this.placeSound);
     }

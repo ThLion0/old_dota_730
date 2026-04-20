@@ -1,4 +1,4 @@
-import { DotaEvent } from "../utils/events";
+import { DotaEvent } from "../utils/events/events";
 
 class Event extends DotaEvent {
     public Register(): void {

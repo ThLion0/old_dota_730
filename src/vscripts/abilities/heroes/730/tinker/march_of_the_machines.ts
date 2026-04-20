@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class tinker_march_of_the_machines_custom_730 extends BaseAbility {
+export class tinker_march_of_the_machines_custom_730 extends CustomAbility {
     private readonly castParticle: string = "particles/units/heroes/hero_tinker/tinker_motm.vpcf";
     private readonly castSound: string = "Hero_Tinker.March_of_the_Machines.Cast";
     

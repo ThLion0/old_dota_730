@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class tinker_laser_custom_730 extends BaseAbility {
+export class tinker_laser_custom_730 extends CustomAbility {
     private readonly laserParticle: string = "particles/units/heroes/hero_tinker/tinker_laser.vpcf";
     private readonly splashParticle: string = "particles/units/heroes/hero_tinker/tinker_laser_secondary.vpcf";
     

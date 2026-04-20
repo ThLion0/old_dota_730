@@ -1,6 +1,6 @@
-import { DotaFilter, FilterOrder } from "../utils/filters";
+import { DotaFilter, FilterOrder } from "../utils/filters/filters";
 
-import { CustomAbility } from "../lib/ability_extend";
+import { CustomAbility } from "../lib/abilities/custom_ability";
 
 class Event extends DotaFilter<ExecuteOrderFilterEvent> {
     public Register(context: {}): void {
@@ -8,20 +8,30 @@ class Event extends DotaFilter<ExecuteOrderFilterEvent> {
     }
 
     protected RegisterOrder(order: FilterOrder<ExecuteOrderFilterEvent>): void {
-        order.set(0, (event) => this.filterCastInRoots(event));
+        order.set(0, (event) => this.filterAbilityCustomBehavior(event));
     }
 
-    private filterCastInRoots(event: ExecuteOrderFilterEvent): boolean | void {
-        const hero = PlayerResource.GetSelectedHeroEntity(event.issuer_player_id_const);
-        const ability = EntIndexToHScript(event.entindex_ability) as CDOTABaseAbility | undefined;
-
-        const castOrderType = event.order_type === UnitOrder.CAST_POSITION || event.order_type === UnitOrder.CAST_TARGET;
-        const isRooted = hero !== undefined && hero.IsRooted();
-        const isCannotBeCasted = ability instanceof CustomAbility && !ability.IsCastableInRoots();
+    private filterAbilityCustomBehavior(event: ExecuteOrderFilterEvent): boolean | void {
+        let unitIndex = event.units?.["0"] as EntityIndex | undefined;
+        const unit = unitIndex !== undefined
+            ? EntIndexToHScript(unitIndex) as CDOTA_BaseNPC
+            : undefined;
         
-        if (castOrderType && isRooted && isCannotBeCasted) {
-            hero.SendCustomError("dota_hud_error_ability_disabled_by_root", event.sequence_number_const);
-            return false;
+        const ability = EntIndexToHScript(event.entindex_ability) as CDOTABaseAbility | undefined;
+        if (!(ability instanceof CustomAbility)) return;
+
+        const customBehavior = ability.GetCustomBehavior();
+
+        const hasBehavior = (b: CustomAbilityBehavior) => (customBehavior & b) === b;
+
+        if (hasBehavior(CustomAbilityBehavior.ROOT_DISABLES)) {
+            const isCastOrder = event.order_type === UnitOrder.CAST_POSITION || event.order_type === UnitOrder.CAST_TARGET;
+            const isRooted = unit !== undefined && unit.IsRooted();
+            
+            if (isCastOrder && isRooted) {
+                unit.SendCustomError("dota_hud_error_ability_disabled_by_root", event.sequence_number_const);
+                return false;
+            }
         }
     }
 }

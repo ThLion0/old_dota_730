@@ -49,7 +49,6 @@ export class techies_remote_mines_self_detonate_custom_730 extends BaseAbility {
     public Detonate(): void {
         const caster = this.GetCaster();
         const owner = caster.GetOwner() as CDOTA_BaseNPC;
-        
         if (!caster.IsAlive()) return;
 
         const ability = owner.FindAbilityByName(this.remoteMinesAbilityName);

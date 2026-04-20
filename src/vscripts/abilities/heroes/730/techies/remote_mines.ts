@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class techies_remote_mines_custom_730 extends BaseAbility {
+export class techies_remote_mines_custom_730 extends CustomAbility {
     private readonly plantParticleName: string = "particles/units/heroes/hero_techies/730/techies_remote_mine_plant.vpcf";
     
     private readonly tossSound: string = "Hero_Techies.RemoteMine.Toss";

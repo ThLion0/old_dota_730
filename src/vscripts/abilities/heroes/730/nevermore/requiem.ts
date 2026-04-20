@@ -1,7 +1,8 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class nevermore_requiem_custom_730 extends BaseAbility {
+export class nevermore_requiem_custom_730 extends CustomAbility {
     private readonly castParticle: string = "particles/units/heroes/hero_nevermore/nevermore_wings.vpcf";
     private readonly groundParticle: string = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf";
     private readonly soulsParticle: string = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf";
@@ -12,7 +13,6 @@ export class nevermore_requiem_custom_730 extends BaseAbility {
     private readonly damageSound: string = "Hero_Nevermore.RequiemOfSouls.Damage";
 
     private readonly necromasteryModifierName: string = "modifier_nevermore_necromastery_custom_730";
-    // private readonly requiemFearModifierName: string = "modifier_nevermore_requiem_fear";
 
     private readonly soulsTouched: Record<string, number> = {};
 
@@ -45,6 +45,7 @@ export class nevermore_requiem_custom_730 extends BaseAbility {
         if (this.wingsParticle) {
             ParticleManager.DestroyParticle(this.wingsParticle, true);
             ParticleManager.ReleaseParticleIndex(this.wingsParticle);
+            this.wingsParticle = undefined;
         }
 
         caster.StopSound(this.castSound);
@@ -63,6 +64,7 @@ export class nevermore_requiem_custom_730 extends BaseAbility {
 
         if (this.wingsParticle) {
             ParticleManager.ReleaseParticleIndex(this.wingsParticle);
+            this.wingsParticle = undefined;
         }
 
         caster.EmitSound(this.sound);
