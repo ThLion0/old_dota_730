@@ -17,8 +17,6 @@ export class LanguageRoot {
         );
 
         this.tokens = lang.CreateChild("Tokens", []);
-
-        lang.Comments.AppendComment("Localization file has been generated using custom script");
     }
 
     public static GetRoot(language: string): LanguageRoot {

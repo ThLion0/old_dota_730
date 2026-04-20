@@ -1,4 +1,3 @@
-// Localization file has been generated using custom script
 "lang"
 {
     "Language"    "English"

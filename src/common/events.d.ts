@@ -4,7 +4,7 @@
  */
 
 //============//
-//=/ Events /=//
+//   Events   //
 //============//
 interface CustomGameEventDeclarations {
     dota_hud_error_message_player: DotaHudErrorMessageEvent;
@@ -18,22 +18,22 @@ interface SelectionUpdateEvent {
 
 
 //===============//
-//=/ NetTables /=//
+//   NetTables   //
 //===============//
 interface CustomNetTableDeclarations {
     custom_shop: CustomShopNetTable;
     entities: EntitiesNetTable;
     key_values: KeyValuesNetTable;
+
+    hero_wearables: HeroWearablesNetTable;
 }
 
-//=/ Custom Shop /=//
-
+// Custom Shop //
 interface CustomShopNetTable {
     items: CustomShopItems;
 }
 
-//=/ Entities /=//
-
+// Entities
 type EntityTableKey = {
     values: Record<EntityIndex, 1>;
 };
@@ -43,9 +43,8 @@ interface EntitiesNetTable {
     mines: EntityTableKey;
 }
 
-//=/ Key Values /=//
-
-// ability
+// Key Values
+// Ability
 type AbilitiesKeyValueTable = {
     type: "ability",
     behavior: DOTA_ABILITY_BEHAVIOR;
@@ -60,16 +59,23 @@ type AbilitiesKeyValueTable = {
     };
 }
 
-// item
+// Item
 type ItemsKeyValueTable = {
     type: "item";
 }
 
-// hero
+// Hero
 type HeroesKeyValueTable = {
     type: "hero";
 };
 
 interface KeyValuesNetTable {
     [key: string]: AbilitiesKeyValueTable | ItemsKeyValueTable | HeroesKeyValueTable;
+}
+
+// Wearables
+interface HeroWearablesNetTable {
+    [key: string]: {
+        abilities: Record<string, string>;
+    }
 }
