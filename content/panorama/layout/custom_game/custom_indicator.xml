@@ -4,6 +4,8 @@
 
         <include src="file://{resources}/scripts/custom_game/types/vectors.js" />
 
+        <include src="file://{resources}/scripts/custom_game/utils/entity_manager.js" />
+
         <include src="file://{resources}/scripts/custom_game/custom_indicator.js" />
 
         <include src="file://{resources}/scripts/custom_game/indicators/tinker_keen_conveyance.js" />

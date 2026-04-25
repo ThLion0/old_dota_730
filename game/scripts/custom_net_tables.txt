@@ -5,6 +5,6 @@
         "custom_shop",
         "entities",
         "key_values",
-        "hero_wearables",
+        "ability_textures",
     ]
 }

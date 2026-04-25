@@ -1,4 +1,4 @@
-type ArrayVector = [number, number, number];
+/// <reference path="vectors.d.ts" />
 
 class Vector {
     /**
@@ -13,78 +13,74 @@ class Vector {
     ) {}
 
     /**
-     * Overloaded +. Adds vectors together.
+     * Convert array to vector.
      */
+    public static toVector(arr: Vector | ArrayVector | undefined | null): Vector {
+        if (arr instanceof Vector) return arr.clone();
+
+        if (Vector.isArrayVector(arr)) {
+            return new Vector(arr[0], arr[1], arr[2]);
+        }
+
+        return new Vector(0, 0, 0);
+    }
+
+    private static isArrayVector(arr: any): arr is ArrayVector {
+        return (
+            Array.isArray(arr) &&
+            arr.length === 3 &&
+            typeof arr[0] === "number" &&
+            typeof arr[1] === "number" &&
+            typeof arr[2] === "number"
+        );
+    }
+
     public __add(b: Vector | ArrayVector): Vector {
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
         return new Vector(this.x + b.x, this.y + b.y, this.z + b.z);
     }
 
-    /**
-     * Overloaded -. Subtracts vectors.
-     */
     public __sub(b: Vector | ArrayVector): Vector {
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
         return new Vector(this.x - b.x, this.y - b.y, this.z - b.z);
     }
 
-    /**
-     * Overloaded * returns the vectors multiplied together. Can also be used to
-     * multiply with scalars.
-     *
-     * @both
-     */
     public __mul(b: Vector | ArrayVector | number): Vector {
         if (typeof b === "number")
             return new Vector(this.x * b, this.y * b, this.z * b);
         
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
         return new Vector(this.x * b.x, this.y * b.y, this.z * b.z);
     }
 
-    /**
-     * Overloaded /. Divides vectors.
-     */
     public __div(b: Vector | ArrayVector | number): Vector {
         if (typeof b === "number")
             return new Vector(this.x / b, this.y / b, this.z / b);
 
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
         return new Vector(this.x / b.x, this.y / b.y, this.z / b.z);
     }
 
-    /**
-     * Overloaded ==. Tests for Equality.
-     */
     public __eq(b: Vector | ArrayVector): boolean {
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
-        return (this.x === b.x && this.y === b.y && this.z === b.z);
+        return this.x === b.x && this.y === b.y && this.z === b.z;
     }
 
-    /**
-     * Overloaded `Length` returns the length of the vector.
-     */
     public __len(): number {
         return this.Length();
     }
 
-    /**
-     * Overloaded - operator. Reverses the vector.
-     */
     public __unm(): Vector {
         return new Vector(-this.x, -this.y, -this.z);
     }
 
-    /**
-     * Cross product of two vectors.
-     */
     public Cross(b: Vector | ArrayVector): Vector {
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
         const [ax, ay, az] = this.toArray();
         const [bx, by, bz] = b.toArray();
@@ -96,11 +92,8 @@ class Vector {
         return new Vector(cx, cy, cz);
     }
 
-    /**
-     * Dot product of two vectors.
-     */
     public Dot(b: Vector | ArrayVector): number {
-        if (this.isArrayVector(b)) b = Vector.toVector(b);
+        if (Vector.isArrayVector(b)) b = Vector.toVector(b);
 
         const [ax, ay, az] = this.toArray();
         const [bx, by, bz] = b.toArray();
@@ -108,82 +101,8 @@ class Vector {
         return ax * bx + ay * by + az + bz;
     }
 
-    /**
-     * Overloaded `Length` returns the length of the vector.
-     */
-    public length(): number {
-        return this.Length();
-    }
-
-    /**
-     * Length of the Vector.
-     */
-    public Length(): number {
-        return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
-    }
-
-    /**
-     * Length of the Vector in the XY plane.
-     */
-    public Length2D(): number {
-        return Math.sqrt(this.x ** 2 + this.y ** 2);
-    }
-
-    /**
-     * Returns the vector normalized.
-     */
-    public Normalized(): Vector {
-        const vector = this.clone();
-        return vector.__div(vector.Length());
-    }
-
-    /**
-     * Linearly interpolates between two vectors.
-     *
-     * This is most commonly used to find a point some fraction of the way along a
-     * line between two endpoints.
-     *
-     * Same as `this + (b - this) * t`.
-     *
-     * @param t Interpolant
-     */
-    public Lerp(b: Vector | ArrayVector, t: number): Vector {
-        if (this.isArrayVector(b))
-            b = Vector.toVector(b);
-
-        const vector = this.clone();
-        return vector.__add(b.__sub(vector).__mul(t));
-    }
-
-    /**
-     * Returns a string representation of a vector.
-     */
-    public toString(): string {
-        return `Vector(${this.x}, ${this.y}, ${this.z})`;
-    }
-
-    /**
-     * Convert vector to 3-length array.
-     */
-    public toArray(): ArrayVector {
-        return [this.x, this.y, this.z];
-    }
-
-    /**
-     * Convert array to vector.
-     */
-    public static toVector(arr: Vector | ArrayVector | undefined | null): Vector {
-        if (arr instanceof Vector) return arr.clone();
-
-        arr = arr ?? [0, 0, 0];
-        return new Vector(arr[0], arr[1], arr[2]);
-    }
-
-    /**
-     * Clamps a vector to a radius.
-     */
     public Clamp(b: Vector | ArrayVector, radius: number): Vector {
-        if (this.isArrayVector(b))
+        if (Vector.isArrayVector(b))
             b = Vector.toVector(b);
         
         const vector = this.clone();
@@ -197,15 +116,40 @@ class Vector {
         return b.__add(unitVector.__mul(radius));
     }
 
-    private clone(): Vector {
-        return new Vector(this.x, this.y, this.z);
+    public length(): number {
+        return this.Length();
     }
 
-    private isArrayVector(arr: any): arr is ArrayVector {
-        return (Array.isArray(arr)
-            && arr.length === 3
-            && typeof arr[0] === "number"
-            && typeof arr[1] === "number"
-            && typeof arr[2] === "number");
+    public Length(): number {
+        return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
+    }
+
+    public Length2D(): number {
+        return Math.sqrt(this.x ** 2 + this.y ** 2);
+    }
+
+    public Normalized(): Vector {
+        const vector = this.clone();
+        return vector.__div(vector.Length());
+    }
+
+    public Lerp(b: Vector | ArrayVector, t: number): Vector {
+        if (Vector.isArrayVector(b))
+            b = Vector.toVector(b);
+
+        const vector = this.clone();
+        return vector.__add(b.__sub(vector).__mul(t));
+    }
+
+    public toString(): string {
+        return `Vector(${this.x}, ${this.y}, ${this.z})`;
+    }
+
+    public toArray(): ArrayVector {
+        return [this.x, this.y, this.z];
+    }
+
+    private clone(): Vector {
+        return new Vector(this.x, this.y, this.z);
     }
 }

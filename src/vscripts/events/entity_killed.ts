@@ -17,7 +17,8 @@ class Event extends DotaEvent {
             }
         }
 
-        GameRules.Manager.RemoveEntityFromNetTable(killed);
+        GameRules.EntityManager.AppendEntity(killed);
+        // GameRules.Manager.RemoveEntityFromNetTable(killed);
     }
 
     /* Real hero handlers */

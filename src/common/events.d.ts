@@ -11,6 +11,7 @@ interface CustomGameEventDeclarations {
     selection_update: SelectionUpdateEvent;
 }
 
+// Selection
 interface SelectionUpdateEvent {
     entities: EntityIndex[];
 }
@@ -25,7 +26,7 @@ interface CustomNetTableDeclarations {
     entities: EntitiesNetTable;
     key_values: KeyValuesNetTable;
 
-    hero_wearables: HeroWearablesNetTable;
+    ability_textures: AbilityTexturesNetTable;
 }
 
 // Custom Shop //
@@ -73,8 +74,8 @@ interface KeyValuesNetTable {
     [key: string]: AbilitiesKeyValueTable | ItemsKeyValueTable | HeroesKeyValueTable;
 }
 
-// Wearables
-interface HeroWearablesNetTable {
+// Ability textures
+interface AbilityTexturesNetTable {
     [key: string]: {
         abilities: Record<string, string>;
     }

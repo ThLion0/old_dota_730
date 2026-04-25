@@ -71,6 +71,9 @@ const DEFAULT_MAP_DATA: DefaultMap = {
     type: "default"
 };
 
+/**
+ * @deprecated
+ */
 @reloadable
 export class OldDotaManager {    
     private currentMapData?: CorrectMaps;
