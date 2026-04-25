@@ -3,14 +3,14 @@ import { BaseModifier, registerAbility, registerModifier } from "../../../../lib
 
 @registerAbility()
 export class nevermore_requiem_custom_730 extends CustomAbility {
-    private readonly castParticle: string = "particles/units/heroes/hero_nevermore/nevermore_wings.vpcf";
-    private readonly groundParticle: string = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf";
-    private readonly soulsParticle: string = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf";
-    private readonly lineParticle: string = "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line.vpcf";
+    private readonly castParticle = this.particle("particles/units/heroes/hero_nevermore/nevermore_wings.vpcf");
+    private readonly groundParticle = this.particle("particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf");
+    private readonly soulsParticle = this.particle("particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf");
+    private readonly lineParticle = this.particle("particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line.vpcf");
     
-    private readonly castSound: string = "Hero_Nevermore.RequiemOfSoulsCast";
-    private readonly sound: string = "Hero_Nevermore.RequiemOfSouls";
-    private readonly damageSound: string = "Hero_Nevermore.RequiemOfSouls.Damage";
+    private readonly requiemSound = this.sound("Hero_Nevermore.RequiemOfSouls");
+    private readonly castSound = this.sound("Hero_Nevermore.RequiemOfSoulsCast");
+    private readonly damageSound = this.sound("Hero_Nevermore.RequiemOfSouls.Damage");
 
     private readonly necromasteryModifierName: string = "modifier_nevermore_necromastery_custom_730";
 
@@ -22,12 +22,12 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
         const caster = this.GetCaster();
 
         this.wingsParticle = ParticleManager.CreateParticle(
-            this.castParticle,
+            this.castParticle.get(),
             ParticleAttachment.ABSORIGIN_FOLLOW,
             caster
         );
 
-        EmitSoundOnLocationForAllies(caster.GetAbsOrigin(), this.castSound, caster);
+        EmitSoundOnLocationForAllies(caster.GetAbsOrigin(), this.castSound.get(), caster);
 
         modifier_nevermore_requiem_custom_730.apply(
             caster,
@@ -48,7 +48,7 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
             this.wingsParticle = undefined;
         }
 
-        caster.StopSound(this.castSound);
+        caster.StopSound(this.castSound.get());
 
         caster.RemoveModifierByName(modifier_nevermore_requiem_custom_730.name);
     }
@@ -67,7 +67,7 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
             this.wingsParticle = undefined;
         }
 
-        caster.EmitSound(this.sound);
+        caster.EmitSound(this.requiemSound.get());
 
         caster.RemoveModifierByName(modifier_nevermore_requiem_custom_730.name);
         
@@ -75,7 +75,7 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
         if (soulCount === 0) return;
 
         const particle_souls = ParticleManager.CreateParticle(
-            this.soulsParticle,
+            this.soulsParticle.get(),
             ParticleAttachment.WORLDORIGIN,
             undefined
         );
@@ -85,7 +85,7 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
         ParticleManager.ReleaseParticleIndex(particle_souls);
 
         const particle_ground = ParticleManager.CreateParticle(
-            this.groundParticle,
+            this.groundParticle.get(),
             ParticleAttachment.WORLDORIGIN,
             undefined
         );
@@ -167,7 +167,7 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
             ApplyDamage(damageTable);
         }
 
-        target.EmitSound(this.damageSound);
+        target.EmitSound(this.damageSound.get());
     }
 
     private Explode(count: number, deathCast: boolean, isScepter: boolean = false, castOrigin?: Vector, soulKey?: string): void {
@@ -239,7 +239,7 @@ export class nevermore_requiem_custom_730 extends CustomAbility {
         ProjectileManager.CreateLinearProjectile(info);
 
         const particle = ParticleManager.CreateParticle(
-            this.lineParticle,
+            this.lineParticle.get(),
             ParticleAttachment.WORLDORIGIN,
             undefined
         );

@@ -6,10 +6,13 @@ declare type ModelData = {
 
 declare type HeroSkin = {
     SkinPriority?: number;
+    MetaInfo?: Record<string, any>;
     ModelPath?: string;
     ModelStyle?: SkinStyle;
     Abilities?: Record<string, string>;
     Particles?: Record<string, string>;
+    Sounds?: Record<string, string>;
+    Models?: Record<string, string>;
 };
 
 type HeroWearableData = Record<string, HeroSkin> & {

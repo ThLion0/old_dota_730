@@ -1,20 +1,25 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { registerAbility } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class techies_remote_mines_self_detonate_custom_730 extends BaseAbility {
-    private readonly detonateParticleName: string = "particles/units/heroes/hero_techies/730/techies_remote_mines_detonate.vpcf";
-    private readonly detonateSound: string = "Hero_Techies.RemoteMine.Detonate";
+export class techies_remote_mines_self_detonate_custom_730 extends CustomAbility {
+    private readonly detonateParticleName = this.particle("particles/units/heroes/hero_techies/730/techies_remote_mines_detonate.vpcf");
+    private readonly detonateSound = this.sound("Hero_Techies.RemoteMine.Detonate");
 
-    private readonly remoteMinesAbilityName: string = "techies_remote_mines_custom_730";
+    private readonly remoteMinesAbilityName = "techies_remote_mines_custom_730";
 
     private readonly radius: number = 425;
 
-    Spawn(): void {
+    protected GetWearableOwner(): CDOTA_BaseNPC {
         if (IsServer()) {
-            if (!this.IsTrained()) {
-                this.SetLevel(1);
-            }
+            return this.GetOwner() as CDOTA_BaseNPC;
         }
+        
+        return super.GetWearableOwner();
+    }
+
+    GetCustomBehavior(): CustomAbilityBehavior {
+        return CustomAbilityBehavior.INNATE;
     }
 
     OnSpellStart(): void {
@@ -80,7 +85,7 @@ export class techies_remote_mines_self_detonate_custom_730 extends BaseAbility {
         });
 
         const particle = ParticleManager.CreateParticle(
-            this.detonateParticleName,
+            this.detonateParticleName.get(),
             ParticleAttachment.WORLDORIGIN,
             undefined
         );
@@ -95,7 +100,7 @@ export class techies_remote_mines_self_detonate_custom_730 extends BaseAbility {
 
         Timers.CreateTimer(RandomFloat(0.01, 0.08), () => {
             if (!this.IsNull() && IsValidEntity(caster)) {
-                caster.EmitSound(this.detonateSound);
+                caster.EmitSound(this.detonateSound.get());
                 UTIL_Remove(caster);
             }
         });

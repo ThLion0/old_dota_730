@@ -3,13 +3,31 @@ import { BaseModifier, registerAbility, registerModifier } from "../../../../lib
 
 @registerAbility()
 export class techies_minefield_sign_custom_730 extends CustomAbility {
-    private readonly placeSound: string = "Hero_Techies.Sign";
+    private readonly placeSound = this.sound("Hero_Techies.Sign");
+
+    private readonly modelName = this.model("models/heroes/techies/techies_sign.vmdl");
     
     private readonly unitName: string = "npc_dota_techies_minefield_sign_custom_730";
 
     private readonly radius: number = 125;
     
     private sign?: CDOTA_BaseNPC;
+
+    GetCustomBehavior(): CustomAbilityBehavior {
+        return CustomAbilityBehavior.INNATE;
+    }
+
+    GetAOERadius(): number {
+        return this.radius;
+    }
+
+    IsStealable(): boolean {
+        return false;
+    }
+
+    ProcsMagicStick(): boolean {
+        return false;
+    }
     
     CastFilterResultLocation(location: Vector): UnitFilterResult {
         if (IsServer()) {
@@ -36,26 +54,6 @@ export class techies_minefield_sign_custom_730 extends CustomAbility {
         return "#dota_hud_error_no_minefield_here";
     }
 
-    GetAOERadius(): number {
-        return this.radius;
-    }
-
-    IsStealable(): boolean {
-        return false;
-    }
-
-    ProcsMagicStick(): boolean {
-        return false;
-    }
-
-    Spawn(): void {
-        if (IsServer()) {
-            if (!this.IsTrained()) {
-                this.SetLevel(1);
-            }
-        }
-    }
-
     OnSpellStart(): void {
         const caster = this.GetCaster();
         const point = this.GetCursorPosition();
@@ -80,17 +78,17 @@ export class techies_minefield_sign_custom_730 extends CustomAbility {
                 duration: this.GetSpecialValueFor("lifetime")
             }
         );
+
+        sign.SetOriginalModel(this.modelName.get());
+        sign.SetModel(this.modelName.get());
+
         FindClearSpaceForUnit(sign, sign.GetAbsOrigin(), true);
 
         sign.SetForwardVector(Vector(RandomFloat(-0.5, 0.5), RandomFloat(-0.5, 0.5), 0));
 
-        Timers.CreateTimer(0.1, () => {
-            if (sign && IsValidEntity(sign)) {
-                sign.StartGesture(GameActivity.DOTA_IDLE);
-            }
-        });
+        sign.StartGesture(GameActivity.DOTA_IDLE);
 
-        caster.EmitSound(this.placeSound);
+        caster.EmitSound(this.placeSound.get());
     }
 }
 

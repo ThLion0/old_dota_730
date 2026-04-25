@@ -9,12 +9,12 @@ interface TeleportTargetResult {
 
 @registerAbility()
 export class tinker_keen_teleport_custom_730 extends CustomAbility {
-    private readonly teleportStartParticle: string = "particles/items2_fx/teleport_start.vpcf";
-    private readonly teleportEndParticle: string = "particles/items2_fx/teleport_end.vpcf";
+    private readonly teleportStartParticle = this.particle("particles/items2_fx/teleport_start.vpcf");
+    private readonly teleportEndParticle = this.particle("particles/items2_fx/teleport_end.vpcf");
 
-    private readonly teleportLoopSound: string = "Portal.Loop_Appear";
-    private readonly teleportStartSound: string = "Portal.Hero_Appear";
-    private readonly teleportEndSound: string = "Portal.Hero_Disappear";
+    private readonly teleportLoopSound = this.sound("Portal.Loop_Appear");
+    private readonly teleportStartSound = this.sound("Portal.Hero_Appear");
+    private readonly teleportEndSound = this.sound("Portal.Hero_Disappear");
 
     private teleportFromParticle?: ParticleID;
     private teleportTargetParticle?: ParticleID;
@@ -26,6 +26,30 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
     private currentTpTarget?: CDOTA_BaseNPC;
     private currentTeleportTime: number = 0;
+
+    constructor() {
+        super();
+
+        if (IsServer()) {
+            GameRules.EntityManager.BindEntityListener(this, {
+                filter: (caster, target) => (
+                    UnitFilter(
+                        target,
+                        UnitTargetTeam.FRIENDLY,
+                        this.GetTargetType(),
+                        UnitTargetFlags.INVULNERABLE,
+                        caster.GetTeamNumber()
+                    ) === UnitFilterResult.SUCCESS
+                )
+            });
+        }
+    }
+
+    OnUpgrade(): void {
+        if (IsServer()) {
+            GameRules.EntityManager.RequestUpdate(this);
+        }
+    }
 
     GetIntrinsicModifierName(): string {
         return modifier_tinker_keen_teleport_custom_730.name;
@@ -102,23 +126,22 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
         this.currentTeleportTime = teleportDuration;
 
-        this.DestroyEffects(true, 0);
         this.PlayEffects(this.currentTpTarget);
 
         this.loopSoundTimer = Timers.CreateTimer(0.1, () => {
             if (this.currentTpTarget && !this.currentTpTarget.IsNull()) {
-                this.currentTpTarget.EmitSound(this.teleportLoopSound);
+                this.currentTpTarget.EmitSound(this.teleportLoopSound.get());
             }
 
-            caster.EmitSound(this.teleportLoopSound);
+            caster.EmitSound(this.teleportLoopSound.get());
         });
 
         this.endSoundTimer = Timers.CreateTimer(teleportDuration - 0.2, () => {
             if (this.currentTpTarget && !this.currentTpTarget.IsNull()) {
-                this.currentTpTarget.EmitSound(this.teleportStartSound);
+                this.currentTpTarget.EmitSound(this.teleportStartSound.get());
             }
 
-            caster.EmitSound(this.teleportEndSound);
+            caster.EmitSound(this.teleportEndSound.get());
         });
 
         AddFOWViewer(casterTeam, tpPosition, this.GetSpecialValueFor("vision_radius"), teleportDuration, true);
@@ -152,8 +175,8 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
         caster.RemoveModifierByName(modifier_tinker_keen_teleport_custom_730_teleporting.name);
         this.currentTpTarget.RemoveModifierByName(modifier_tinker_keen_teleport_custom_730_incoming.name);
 
-        this.currentTpTarget.StopSound(this.teleportLoopSound);
-        caster.StopSound(this.teleportLoopSound);
+        this.currentTpTarget.StopSound(this.teleportLoopSound.get());
+        caster.StopSound(this.teleportLoopSound.get());
 
         if (this.loopSoundTimer) {
             Timers.RemoveTimer(this.loopSoundTimer);
@@ -191,7 +214,7 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
         caster.StartGesture(GameActivity.DOTA_TELEPORT);
 
         this.teleportFromParticle = ParticleManager.CreateParticle(
-            this.teleportStartParticle,
+            this.teleportStartParticle.get(),
             ParticleAttachment.WORLDORIGIN,
             caster
         );
@@ -201,7 +224,7 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
         const targetOrigin = target.GetAbsOrigin();
 
         this.teleportTargetParticle = ParticleManager.CreateParticle(
-            this.teleportEndParticle,
+            this.teleportEndParticle.get(),
             ParticleAttachment.CUSTOMORIGIN,
             undefined
         );
@@ -261,21 +284,27 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
             }
         }
 
-        Timers.CreateTimer(dt, () => {
-            if (this.teleportFromParticle) {
-                ParticleManager.DestroyParticle(this.teleportFromParticle, interrupted);
-                ParticleManager.ReleaseParticleIndex(this.teleportFromParticle);
+        if (interrupted) {
+            this.DestroyParticles(true);
+        } else {
+            Timers.CreateTimer(dt, () => this.DestroyParticles(false));
+        }
+    }
 
-                this.teleportFromParticle = undefined;
-            }
+    private DestroyParticles(release: boolean): void {
+        if (this.teleportFromParticle) {
+            ParticleManager.DestroyParticle(this.teleportFromParticle, release);
+            ParticleManager.ReleaseParticleIndex(this.teleportFromParticle);
 
-            if (this.teleportTargetParticle) {
-                ParticleManager.DestroyParticle(this.teleportTargetParticle, interrupted);
-                ParticleManager.ReleaseParticleIndex(this.teleportTargetParticle);
+            this.teleportFromParticle = undefined;
+        }
 
-                this.teleportTargetParticle = undefined;
-            }
-        });
+        if (this.teleportTargetParticle) {
+            ParticleManager.DestroyParticle(this.teleportTargetParticle, release);
+            ParticleManager.ReleaseParticleIndex(this.teleportTargetParticle);
+
+            this.teleportTargetParticle = undefined;
+        }
     }
 
     private GetTargetType(): UnitTargetType {

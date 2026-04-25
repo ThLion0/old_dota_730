@@ -1,8 +1,11 @@
-import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class techies_stasis_trap_custom_730 extends BaseAbility {
-    private readonly plantSound: string = "Hero_Techies.StasisTrap.Plant";
+export class techies_stasis_trap_custom_730 extends CustomAbility {
+    private readonly plantSound = this.sound("Hero_Techies.StasisTrap.Plant");
+
+    private readonly modelName = this.model("models/heroes/techies/fx_techiesfx_stasis.vmdl");
     
     private readonly unitName: string = "npc_dota_techies_stasis_trap_custom_730";
 
@@ -17,13 +20,13 @@ export class techies_stasis_trap_custom_730 extends BaseAbility {
     }
 
     OnAbilityPhaseStart(): boolean {
-        this.GetCaster().EmitSound(this.plantSound);
+        this.GetCaster().EmitSound(this.plantSound.get());
 
         return true;
     }
 
     OnAbilityPhaseInterrupted(): void {
-        this.GetCaster().StopSound(this.plantSound);
+        this.GetCaster().StopSound(this.plantSound.get());
     }
 
     OnSpellStart(): void {
@@ -37,6 +40,9 @@ export class techies_stasis_trap_custom_730 extends BaseAbility {
             this,
             {}
         );
+
+        trap.SetOriginalModel(this.modelName.get());
+        trap.SetModel(this.modelName.get());
         
         FindClearSpaceForUnit(trap, trap.GetAbsOrigin(), true);
 

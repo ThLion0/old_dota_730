@@ -1,19 +1,26 @@
 /// <reference path="custom_ability.d.ts" />
 
+import { Wearables } from "../../managers/wearable_manager";
+
 import { BaseAbility, BaseModifier } from "../dota_ts_adapter";
 
-import { WearableManager } from "../../managers/wearable_manager";
-
-export interface CustomAbility {
+export interface CustomAbility extends BaseAbility {
     
 }
 export class CustomAbility extends BaseAbility {
     private readonly __customAbilityTextureName: string;
-    
+    private readonly __abilityAssets = new Set<Wearables.AssetWrapper>();
+
     constructor() {
         super();
 
-        this.__customAbilityTextureName = WearableManager.GetAbilityTexture(this.GetCaster(), this);
+        this.__customAbilityTextureName = Wearables.Resolver.getAbilityTexture(this.GetWearableOwner(), this);
+
+        this.processCustomBehavior();
+    }
+
+    OnPostUpdate(): void {
+        this.processAssets();
     }
 
     /**
@@ -33,8 +40,98 @@ export class CustomAbility extends BaseAbility {
     GetAbilityTextureName(): string {
         return this.__customAbilityTextureName;
     }
+
+    /** @custom */
+    protected GetWearableOwner(): CDOTA_BaseNPC {
+        return this.GetCaster();
+    }
+
+    /** @custom */
+    protected getWearableInfo(): Wearables.SkinMetaInfo {
+        return Wearables.Resolver.getMetaInfo(this.GetWearableOwner());
+    }
+
+    /** @custom */
+    protected particle(particleName: string): Wearables.AssetWrapper {
+        return this.addWrapper(new Wearables.ParticleWrapper(particleName));
+    }
+
+    /** @custom */
+    protected sound(soundName: string): Wearables.AssetWrapper {
+        return this.addWrapper(new Wearables.SoundWrapper(soundName));
+    }
+
+    /** @custom */
+    protected model(modelName: string): Wearables.AssetWrapper {
+        return this.addWrapper(new Wearables.ModelWrapper(modelName));
+    }
+
+    private addWrapper(wrapper: Wearables.AssetWrapper): Wearables.AssetWrapper {
+        this.__abilityAssets.add(wrapper);
+        return wrapper;
+    }
+
+    private processAssets(): void {
+        const owner = this.GetWearableOwner();
+        this.__abilityAssets.forEach(
+            wrapper => Wearables.Resolver.resolveAsset(owner, wrapper)
+        );
+    }
+
+    private processCustomBehavior(): void {
+        const customBehavior = this.GetCustomBehavior();
+        const hasBehavior = (b: CustomAbilityBehavior): boolean => (customBehavior & b) === b;
+
+        if (IsServer()) {
+            if (hasBehavior(CustomAbilityBehavior.INNATE)) {
+                if (!this.IsTrained()) {
+                    this.SetLevel(this.GetMaxLevel());
+                }
+            }
+        }
+    }
 }
 
+export interface CustomModifier extends BaseModifier {
+    GetAbility(): CustomAbility | undefined;
+}
 export class CustomModifier extends BaseModifier {
+    private readonly __modifierAssets = new Set<Wearables.AssetWrapper>();
 
+    constructor() {
+        super();
+
+        this.processAssets();
+    }
+
+    /** @custom */
+    protected particle(particleName: string): Wearables.AssetWrapper {
+        return this.addWrapper(new Wearables.ParticleWrapper(particleName));
+    }
+
+    /** @custom */
+    protected sound(soundName: string): Wearables.AssetWrapper {
+        return this.addWrapper(new Wearables.SoundWrapper(soundName));
+    }
+
+    /** @custom */
+    protected model(modelName: string): Wearables.AssetWrapper {
+        return this.addWrapper(new Wearables.ModelWrapper(modelName));
+    }
+
+    private addWrapper(wrapper: Wearables.AssetWrapper): Wearables.AssetWrapper {
+        this.__modifierAssets.add(wrapper);
+        return wrapper;
+    }
+
+    private processAssets(): void {
+        if (IsServer()) {
+            const owner = this.GetCaster();
+            if (owner) {
+                this.__modifierAssets.forEach(
+                    wrapper => Wearables.Resolver.resolveAsset(owner, wrapper)
+                );
+            }
+        }
+    }
 }

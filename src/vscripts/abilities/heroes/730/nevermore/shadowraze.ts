@@ -2,8 +2,8 @@ import { CustomAbility } from "../../../../lib/abilities/custom_ability";
 import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 class NevermoreShadowrazeCustom extends CustomAbility {
-    private readonly shadowrazeParticle: string = "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf";
-    private readonly shadowrazeSound: string = "Hero_Nevermore.Shadowraze";
+    private readonly shadowrazeParticle = this.particle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf");
+    private readonly shadowrazeSound = this.sound("Hero_Nevermore.Shadowraze");
     
     GetAOERadius(): number {
         return this.GetSpecialValueFor("shadowraze_range");
@@ -29,7 +29,7 @@ class NevermoreShadowrazeCustom extends CustomAbility {
             ability: this
         };
 
-        FindUnitsInRadius(
+        const enemies = FindUnitsInRadius(
             caster.GetTeamNumber(),
             position,
             undefined,
@@ -39,7 +39,14 @@ class NevermoreShadowrazeCustom extends CustomAbility {
             UnitTargetFlags.NONE,
             FindOrder.ANY,
             false
-        ).forEach(target => {
+        );
+
+        const isArcana = this.getWearableInfo().IsArcana();
+        if (isArcana) {
+            this.processArcanaCounter(enemies);
+        }
+
+        enemies.forEach(target => {
             const modifier = target.FindModifierByName(modifier_nevermore_shadowraze_custom_730.name);
             const stacks = modifier !== undefined
                 ? modifier.GetStackCount()
@@ -64,14 +71,50 @@ class NevermoreShadowrazeCustom extends CustomAbility {
             }
         });
 
-        this.PlayEffects(position, radius);
+        this.playEffects(position, radius);
     }
 
-    private PlayEffects(position: Vector, radius: number): void {
+    private processArcanaCounter(enemies: CDOTA_BaseNPC[]): void {
+        const caster = this.GetCaster();
+        
+        const hasEnemies = enemies.length > 0;
+        const enoughStacks = enemies.some(enemy => {
+            if (!enemy.IsHero()) return false;
+
+            const modifier = enemy.FindModifierByName(modifier_nevermore_shadowraze_custom_730.name);
+            const stack = modifier !== undefined
+                ? modifier.GetStackCount()
+                : 0;
+            
+            return stack < 3;
+        });
+
+        if (hasEnemies && enoughStacks) {
+            const counterModifier = caster.FindModifierByName(modifier_nevermore_shadowraze_custom_730_counter.name);
+
+            if (counterModifier === undefined) {
+                modifier_nevermore_shadowraze_custom_730_counter.apply(
+                    caster,
+                    caster,
+                    this,
+                    {
+                        duration: 3.0
+                    }
+                );
+            } else {
+                counterModifier.IncrementStackCount();
+                counterModifier.ForceRefresh();
+            }
+        } else {
+            caster.RemoveModifierByName(modifier_nevermore_shadowraze_custom_730_counter.name);
+        }
+    }
+
+    private playEffects(position: Vector, radius: number): void {
         const ground = GetGroundPosition(position, undefined);
 
         const particle = ParticleManager.CreateParticle(
-            this.shadowrazeParticle,
+            this.shadowrazeParticle.get(),
             ParticleAttachment.WORLDORIGIN,
             undefined
         );
@@ -79,7 +122,7 @@ class NevermoreShadowrazeCustom extends CustomAbility {
         ParticleManager.SetParticleControl(particle, 1, Vector(radius, 1, 1));
         ParticleManager.ReleaseParticleIndex(particle);
 
-        EmitSoundOnLocationWithCaster(ground, this.shadowrazeSound, this.GetCaster());
+        EmitSoundOnLocationWithCaster(ground, this.shadowrazeSound.get(), this.GetCaster());
     }
 }
 
@@ -140,5 +183,56 @@ class modifier_nevermore_shadowraze_custom_730 extends BaseModifier {
 
     GetEffectAttachType(): ParticleAttachment {
         return ParticleAttachment.ABSORIGIN_FOLLOW;
+    }
+}
+
+@registerModifier()
+class modifier_nevermore_shadowraze_custom_730_counter extends BaseModifier {
+    private readonly doubleRaze: string = "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze_double.vpcf";
+    private readonly tripleRaze: string = "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_shadowraze_triple.vpcf";
+    
+    private particle?: ParticleID;
+    
+    IsHidden(): boolean {
+        return true;
+    }
+
+    IsPurgable(): boolean {
+        return false;
+    }
+
+    OnCreated(params: object): void {
+        this.SetStackCount(1);
+    }
+
+    OnRefresh(params: object): void {
+        if (!IsServer()) return;
+
+        const stackCount = this.GetStackCount();
+
+        if (stackCount === 2) {
+            this.showCounter(this.doubleRaze);
+        } else if (stackCount >= 3) {
+            this.showCounter(this.tripleRaze);
+            
+            this.Destroy();
+        }
+    }
+
+    private showCounter(particleName: string): void {
+        if (this.particle !== undefined) {
+            ParticleManager.DestroyParticle(this.particle, true);
+            this.particle = undefined;
+        }
+        
+        const parent = this.GetParent();
+
+        this.particle = ParticleManager.CreateParticle(
+            particleName,
+            ParticleAttachment.ABSORIGIN_FOLLOW,
+            parent
+        );
+        ParticleManager.SetParticleControl(this.particle, 0, parent.GetOrigin());
+        ParticleManager.ReleaseParticleIndex(this.particle);
     }
 }

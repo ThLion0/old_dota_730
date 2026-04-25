@@ -26,6 +26,17 @@ const models: ModelPrecache[] = [
     "models/heroes/techies/fx_techiesfx_stasis.vmdl",
     "models/heroes/techies/techies_sign.vmdl",
     "models/heroes/techies/fx_techies_remotebomb.vmdl",
+
+    // Techies Arcana
+    "models/items/techies/bigshot/fx_bigshot_mine.vmdl",
+    "models/items/techies/bigshot/fx_bigshot_stasis.vmdl",
+    "models/items/techies/bigshot/fx_bigshot_sign.vmdl",
+    "models/items/techies/bigshot/bigshot_remotebomb.vmdl",
+
+    // Techies Immortal
+    "models/items/techies/techies_ti9_immortal_prox_mine/techies_ti9_immortal_prox_mine.vmdl",
+    "models/items/techies/techies_ti9_immortal_sign/techies_ti9_immortal_sign.vmdl",
+    "models/items/techies/techies_ti9_immortal_remote_mine/techies_ti9_immortal_remote_mine.vmdl"
 ];
 
 export const PrecacheAllResources = (context: CScriptPrecacheContext): void => {

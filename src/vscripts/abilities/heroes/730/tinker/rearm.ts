@@ -22,10 +22,6 @@ export class tinker_rearm_custom_730 extends BaseAbility {
         "item_sphere"
     ];
 
-    private IsItemException(item: CDOTA_Item): boolean {
-        return this.itemExceptions.includes(item.GetName());
-    }
-
     private currentGesture: GameActivity = this.GetChannelAnimation();
 
     IsStealable(): boolean {
@@ -108,6 +104,10 @@ export class tinker_rearm_custom_730 extends BaseAbility {
         ParticleManager.ReleaseParticleIndex(particle);
 
         caster.EmitSound(this.castSound);
+    }
+
+    private IsItemException(item: CDOTA_Item): boolean {
+        return this.itemExceptions.includes(item.GetName());
     }
 }
 

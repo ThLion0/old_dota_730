@@ -22,7 +22,7 @@ class Event extends DotaFilter<ExecuteOrderFilterEvent> {
 
         const customBehavior = ability.GetCustomBehavior();
 
-        const hasBehavior = (b: CustomAbilityBehavior) => (customBehavior & b) === b;
+        const hasBehavior = (b: CustomAbilityBehavior): boolean => (customBehavior & b) === b;
 
         if (hasBehavior(CustomAbilityBehavior.ROOT_DISABLES)) {
             const isCastOrder = event.order_type === UnitOrder.CAST_POSITION || event.order_type === UnitOrder.CAST_TARGET;

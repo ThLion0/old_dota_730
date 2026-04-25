@@ -3,12 +3,12 @@ import { BaseModifier, registerAbility, registerModifier } from "../../../../lib
 
 @registerAbility()
 export class techies_remote_mines_custom_730 extends CustomAbility {
-    private readonly plantParticleName: string = "particles/units/heroes/hero_techies/730/techies_remote_mine_plant.vpcf";
+    private readonly plantParticleName = this.particle("particles/units/heroes/hero_techies/730/techies_remote_mine_plant.vpcf");
     
-    private readonly tossSound: string = "Hero_Techies.RemoteMine.Toss";
-    private readonly plantSound: string = "Hero_Techies.RemoteMine.Plant";
+    private readonly tossSound = this.sound("Hero_Techies.RemoteMine.Toss");
+    private readonly plantSound = this.sound("Hero_Techies.RemoteMine.Plant");
 
-    private readonly modelName: string = "models/heroes/techies/fx_techies_remotebomb.vmdl";
+    private readonly modelName = this.model("models/heroes/techies/fx_techies_remotebomb.vmdl");
 
     private readonly unitName: string = "npc_dota_techies_remote_mine_custom_730";
 
@@ -23,10 +23,7 @@ export class techies_remote_mines_custom_730 extends CustomAbility {
 
     OnUpgrade(): void {
         if (IsServer()) {
-            const focusedDetonate = this.GetCaster().FindAbilityByName("techies_focused_detonate_custom_730");
-            if (focusedDetonate && !focusedDetonate.IsTrained()) {
-                focusedDetonate.SetLevel(1);
-            }
+            this.UpgradeLinkedAbility("techies_focused_detonate_custom_730");
         }
     }
 
@@ -46,11 +43,11 @@ export class techies_remote_mines_custom_730 extends CustomAbility {
             }
         );
 
-        this.castMine.SetOriginalModel(this.modelName);
-        this.castMine.SetModel(this.modelName);
+        this.castMine.SetOriginalModel(this.modelName.get());
+        this.castMine.SetModel(this.modelName.get());
 
         this.castParticle = ParticleManager.CreateParticle(
-            this.plantParticleName,
+            this.plantParticleName.get(),
             ParticleAttachment.CUSTOMORIGIN,
             caster
         );
@@ -84,7 +81,7 @@ export class techies_remote_mines_custom_730 extends CustomAbility {
         );
         ParticleManager.SetParticleControl(this.castParticle, 4, point);
 
-        caster.EmitSound(this.tossSound);
+        caster.EmitSound(this.tossSound.get());
 
         return true;
     }
@@ -115,8 +112,8 @@ export class techies_remote_mines_custom_730 extends CustomAbility {
             }
         );
 
-        mine.SetOriginalModel(this.modelName);
-        mine.SetModel(this.modelName);
+        mine.SetOriginalModel(this.modelName.get());
+        mine.SetModel(this.modelName.get());
 
         FindClearSpaceForUnit(mine, mine.GetAbsOrigin(), false);
 
@@ -129,7 +126,7 @@ export class techies_remote_mines_custom_730 extends CustomAbility {
             mine.StartGesture(GameActivity.DOTA_IDLE);
         });
 
-        mine.EmitSound(this.plantSound);
+        mine.EmitSound(this.plantSound.get());
     }
 
     private HideCastParticle(): void {

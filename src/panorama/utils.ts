@@ -54,6 +54,9 @@ Players.GetPlayerColorHex = (iPlayerID: PlayerID): string => {
 };
 
 // $
+/** @custom */
+const print = $.Msg.bind($);
+
 /**
  * @deprecated Used only in local scope in utils.ts
  */
@@ -74,26 +77,6 @@ $.IsTranslatable = (token: string, parent?: PanelBase): boolean => {
     const localized = $.Localize(token, parent);
     return localized !== token && token.trim().length > 0;
 };
-
-
-// Other Utils
-class NetTableUtils {
-    public static GetEntityList(key: keyof EntitiesNetTable, filter?: (value: EntityIndex) => boolean): EntityIndex[] {
-        const table = CustomNetTables.GetTableValue("entities", key);
-        if (!table) return [];
-
-        const result: EntityIndex[] = [];
-        for (const entityKey in table.values) {
-            const entityIndex = parseInt(entityKey, 10) as EntityIndex;
-
-            if (!filter || filter(entityIndex)) {
-                result.push(entityIndex);
-            }
-        }
-        
-        return result;
-    }
-}
 
 
 

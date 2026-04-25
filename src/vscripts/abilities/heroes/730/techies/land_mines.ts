@@ -3,9 +3,24 @@ import { BaseModifier, registerAbility, registerModifier } from "../../../../lib
 
 @registerAbility()
 export class techies_land_mines_custom_730 extends CustomAbility {
-    private readonly plantSound: string = "Hero_Techies.LandMine.Plant";
+    private readonly plantSound = this.sound("Hero_Techies.LandMine.Plant");
+
+    private readonly modelName = this.model("models/heroes/techies/fx_techiesfx_mine.vmdl")
 
     private readonly unitName: string = "npc_dota_techies_land_mine_custom_730";
+
+    constructor() {
+        super();
+
+        if (IsServer()) {
+            GameRules.EntityManager.BindEntityListener(this, {
+                filter: (caster, target) => (
+                    target.GetTeamNumber() === caster.GetTeamNumber() &&
+                    target.GetUnitName() === this.unitName
+                )
+            });
+        }
+    }
 
     CastFilterResultLocation(location: Vector): UnitFilterResult {
         const caster = this.GetCaster();
@@ -56,11 +71,14 @@ export class techies_land_mines_custom_730 extends CustomAbility {
             {}
         );
 
+        mine.SetOriginalModel(this.modelName.get());
+        mine.SetModel(this.modelName.get());
+
         if (caster.GetAbsOrigin() !== point) {
             FindClearSpaceForUnit(mine, mine.GetAbsOrigin(), true);
         }
 
-        caster.EmitSound(this.plantSound);
+        caster.EmitSound(this.plantSound.get());
     }
 }
 

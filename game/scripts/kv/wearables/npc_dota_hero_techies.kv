@@ -6,9 +6,12 @@
         {
             "Abilities"
             {
-                "techies_land_mines_custom_730"         "techies/techies_land_mines"
-                "techies_minefield_sign_custom_730"     "techies/techies_minefield_sign"
-                "techies_remote_mines_custom_730"       "techies/techies_remote_mines"
+                "techies_land_mines_custom_730"                 "techies/techies_land_mines"
+                "techies_stasis_trap_custom_730"                "techies/techies_stasis_trap"
+                "techies_suicide_custom_730"                    "techies/techies_suicide"
+                "techies_minefield_sign_custom_730"             "techies/techies_minefield_sign"
+                "techies_remote_mines_custom_730"               "techies/techies_remote_mines"
+                "techies_remote_mines_self_detonate_custom_730" "techies/techies_remote_mines_self_detonate"
             }
         }
 
@@ -16,10 +19,43 @@
         {
             "SkinPriority"  "1"
             "ModelPath"     "models/items/techies/bigshot/bigshot.vmdl"
+
+            "MetaInfo"
+            {
+                "IsArcana"  "1"
+            }
+
             "Abilities"
             {
                 "techies_minefield_sign_custom_730"     "techies/techies_minefield_sign_arcana"
                 "techies_remote_mines_custom_730"       "techies/techies_remote_mines_arcana"
+            }
+
+            "Particles"
+            {
+                // TODO: Return blast off particle from old client
+                "particles/units/heroes/hero_techies/730/techies_blast_off.vpcf"                "particles/econ/items/techies/techies_arcana/techies_suicide_arcana.vpcf"
+
+                "particles/units/heroes/hero_techies/730/techies_remote_mine_plant.vpcf"        "particles/econ/items/techies/techies_arcana/techies_remote_mine_plant_arcana.vpcf"
+                "particles/units/heroes/hero_techies/730/techies_remote_mines_detonate.vpcf"    "particles/econ/items/techies/techies_arcana/techies_remote_mines_detonate_arcana.vpcf"
+            }
+
+            "Sounds"
+            {
+                "Hero_Techies.Suicide"              "Hero_Techies.Suicide.Arcana"
+
+                "Hero_Techies.RemoteMine.Detonate"  "Hero_Techies.RemoteMine.Detonate.Arcana"
+            }
+
+            "Models"
+            {
+                "models/heroes/techies/fx_techiesfx_mine.vmdl"          "models/items/techies/bigshot/fx_bigshot_mine.vmdl"
+
+                "models/heroes/techies/fx_techiesfx_stasis.vmdl"        "models/items/techies/bigshot/fx_bigshot_stasis.vmdl"
+
+                "models/heroes/techies/techies_sign.vmdl"               "models/items/techies/bigshot/fx_bigshot_sign.vmdl"
+
+                "models/heroes/techies/fx_techies_remotebomb.vmdl"      "models/items/techies/bigshot/bigshot_remotebomb.vmdl"
             }
         }
 
@@ -31,6 +67,15 @@
             {
                 "techies_land_mines_custom_730"         "techies/techies_land_mines_immortal"
                 "techies_remote_mines_custom_730"       "techies/techies_remote_mines_immortal"
+            }
+
+            "Models"
+            {
+                "models/heroes/techies/fx_techiesfx_mine.vmdl"          "models/items/techies/techies_ti9_immortal_prox_mine/techies_ti9_immortal_prox_mine.vmdl"
+
+                "models/heroes/techies/techies_sign.vmdl"               "models/items/techies/techies_ti9_immortal_sign/techies_ti9_immortal_sign.vmdl"
+
+                "models/heroes/techies/fx_techies_remotebomb.vmdl"      "models/items/techies/techies_ti9_immortal_remote_mine/techies_ti9_immortal_remote_mine.vmdl"
             }
         }
     }

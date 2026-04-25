@@ -74,6 +74,9 @@ interface CDOTA_BaseNPC {
     /** @custom */
     GetItems(slots?: InventorySlot): CDOTA_Item[];
 
+    /** @custom */
+    PostUpdateAbilities(): void;
+
     /**
      * Goes through all the modifiers of the unit and checks if it has the specific state.
      * @custom
@@ -94,7 +97,11 @@ interface CDOTA_BaseNPC_Hero {
 }
 
 interface CDOTABaseAbility {
+    /** @custom */
+    OnPostUpdate(): void;
 
+    /** @custom */
+    UpgradeLinkedAbility(abilityName: string): void;
 }
 
 interface CDOTA_Item {

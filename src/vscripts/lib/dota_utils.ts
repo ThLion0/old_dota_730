@@ -161,6 +161,10 @@ CDOTA_BaseNPC.GetItems = function(slots: InventorySlot = InventorySlot.SLOT_9): 
     return items;
 };
 
+CDOTA_BaseNPC.PostUpdateAbilities = function(): void {
+    this.GetAbilities().forEach(ability => ability.OnPostUpdate());
+};
+
 CDOTA_BaseNPC.HasModifiersState = function(state: ModifierState): boolean {
     return this.FindAllModifiers().some(modifier => modifier.HasState(state));
 };
@@ -171,6 +175,20 @@ CDOTA_BaseNPC.SendCustomError = function(message: string, sequenceNumber: number
         reason: 80,
         sequenceNumber: sequenceNumber
     });
+};
+
+
+
+//======================//
+//=/ CDOTABaseAbility /=//
+//======================//
+CDOTABaseAbility.OnPostUpdate = function(): void {};
+
+CDOTABaseAbility.UpgradeLinkedAbility = function(abilityName: string): void {
+    const ability = this.GetCaster().FindAbilityByName(abilityName);
+    if (ability && !ability.IsTrained()) {
+        ability.SetLevel(ability.GetMaxLevel());
+    }
 };
 
 

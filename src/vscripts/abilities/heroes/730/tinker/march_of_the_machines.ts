@@ -1,10 +1,10 @@
-import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { CustomAbility, CustomModifier } from "../../../../lib/abilities/custom_ability";
 import { BaseModifier, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
 export class tinker_march_of_the_machines_custom_730 extends CustomAbility {
-    private readonly castParticle: string = "particles/units/heroes/hero_tinker/tinker_motm.vpcf";
-    private readonly castSound: string = "Hero_Tinker.March_of_the_Machines.Cast";
+    private readonly castParticle = this.particle("particles/units/heroes/hero_tinker/tinker_motm.vpcf");
+    private readonly castSound = this.sound("Hero_Tinker.March_of_the_Machines.Cast");
     
     OnSpellStart(): void {
         const caster = this.GetCaster();
@@ -64,7 +64,7 @@ export class tinker_march_of_the_machines_custom_730 extends CustomAbility {
         const origin = caster.GetAbsOrigin();
 
         const particle = ParticleManager.CreateParticle(
-            this.castParticle,
+            this.castParticle.get(),
             ParticleAttachment.CUSTOMORIGIN,
             caster
         );
@@ -88,20 +88,20 @@ export class tinker_march_of_the_machines_custom_730 extends CustomAbility {
         );
         ParticleManager.ReleaseParticleIndex(particle);
 
-        EmitSoundOnLocationForAllies(origin, this.castSound, caster);
+        EmitSoundOnLocationForAllies(origin, this.castSound.get(), caster);
     }
 }
 
 
 
 @registerModifier()
-class modifier_tinker_march_of_the_machines_custom_730_thinker extends BaseModifier {
-    private marchParticle: string = "particles/units/heroes/hero_tinker/tinker_machine.vpcf";
-    private marchSound: string = "Hero_Tinker.March_of_the_Machines";
+class modifier_tinker_march_of_the_machines_custom_730_thinker extends CustomModifier {
+    private readonly marchParticle = this.particle("particles/units/heroes/hero_tinker/tinker_machine.vpcf");
+    private readonly marchSound = this.sound("Hero_Tinker.March_of_the_Machines");
 
     private radius: number = 0;
 
-    private centerSpawn!: Vector;;
+    private centerSpawn!: Vector;
     private centerVector!: Vector;
 
     private projectileInfo!: CreateLinearProjectileOptions;
@@ -161,7 +161,7 @@ class modifier_tinker_march_of_the_machines_custom_730_thinker extends BaseModif
             iUnitTargetType: UnitTargetType.HERO | UnitTargetType.BASIC,
             iUnitTargetFlags: UnitTargetFlags.NONE,
 
-            EffectName: this.marchParticle,
+            EffectName: this.marchParticle.get(),
             fDistance: distance,
             fStartRadius: collisionRadius,
             fEndRadius: collisionRadius,
@@ -180,14 +180,14 @@ class modifier_tinker_march_of_the_machines_custom_730_thinker extends BaseModif
         // 1 / 24 = ~0.04166...
         this.StartIntervalThink(0.042);
 
-        parent.EmitSound(this.marchSound);
+        parent.EmitSound(this.marchSound.get());
     }
 
     OnDestroy(): void {
         const parent = this.GetParent();
 
         if (IsServer()) {
-            parent.StopSound(this.marchSound);
+            parent.StopSound(this.marchSound.get());
     
             UTIL_Remove(parent);
         }

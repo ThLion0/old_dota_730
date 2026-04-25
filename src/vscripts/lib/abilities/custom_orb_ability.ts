@@ -34,7 +34,7 @@ export class CustomOrbAbility extends CustomAbility {
     }
 }
 
-export interface CustomOrbModifier {
+export interface CustomOrbModifier extends CustomModifier {
     /** @override changed type */
     GetAbility(): CustomOrbAbility | undefined;
 }

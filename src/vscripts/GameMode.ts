@@ -14,7 +14,8 @@ import { ModifierGainFilter } from "./filters/modifier_gain_filter";
 
 // managers
 import { NeutralCampsManager } from "./managers/neutral_camps_manager";
-import { WearableManager } from "./managers/wearable_manager";
+import { Wearables } from "./managers/wearable_manager";
+import { EntityManager } from "./managers/entity_manager";
 
 import { OldDotaManager } from "./managers/map_manager";
 
@@ -38,7 +39,8 @@ declare global {
          */
         Manager: OldDotaManager;
 
-        WearableManager: WearableManager;
+        WearableManager: Wearables.Manager;
+        EntityManager: EntityManager;
     }
 }
 
@@ -67,7 +69,8 @@ export class GameMode {
         // TODO: remove
         GameRules.Manager = new OldDotaManager();
 
-        GameRules.WearableManager = new WearableManager();
+        GameRules.WearableManager = new Wearables.Manager();
+        GameRules.EntityManager = new EntityManager();
 
         // Addon should initialize only after all structure configs
         GameRules.Addon = new GameMode();
@@ -128,9 +131,11 @@ export class GameMode {
 
     public OnGameSetup(): void {
         GameRules.WearableManager.Initialize();
+        GameRules.EntityManager.Initialize();
+        
         this.neutralCampManager.Initialize();
 
-        GameRules.Manager.SaveKVData();
+        // GameRules.Manager.SaveKVData();
     }
 
     public OnWaitMapToLoad(): void {

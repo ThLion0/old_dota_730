@@ -1,11 +1,14 @@
-import { BaseAbility, BaseModifierMotionBoth, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
+import { CustomAbility } from "../../../../lib/abilities/custom_ability";
+import { BaseModifierMotionBoth, registerAbility, registerModifier } from "../../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class techies_suicide_custom_730 extends BaseAbility {
-    private readonly blastOffParticleName: string = "particles/units/heroes/hero_techies/730/techies_blast_off.vpcf";
+export class techies_suicide_custom_730 extends CustomAbility {
+    private readonly blastOffParticleName = this.particle("particles/units/heroes/hero_techies/730/techies_blast_off.vpcf");
 
-    private readonly castSound: string = "Hero_Techies.BlastOff.Cast";
-    private readonly blastOffSound: string = "Hero_Techies.Suicide";
+    private readonly castSound = this.sound("Hero_Techies.BlastOff.Cast");
+    private readonly blastOffSound = this.sound("Hero_Techies.Suicide");
+
+    private readonly treeDestructionRadius: number = 150;
 
     private readonly shardStunDuration: number = 1.75;
     private readonly healthCostMultiplier: number = 0.5;
@@ -35,7 +38,7 @@ export class techies_suicide_custom_730 extends BaseAbility {
             }
         );
 
-        caster.EmitSound(this.castSound);
+        caster.EmitSound(this.castSound.get());
     }
 
     public BlastOff(): void {
@@ -91,7 +94,7 @@ export class techies_suicide_custom_730 extends BaseAbility {
         });
 
         const particle = ParticleManager.CreateParticle(
-            this.blastOffParticleName,
+            this.blastOffParticleName.get(),
             ParticleAttachment.CUSTOMORIGIN,
             undefined
         );
@@ -100,9 +103,9 @@ export class techies_suicide_custom_730 extends BaseAbility {
         ParticleManager.SetParticleControl(particle, 2, Vector(radius, 0, 1));
         ParticleManager.ReleaseParticleIndex(particle);
 
-        caster.EmitSound(this.blastOffSound);
+        caster.EmitSound(this.blastOffSound.get());
 
-        GridNav.DestroyTreesAroundPoint(caster.GetOrigin(), radius, false);
+        GridNav.DestroyTreesAroundPoint(caster.GetOrigin(), this.treeDestructionRadius, false);
 
         if (caster.IsAlive()) {
             const damage = caster.GetMaxHealth() * this.healthCostMultiplier;

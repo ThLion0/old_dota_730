@@ -3,11 +3,11 @@ import { BaseModifier, registerAbility, registerModifier } from "../../../../lib
 
 @registerAbility()
 export class tinker_laser_custom_730 extends CustomAbility {
-    private readonly laserParticle: string = "particles/units/heroes/hero_tinker/tinker_laser.vpcf";
-    private readonly splashParticle: string = "particles/units/heroes/hero_tinker/tinker_laser_secondary.vpcf";
+    private readonly laserParticle = this.particle("particles/units/heroes/hero_tinker/tinker_laser.vpcf");
+    private readonly splashParticle = this.particle("particles/units/heroes/hero_tinker/tinker_laser_secondary.vpcf");
     
-    private readonly laserSound: string = "Hero_Tinker.Laser";
-    private readonly impactSound: string = "Hero_Tinker.LaserImpact";
+    private readonly laserSound = this.sound("Hero_Tinker.Laser");
+    private readonly impactSound = this.sound("Hero_Tinker.LaserImpact");
 
     GetCastRange(location: Vector, target: CDOTA_BaseNPC | undefined): number {
         const bonus = this.GetCaster().HasScepter() ? 300 : 0;
@@ -111,10 +111,10 @@ export class tinker_laser_custom_730 extends CustomAbility {
             });
         });
 
-        this.PlayEffects(targets);
+        this.playEffects(targets);
     }
 
-    private PlayEffects(targets: Array<CDOTA_BaseNPC>): void {
+    private playEffects(targets: Array<CDOTA_BaseNPC>): void {
         const caster = this.GetCaster();
 
         const mainTarget = targets[0];
@@ -123,22 +123,22 @@ export class tinker_laser_custom_730 extends CustomAbility {
             ? AttachLocation.ATTACK2
             : AttachLocation.ATTACK1;
 
-        this.PlayFromToTargetEffect(caster, mainTarget, this.laserParticle, attachment);
+        this.PlayFromToTargetEffect(caster, mainTarget, this.laserParticle.get(), attachment);
 
-        caster.EmitSound(this.laserSound);
-        mainTarget.EmitSound(this.impactSound);
+        caster.EmitSound(this.laserSound.get());
+        mainTarget.EmitSound(this.impactSound.get());
 
         if (targets.length > 1) {
             for (let i = 1; i < targets.length; i++) {
-                this.PlayFromToTargetEffect(targets[i], targets[i - 1], this.laserParticle);
+                this.PlayFromToTargetEffect(targets[i], targets[i - 1], this.laserParticle.get());
 
-                targets[i].EmitSound(this.impactSound);
+                targets[i].EmitSound(this.impactSound.get());
             }
         }
     }
 
     private PlaySplashEffect(target: CDOTA_BaseNPC, additional: CDOTA_BaseNPC): void {
-        this.PlayFromToTargetEffect(target, additional, this.splashParticle);
+        this.PlayFromToTargetEffect(target, additional, this.splashParticle.get());
     }
 
     private PlayFromToTargetEffect(

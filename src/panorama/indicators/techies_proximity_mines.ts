@@ -1,34 +1,19 @@
-
 class TechiesMinesIndicator implements AbilityIndicator {
-    private readonly minesFilter = (entity: EntityIndex) =>
-        Entities.GetTeamNumber(entity) === this.localTeam &&
-        Entities.GetPlayerOwnerID(entity) === this.localPlayer;
+    public readonly abilityName: string;
 
     private particleList = new Map<EntityIndex, ParticleID>();
     
     private readonly placementRadius: number = 400;
-
-    private localPlayer: PlayerID;
-    private localTeam: DOTATeam_t;
     
-    private mines: EntityIndex[];
+    private mines = new Set<EntityIndex>();
 
     constructor() {
-        this.localPlayer = Players.GetLocalPlayer();
-        this.localTeam = Players.GetTeam(this.localPlayer);
+        this.abilityName = "techies_land_mines_custom_730";
 
-        this.mines = NetTableUtils.GetEntityList("mines", this.minesFilter);
-
-        this.registerNetTableListener();
-    }
-
-    private registerNetTableListener(): void {
-        CustomNetTables.SubscribeNetTableListener("entities", (_, key) => {
-            $.Schedule(0, () => {
-                if (key === "mines") {
-                    this.mines = NetTableUtils.GetEntityList("mines", this.minesFilter);
-                }
-            });
+        EntityManager.BindEntityListener(this.abilityName, {
+            onAdd: (entity) => this.mines.add(entity),
+            onRemove: (entity) => this.mines.delete(entity),
+            onEntriesUpdate: (indexes) => (this.mines = new Set(indexes))
         });
     }
     
@@ -74,4 +59,4 @@ class TechiesMinesIndicator implements AbilityIndicator {
     }
 }
 
-CustomIndicator.AddIndicator("techies_land_mines_custom_730", new TechiesMinesIndicator());
+CustomIndicator.AddIndicator(new TechiesMinesIndicator());

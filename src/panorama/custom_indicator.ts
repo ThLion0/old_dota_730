@@ -10,6 +10,7 @@ interface State {
 }
 
 interface AbilityIndicator {
+    readonly abilityName: string;
     ShowParticles(ability: AbilityEntityIndex, cursorPosition: Vector): void;
     HideParticles(): void;
 }
@@ -28,8 +29,8 @@ const CustomIndicator = new class {
         this.updateMousePosition();
     }
 
-    public AddIndicator(abilityName: string, indicator: AbilityIndicator): void {
-        this.allIndicators[abilityName] = indicator;
+    public AddIndicator(indicator: AbilityIndicator): void {
+        this.allIndicators[indicator.abilityName] = indicator;
     }
 
     private updateMousePosition(): void {
