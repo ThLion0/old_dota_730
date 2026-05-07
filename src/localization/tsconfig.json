@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",
+        "target": "es2022",
+        "lib": ["es2022"],
+        "types": ["node"],
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "strict": true,
+        "ignoreDeprecations": "5.0"
+    },
+    "include": ["**/*.ts", "../common/**/*.ts"]
+}

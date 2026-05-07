@@ -1,7 +1,6 @@
 import { KeyValues } from "easy-keyvalues";
 import { writeFile } from "node:fs";
 
-
 export class LanguageRoot {
     private static readonly rootMap = new Map<string, LanguageRoot>();
 
@@ -27,6 +26,10 @@ export class LanguageRoot {
         const root = new LanguageRoot(language);
         this.rootMap.set(language, root);
         return root;
+    }
+
+    public static GetLanguages(): string[] {
+        return [...this.rootMap.keys()];
     }
 
     public setTokens(tokens: KeyValues): LanguageRoot {
