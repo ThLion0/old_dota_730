@@ -72,7 +72,7 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/units/heroes/hero_techies/techies_smoketrail.vpcf"
+			m_ChildRef = resource:"particles/units/heroes/hero_techies/730/techies_smoketrail.vpcf"
 		},
 	]
 	m_nBehaviorVersion = 5

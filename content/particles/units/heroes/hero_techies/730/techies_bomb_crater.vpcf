@@ -78,7 +78,7 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/units/heroes/hero_techies/techies_crater_smoke.vpcf"
+			m_ChildRef = resource:"particles/units/heroes/hero_techies/730/techies_crater_smoke.vpcf"
 		},
 	]
 	m_nBehaviorVersion = 3

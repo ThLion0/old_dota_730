@@ -162,7 +162,7 @@
 	[
 		{
 			m_bEndCap = true
-			m_ChildRef = resource:"particles/units/heroes/hero_techies/techies_bomb_crater.vpcf"
+			m_ChildRef = resource:"particles/units/heroes/hero_techies/730/techies_bomb_crater.vpcf"
 			m_bDisableChild = true
 		},
 	]
