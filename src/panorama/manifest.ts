@@ -35,6 +35,11 @@ new class {
         if (roshanTimer) {
             roshanTimer.style.visibility = "collapse";
         }
+
+        const tormentorTimer = FindDotaHudElement("TormentorTimerContainer");
+        if (tormentorTimer) {
+            tormentorTimer.style.visibility = "collapse";
+        }
     }
 
     private hideInnateIcon(): void {
