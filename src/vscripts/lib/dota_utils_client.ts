@@ -5,7 +5,11 @@
 /**
  * @deprecated Used to override EntIndexToHScript
  */
-const _EntIndexToHScriptEngine_Client = globalThis.EntIndexToHScript;
+declare var _EntIndexToHScriptEngine_Client: typeof globalThis.EntIndexToHScript;
+if (_EntIndexToHScriptEngine_Client === undefined) {
+    _EntIndexToHScriptEngine_Client = globalThis.EntIndexToHScript;
+}
+
 globalThis.EntIndexToHScript = function(entityIndex: EntityIndex): CBaseEntity | undefined {
     if (entityIndex === undefined) return undefined;
     return _EntIndexToHScriptEngine_Client(entityIndex);

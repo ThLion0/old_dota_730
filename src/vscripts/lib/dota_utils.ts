@@ -1,10 +1,14 @@
 //===============//
 //=/ Functions /=//
 //===============//
-/** @custom */
-const CreateCompanion = (location: Vector, findClearSpace: boolean = true, team: DotaTeam = DotaTeam.NEUTRALS): CDOTA_BaseNPC_Companion => {
+/**
+ * @param ability specify ability to prevent leaks
+ * 
+ * @custom
+ */
+const CreateCompanion = (ability: CDOTABaseAbility, location: Vector, findClearSpace: boolean = true, team: DotaTeam = DotaTeam.NEUTRALS): CDOTA_BaseNPC_Companion => {
     const companion = CreateUnitByName("npc_dota_companion", location, false, undefined, undefined, team) as CDOTA_BaseNPC_Companion;
-    TurnToDummy(companion);
+    TurnToDummy(companion, ability);
 
     companion.SetAbsOrigin(location);
 
@@ -24,22 +28,29 @@ const CreateMineByName = (unitName: string, location: Vector, owner: CDOTA_BaseN
     return mine;
 };
 
-/** @custom */
-const TurnToDummy = (unit: CDOTA_BaseNPC): void => {
+/**
+ * @param ability specify ability to prevent leaks
+ * 
+ * @custom
+ */
+const TurnToDummy = (unit: CDOTA_BaseNPC, ability: CDOTABaseAbility): void => {
     if (unit === undefined || unit.IsNull() || !IsValidEntity(unit)) return;
 
-    unit.AddNewModifier(unit, undefined, BuiltInModifier.PHASED, {});
-    unit.AddNewModifier(unit, undefined, BuiltInModifier.INVULNERABLE, {});
-    unit.AddNewModifier(unit, undefined, BuiltInModifier.HIDDEN_CUSTOM, {});
+    unit.AddNewModifier(unit, ability, BuiltInModifier.PHASED, {});
+    unit.AddNewModifier(unit, ability, BuiltInModifier.INVULNERABLE, {});
+    unit.AddNewModifier(unit, ability, BuiltInModifier.HIDDEN_CUSTOM, {});
 
     unit.AddNoDraw();
 };
 
-
 /**
  * @deprecated Used to override EntIndexToHScript
  */
-const _EntIndexToHScriptEngine_Server = globalThis.EntIndexToHScript;
+declare var _EntIndexToHScriptEngine_Server: typeof globalThis.EntIndexToHScript;
+if (_EntIndexToHScriptEngine_Server === undefined) {
+    _EntIndexToHScriptEngine_Server = globalThis.EntIndexToHScript;
+}
+
 globalThis.EntIndexToHScript = function(entityIndex: EntityIndex): CBaseEntity | undefined {
     if (entityIndex === undefined) return undefined;
     return _EntIndexToHScriptEngine_Server(entityIndex);
@@ -94,14 +105,16 @@ CDOTA_BaseNPC.IsSomethingWeird = function(): boolean {
     return this.GetUnitName === undefined;
 };
 
+// TODO: Optimize this shit
 CDOTA_BaseNPC.IsTechiesMine = function(): boolean {
-    const unitData = GetUnitKeyValuesByName(this.GetUnitName()) as { CustomData?: { IsMineType?: 0 | 1; }; };
-    return unitData?.CustomData?.IsMineType === 1;
+    const unitData = GetUnitKeyValuesByName(this.GetUnitName()) as { CustomData?: { IsTechiesMine?: 0 | 1; }; };
+    return unitData?.CustomData?.IsTechiesMine === 1;
 };
 
+// TODO: Optimize this shit
 CDOTA_BaseNPC.IsBlockingCamp = function(): boolean {
     const unitData = GetUnitKeyValuesByName(this.GetUnitName()) as { CustomData?: { BlockNeutralCamps?: 0 | 1; }; };
-    return unitData?.CustomData?.BlockNeutralCamps === 1;
+    return unitData?.CustomData?.BlockNeutralCamps !== 0;
 };
 
 CDOTA_BaseNPC.IsLeashed = function(): boolean {

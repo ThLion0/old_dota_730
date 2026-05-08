@@ -1,7 +1,7 @@
 /// <reference path="settings.d.ts" />
 
 export abstract class MapSettings {
-    public readonly modifierHolder: ModifierHolder;
+    private readonly modifierHolder: ModifierHolder;
 
     constructor() {
         this.modifierHolder = new ModifierHolder();
@@ -10,6 +10,12 @@ export abstract class MapSettings {
 
     public abstract ConfigureModifiers(holder: ModifierHolder): void;
     public abstract Configure(): void;
+    public abstract SendToConsole(): void;
+
+    public IsModifierEnabled(modifierName: string): boolean {
+        const state = this.modifierHolder.get(modifierName);
+        return state === undefined || state === ModifierAccess.NONE || state === ModifierAccess.ENABLED;
+    }
 }
 
 export class ModifierHolder {

@@ -3,8 +3,8 @@ import { DotaFilter, FilterOrder } from "../utils/filters/filters";
 import { CustomAbility } from "../lib/abilities/custom_ability";
 
 class Event extends DotaFilter<ExecuteOrderFilterEvent> {
-    public Register(context: {}): void {
-        GameModeEntity.SetExecuteOrderFilter((event) => this.handle(event), context);
+    public Register(): void {
+        GameModeEntity.SetExecuteOrderFilter(this.getHandler(), this);
     }
 
     protected RegisterOrder(order: FilterOrder<ExecuteOrderFilterEvent>): void {
@@ -12,10 +12,8 @@ class Event extends DotaFilter<ExecuteOrderFilterEvent> {
     }
 
     private filterAbilityCustomBehavior(event: ExecuteOrderFilterEvent): boolean | void {
-        let unitIndex = event.units?.["0"] as EntityIndex | undefined;
-        const unit = unitIndex !== undefined
-            ? EntIndexToHScript(unitIndex) as CDOTA_BaseNPC
-            : undefined;
+        let unitIndex = event.units?.["0"] as EntityIndex;
+        const unit = EntIndexToHScript(unitIndex) as CDOTA_BaseNPC | undefined;
         
         const ability = EntIndexToHScript(event.entindex_ability) as CDOTABaseAbility | undefined;
         if (!(ability instanceof CustomAbility)) return;
