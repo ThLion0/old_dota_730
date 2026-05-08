@@ -1,19 +1,21 @@
-type ParticlePrecache = string | {
-    type: 'folder';
-    path: string;
-};
-
-type SoundPrecache = string;
-
-type ModelPrecache = string;
-
-
+/// <reference path="precache.d.ts" />
 
 const particles: ParticlePrecache[] = [
-    {
-        type: "folder",
-        path: "particles/units/heroes/hero_techies/730"
-    }
+    // Techies
+    "particles/units/heroes/hero_techies/730/techies_remote_mines_detonate.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_remote_mine_plant.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_blast_off.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_suicide_arcana.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_blast_off_trail.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_stasis_trap_explode.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_stasis_trap_beams.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_remote_mine.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_land_mine.vpcf",
+    "particles/units/heroes/hero_techies/730/techies_land_mine_explode.vpcf",
+    
+    // Tinker
+    "particles/units/heroes/hero_tinker/730/tinker_motm.vpcf",
+    "particles/units/heroes/hero_tinker/730/tinker_machine.vpcf"
 ];
 
 const soundFiles: SoundPrecache[] = [
