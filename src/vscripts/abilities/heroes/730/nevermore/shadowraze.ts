@@ -41,11 +41,6 @@ class NevermoreShadowrazeCustom extends CustomAbility {
             false
         );
 
-        const isArcana = this.getWearableInfo().IsArcana();
-        if (isArcana) {
-            this.processArcanaCounter(enemies);
-        }
-
         enemies.forEach(target => {
             const modifier = target.FindModifierByName(modifier_nevermore_shadowraze_custom_730.name);
             const stacks = modifier !== undefined
@@ -71,6 +66,11 @@ class NevermoreShadowrazeCustom extends CustomAbility {
             }
         });
 
+        const isArcana = this.getWearableInfo().IsArcana();
+        if (isArcana) {
+            this.processArcanaCounter(enemies);
+        }
+
         this.playEffects(position, radius);
     }
 
@@ -78,16 +78,14 @@ class NevermoreShadowrazeCustom extends CustomAbility {
         const caster = this.GetCaster();
         
         const hasEnemies = enemies.length > 0;
-        const enoughStacks = enemies.some(enemy => {
-            if (!enemy.IsHero()) return false;
-
-            const modifier = enemy.FindModifierByName(modifier_nevermore_shadowraze_custom_730.name);
-            const stack = modifier !== undefined
-                ? modifier.GetStackCount()
-                : 0;
-            
-            return stack < 3;
-        });
+        const enoughStacks = enemies
+            .filter(enemy => enemy.IsHero())
+            .some(enemy => {
+                const modifier = enemy.FindModifierByName(modifier_nevermore_shadowraze_custom_730.name);
+                if (!modifier) return true;
+                
+                return modifier.GetStackCount() <= 3;
+            });
 
         if (hasEnemies && enoughStacks) {
             const counterModifier = caster.FindModifierByName(modifier_nevermore_shadowraze_custom_730_counter.name);

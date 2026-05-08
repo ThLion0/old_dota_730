@@ -8,13 +8,13 @@ export interface CustomAbility extends BaseAbility {
     
 }
 export class CustomAbility extends BaseAbility {
-    private readonly __customAbilityTextureName: string;
-    private readonly __abilityAssets = new Set<Wearables.AssetWrapper>();
+    private readonly customAbility$textureName: string;
+    private readonly customAbility$assets = new Set<Wearables.AssetWrapper>();
 
     constructor() {
         super();
 
-        this.__customAbilityTextureName = Wearables.Resolver.getAbilityTexture(this.GetWearableOwner(), this);
+        this.customAbility$textureName = Wearables.Resolver.getAbilityTexture(this.GetWearableOwner(), this);
 
         this.processCustomBehavior();
     }
@@ -38,7 +38,7 @@ export class CustomAbility extends BaseAbility {
      * @override the `CustomAbility` class, used to change the icon based on owner's skins
      */
     GetAbilityTextureName(): string {
-        return this.__customAbilityTextureName;
+        return this.customAbility$textureName;
     }
 
     /** @custom */
@@ -67,13 +67,13 @@ export class CustomAbility extends BaseAbility {
     }
 
     private addWrapper(wrapper: Wearables.AssetWrapper): Wearables.AssetWrapper {
-        this.__abilityAssets.add(wrapper);
+        this.customAbility$assets.add(wrapper);
         return wrapper;
     }
 
     private processAssets(): void {
         const owner = this.GetWearableOwner();
-        this.__abilityAssets.forEach(
+        this.customAbility$assets.forEach(
             wrapper => Wearables.Resolver.resolveAsset(owner, wrapper)
         );
     }
@@ -93,10 +93,13 @@ export class CustomAbility extends BaseAbility {
 }
 
 export interface CustomModifier extends BaseModifier {
+    /**
+     * @override by `CustomModifier` class. Changed type to `CustomAbility` to apply custom methods.
+     */
     GetAbility(): CustomAbility | undefined;
 }
 export class CustomModifier extends BaseModifier {
-    private readonly __modifierAssets = new Set<Wearables.AssetWrapper>();
+    private readonly customModifier$assets = new Set<Wearables.AssetWrapper>();
 
     constructor() {
         super();
@@ -120,7 +123,7 @@ export class CustomModifier extends BaseModifier {
     }
 
     private addWrapper(wrapper: Wearables.AssetWrapper): Wearables.AssetWrapper {
-        this.__modifierAssets.add(wrapper);
+        this.customModifier$assets.add(wrapper);
         return wrapper;
     }
 
@@ -128,7 +131,7 @@ export class CustomModifier extends BaseModifier {
         if (IsServer()) {
             const owner = this.GetCaster();
             if (owner) {
-                this.__modifierAssets.forEach(
+                this.customModifier$assets.forEach(
                     wrapper => Wearables.Resolver.resolveAsset(owner, wrapper)
                 );
             }

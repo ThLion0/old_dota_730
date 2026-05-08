@@ -192,12 +192,7 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
                 
                 this.StopIntervalThink();
 
-                Timers.CreateTimer(0.03, () => {
-                    const parent = this.GetParent();
-                    if (parent && IsValidEntity(parent) && parent.IsAlive()) {
-                        this.Detonate();
-                    }
-                });
+                this.Detonate();
             }
         }
     }
@@ -268,6 +263,7 @@ class modifier_techies_land_mines_custom_730 extends BaseModifier {
             ApplyDamage(damageTable);
         });
 
+        // TODO: Check particle release on client-side in every mine
         const particle = ParticleManager.CreateParticle(
             this.detonateParticleName,
             ParticleAttachment.WORLDORIGIN,

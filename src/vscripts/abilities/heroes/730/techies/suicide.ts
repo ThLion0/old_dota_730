@@ -8,6 +8,8 @@ export class techies_suicide_custom_730 extends CustomAbility {
     private readonly castSound = this.sound("Hero_Techies.BlastOff.Cast");
     private readonly blastOffSound = this.sound("Hero_Techies.Suicide");
 
+    private readonly explodeRadius: number = 400;
+
     private readonly treeDestructionRadius: number = 150;
 
     private readonly shardStunDuration: number = 1.75;
@@ -46,7 +48,6 @@ export class techies_suicide_custom_730 extends CustomAbility {
 
         const location = caster.GetAbsOrigin();
 
-        const radius = this.GetSpecialValueFor("radius");
         const damage = this.GetSpecialValueFor("damage");
         const duration = this.GetSpecialValueFor("silence_duration");
 
@@ -58,17 +59,21 @@ export class techies_suicide_custom_730 extends CustomAbility {
             ability: this
         };
 
-        FindUnitsInRadius(
+        const enemies = FindUnitsInRadius(
             caster.GetTeamNumber(),
             location,
             undefined,
-            radius,
+            this.explodeRadius,
             UnitTargetTeam.ENEMY,
             UnitTargetType.HERO | UnitTargetType.BASIC,
             UnitTargetFlags.NONE,
             FindOrder.ANY,
             false
-        ).forEach(enemy => {
+        );
+
+        let heroKilled: number = 0;
+
+        enemies.forEach(enemy => {
             if (caster.HasShard()) {
                 enemy.AddNewModifier(
                     caster,
@@ -91,21 +96,13 @@ export class techies_suicide_custom_730 extends CustomAbility {
             
             damageTable.victim = enemy;
             ApplyDamage(damageTable);
+
+            if (enemy.IsRealHero() && !enemy.IsAlive()) {
+                heroKilled++;
+            }
         });
 
-        const particle = ParticleManager.CreateParticle(
-            this.blastOffParticleName.get(),
-            ParticleAttachment.CUSTOMORIGIN,
-            undefined
-        );
-        ParticleManager.SetParticleControl(particle, 0, caster.GetOrigin());
-        ParticleManager.SetParticleControl(particle, 1, Vector(radius, 0, 1));
-        ParticleManager.SetParticleControl(particle, 2, Vector(radius, 0, 1));
-        ParticleManager.ReleaseParticleIndex(particle);
-
-        caster.EmitSound(this.blastOffSound.get());
-
-        GridNav.DestroyTreesAroundPoint(caster.GetOrigin(), this.treeDestructionRadius, false);
+        this.playEffects();
 
         if (caster.IsAlive()) {
             const damage = caster.GetMaxHealth() * this.healthCostMultiplier;
@@ -123,6 +120,25 @@ export class techies_suicide_custom_730 extends CustomAbility {
             
             ApplyDamage(selfDamageTable);
         }
+    }
+
+    private playEffects(): void {
+        const caster = this.GetCaster();
+
+        const particle = ParticleManager.CreateParticle(
+            this.blastOffParticleName.get(),
+            ParticleAttachment.CUSTOMORIGIN,
+            undefined
+        );
+        ParticleManager.SetParticleControl(particle, 0, caster.GetOrigin());
+        ParticleManager.SetParticleControl(particle, 1, Vector(150, 0, 1));
+        ParticleManager.SetParticleControl(particle, 2, Vector(this.explodeRadius, 0, 1));
+        ParticleManager.SetParticleControl(particle, 3, Vector(255, 255, 0));
+        ParticleManager.ReleaseParticleIndex(particle);
+
+        caster.EmitSound(this.blastOffSound.get());
+
+        GridNav.DestroyTreesAroundPoint(caster.GetOrigin(), this.treeDestructionRadius, false);
     }
 }
 

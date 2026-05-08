@@ -32,7 +32,7 @@ export class techies_remote_mines_custom_730 extends CustomAbility {
         const point = this.GetCursorPosition();
 
         this.castMine = CreateUnitByName(this.unitName, caster.GetAbsOrigin(), true, caster, caster, caster.GetTeamNumber());
-        TurnToDummy(this.castMine);
+        TurnToDummy(this.castMine, this);
 
         this.castMine.AddNewModifier(
             caster,

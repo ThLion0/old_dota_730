@@ -89,7 +89,15 @@ class modifier_tinker_defense_matrix_custom_730 extends BaseModifier {
             ParticleAttachment.POINT_FOLLOW,
             parent
         );
-        ParticleManager.SetParticleControlEnt(particle, 1, parent, ParticleAttachment.POINT_FOLLOW, AttachLocation.HITLOC, parent.GetAbsOrigin(), true);
+        ParticleManager.SetParticleControlEnt(
+            particle,
+            1,
+            parent,
+            ParticleAttachment.POINT_FOLLOW,
+            AttachLocation.HITLOC,
+            parent.GetAbsOrigin(),
+            true
+        );
         this.AddParticle(particle, false, false, -1, false, false);
 
         parent.EmitSound(this.targetSound);
@@ -104,8 +112,9 @@ class modifier_tinker_defense_matrix_custom_730 extends BaseModifier {
     }
 
     OnDestroy(): void {
-        if (IsServer())
+        if (IsServer()) {
             this.GetParent().StopSound(this.targetSound);
+        }
     }
 
     DeclareFunctions(): ModifierFunction[] {

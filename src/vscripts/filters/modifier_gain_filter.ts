@@ -1,8 +1,8 @@
 import { DotaFilter, FilterOrder } from "../utils/filters/filters";
 
 class Event extends DotaFilter<ModifierGainedFilterEvent> {
-    public Register(context: {}): void {
-        GameModeEntity.SetModifierGainedFilter((event) => this.handle(event), context);
+    public Register(): void {
+        GameModeEntity.SetModifierGainedFilter(this.getHandler(), this);
     }
 
     protected RegisterOrder(order: FilterOrder<ModifierGainedFilterEvent>): void {
@@ -10,8 +10,7 @@ class Event extends DotaFilter<ModifierGainedFilterEvent> {
     }
 
     private filterModifierAccess(modifierName: string): boolean | void {
-        const access = GameRules.Settings.modifierHolder.get(modifierName);
-        return access !== ModifierAccess.DISABLED;
+        return GameRules.Settings.IsModifierEnabled(modifierName);
     }
 }
 

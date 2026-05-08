@@ -178,6 +178,8 @@ export class tinker_laser_custom_730 extends CustomAbility {
 
 @registerModifier()
 class modifier_tinker_laser_custom_730_blind extends BaseModifier {
+    private isScepterUpgraded: boolean = false;
+    
     private healthReduction: number = 0;
     
     IsHidden(): boolean {
@@ -193,8 +195,7 @@ class modifier_tinker_laser_custom_730_blind extends BaseModifier {
     }
 
     GetAttributes(): ModifierAttribute {
-        const hasScepter = this.GetCaster()?.HasScepter();
-        return hasScepter === true
+        return this.isScepterUpgraded
             ? ModifierAttribute.MULTIPLE
             : ModifierAttribute.NONE;
     }
@@ -203,11 +204,13 @@ class modifier_tinker_laser_custom_730_blind extends BaseModifier {
         const parent = this.GetParent();
         const caster = this.GetCaster();
 
+        this.isScepterUpgraded = caster?.HasScepter() === true;
+
         if (!IsServer()) return;
 
         if (parent.IsCreep()) {
             this.healthReduction = 0;
-        } else if (caster?.HasScepter()) {
+        } else if (this.isScepterUpgraded) {
             this.healthReduction = this.GetSpecialValueFor("scepter_health_reduction");
 
             const health = parent.GetHealth();

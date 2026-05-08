@@ -16,6 +16,9 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
     private readonly teleportStartSound = this.sound("Portal.Hero_Appear");
     private readonly teleportEndSound = this.sound("Portal.Hero_Disappear");
 
+    private readonly outpostTeleportRadius: number = 250;
+    private readonly buildingTeleportRadius: number = 800;
+
     private teleportFromParticle?: ParticleID;
     private teleportTargetParticle?: ParticleID;
 
@@ -180,14 +183,14 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
         if (this.loopSoundTimer) {
             Timers.RemoveTimer(this.loopSoundTimer);
+            this.loopSoundTimer = undefined;
         }
         if (this.endSoundTimer && this.currentTeleportTime >= 0.25) {
             Timers.RemoveTimer(this.endSoundTimer);
+            this.endSoundTimer = undefined;
         }
 
-        const dt = FrameTime();
-
-        this.DestroyEffects(interrupted, dt);
+        this.DestroyEffects(interrupted, FrameTime());
 
         const tpPosition = this.currentTpTarget.GetAbsOrigin();
         if (this.currentTpTarget.IsCompanion()) {
@@ -198,12 +201,10 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
         if (interrupted) return;
 
-        Timers.CreateTimer(dt, () => {
-            ProjectileManager.ProjectileDodge(caster);
+        ProjectileManager.ProjectileDodge(caster);
             
-            caster.SetAbsOrigin(tpPosition);
-            FindClearSpaceForUnit(caster, tpPosition, true);
-        });
+        caster.SetAbsOrigin(tpPosition);
+        FindClearSpaceForUnit(caster, tpPosition, true);
 
         caster.StartGesture(GameActivity.DOTA_TELEPORT_END);
     }
@@ -367,7 +368,10 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
         const nearestUnit = units[0];
         if (nearestUnit.IsBuilding()) {
-            const radius = nearestUnit.IsOutpost() ? 250 : 800;
+            const radius = nearestUnit.IsOutpost()
+                ? this.outpostTeleportRadius
+                : this.buildingTeleportRadius;
+            
             const point = this.ClampVector(cursorPosition, nearestUnit.GetAbsOrigin(), radius);
 
             return {
@@ -385,18 +389,20 @@ export class tinker_keen_teleport_custom_730 extends CustomAbility {
 
     private CreateTeleportTargetEntity(targetResult: TeleportTargetResult): CDOTA_BaseNPC | undefined {
         if (targetResult.point) {
-            return CreateCompanion(targetResult.point);
+            return CreateCompanion(this, targetResult.point);
         } else if (targetResult.target) {
-            if (targetResult.target.IsBuilding()) {
+            const target = targetResult.target;
+
+            if (target.IsBuilding()) {
                 const location = this.ClampVector(
                     this.GetCaster().GetAbsOrigin(),
-                    targetResult.target.GetAbsOrigin(),
-                    targetResult.target.GetHullRadius() * 1.45
+                    target.GetAbsOrigin(),
+                    target.GetHullRadius() * 1.45
                 );
 
-                return CreateCompanion(location);
+                return CreateCompanion(this, location);
             } else {
-                return targetResult.target;
+                return target;
             }
         }
         

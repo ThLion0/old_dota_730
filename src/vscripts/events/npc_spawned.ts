@@ -29,15 +29,13 @@ class Event extends DotaEvent {
         }
 
         GameRules.EntityManager.AppendEntity(baseNPC);
-        // GameRules.Manager.PushEntityToNetTable(baseNPC);
     }
 
     private handleFinished(event: NpcSpawnFinishedEvent & GameEventProvidedProperties): void {
         const baseNPC = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC | undefined;
         if (baseNPC === undefined) return;
         
-        GameRules.EntityManager.AppendEntity(baseNPC);
-        // GameRules.Manager.PushEntityToNetTable(baseNPC);
+        // GameRules.EntityManager.AppendEntity(baseNPC);
     }
 
     /* Real hero handlers */

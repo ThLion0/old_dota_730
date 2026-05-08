@@ -3,7 +3,7 @@ import { BaseModifier, registerAbility, registerModifier } from "../../../../lib
 
 @registerAbility()
 export class tinker_march_of_the_machines_custom_730 extends CustomAbility {
-    private readonly castParticle = this.particle("particles/units/heroes/hero_tinker/tinker_motm.vpcf");
+    private readonly castParticle = this.particle("particles/units/heroes/hero_tinker/730/tinker_motm.vpcf");
     private readonly castSound = this.sound("Hero_Tinker.March_of_the_Machines.Cast");
     
     OnSpellStart(): void {
@@ -96,7 +96,7 @@ export class tinker_march_of_the_machines_custom_730 extends CustomAbility {
 
 @registerModifier()
 class modifier_tinker_march_of_the_machines_custom_730_thinker extends CustomModifier {
-    private readonly marchParticle = this.particle("particles/units/heroes/hero_tinker/tinker_machine.vpcf");
+    private readonly marchParticle = this.particle("particles/units/heroes/hero_tinker/730/tinker_machine.vpcf");
     private readonly marchSound = this.sound("Hero_Tinker.March_of_the_Machines");
 
     private radius: number = 0;
