@@ -17,8 +17,6 @@ import { NeutralCampsManager } from "./managers/neutral_camps_manager";
 import { Wearables } from "./managers/wearable_manager";
 import { EntityManager } from "./managers/entity_manager";
 
-import { OldDotaManager } from "./managers/map_manager";
-
 import { MapSettings } from "./utils/settings/settings";
 import { Dota730Map } from "./maps/dota_730";
 
@@ -32,12 +30,6 @@ declare global {
         Addon: GameMode;
         /** @custom */
         Settings: MapSettings;
-        
-        /**
-         * @deprecated
-         * @custom
-         */
-        Manager: OldDotaManager;
 
         WearableManager: Wearables.Manager;
         EntityManager: EntityManager;
@@ -66,8 +58,6 @@ export class GameMode {
         GameModeEntity = GameRules.GetGameModeEntity();
 
         GameRules.Settings = new Dota730Map();
-        // TODO: remove
-        GameRules.Manager = new OldDotaManager();
 
         GameRules.WearableManager = new Wearables.Manager();
         GameRules.EntityManager = new EntityManager();
@@ -81,6 +71,8 @@ export class GameMode {
         if (IsInToolsMode()) {
             SendToServerConsole("dota_easybuy 1");
         }
+
+        GameRules.Settings.SendToConsole();
     }
 
     private configure(): void {
@@ -124,9 +116,9 @@ export class GameMode {
     }
 
     private setGameFilters(): void {
-        GoldFilter.Register(this);
-        OrderFilter.Register(this);
-        ModifierGainFilter.Register(this);
+        GoldFilter.Register();
+        ModifierGainFilter.Register();
+        OrderFilter.Register();
     }
 
     public OnGameSetup(): void {
@@ -134,8 +126,6 @@ export class GameMode {
         GameRules.EntityManager.Initialize();
         
         this.neutralCampManager.Initialize();
-
-        // GameRules.Manager.SaveKVData();
     }
 
     public OnWaitMapToLoad(): void {
@@ -154,7 +144,5 @@ export class GameMode {
 
     public Reload(): void {
         print("Script reloaded!");
-
-        // GameRules.Manager.SaveKVData();
     }
 }

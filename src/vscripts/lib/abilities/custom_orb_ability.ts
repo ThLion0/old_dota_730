@@ -39,7 +39,7 @@ export interface CustomOrbModifier extends CustomModifier {
     GetAbility(): CustomOrbAbility | undefined;
 }
 export class CustomOrbModifier extends CustomModifier {
-    private readonly MOVEMENT_ORDERS: UnitOrder[] = [
+    private readonly customOrbModifier$movementOrders: UnitOrder[] = [
         UnitOrder.MOVE_TO_POSITION,
         UnitOrder.MOVE_TO_TARGET,
         UnitOrder.ATTACK_MOVE,
@@ -48,9 +48,9 @@ export class CustomOrbModifier extends CustomModifier {
         UnitOrder.HOLD_POSITION
     ];
 
-    private readonly attackRecords = new Set<number>();
+    private readonly customOrbModifier$attackRecords = new Set<number>();
 
-    private cast: boolean = false;
+    private customOrbModifier$cast: boolean = false;
     
     /** @override */
     DeclareFunctions(): ModifierFunction[] {
@@ -74,14 +74,14 @@ export class CustomOrbModifier extends CustomModifier {
         if (event.no_attack_cooldown) return;
 
         if (ability !== undefined && this.ShouldLaunch(event.target)) {
-            this.attackRecords.add(event.record);
+            this.customOrbModifier$attackRecords.add(event.record);
             
             ability.UseResources(true, true, false, true);
 
             ability.OnOrbFire?.(event);
         }
         
-        this.cast = false;
+        this.customOrbModifier$cast = false;
     }
 
     /** @override */
@@ -104,7 +104,7 @@ export class CustomOrbModifier extends CustomModifier {
 
     /** @override */
     OnAttackRecordDestroy(event: ModifierAttackEvent): void {
-        this.attackRecords.delete(event.record);
+        this.customOrbModifier$attackRecords.delete(event.record);
     }
 
     /** @override */
@@ -113,14 +113,14 @@ export class CustomOrbModifier extends CustomModifier {
 
         const ability = event.ability;
 
-        if (this.cast) {
-            if (ability || this.MOVEMENT_ORDERS.includes(event.order_type)) {
-                this.cast = false;
+        if (this.customOrbModifier$cast) {
+            if (ability || this.customOrbModifier$movementOrders.includes(event.order_type)) {
+                this.customOrbModifier$cast = false;
             }
         }
 
         if (ability && ability === this.GetAbility() && event.order_type !== UnitOrder.CAST_TOGGLE_AUTO) {
-            this.cast = true;
+            this.customOrbModifier$cast = true;
         }
     }
 
@@ -129,7 +129,7 @@ export class CustomOrbModifier extends CustomModifier {
         const ability = this.GetAbility();
         const target = this.GetParent().GetAggroTarget();
 
-        if (ability !== undefined && (this.cast || this.ShouldLaunch(target))) {
+        if (ability !== undefined && (this.customOrbModifier$cast || this.ShouldLaunch(target))) {
             return ability.GetOrbProjectileName?.() || "";
         }
         
@@ -146,10 +146,12 @@ export class CustomOrbModifier extends CustomModifier {
      * @custom
      */
     protected IsRecordedAttack(event: object & { record: number; }): boolean {
-        return this.attackRecords.has(event.record);
+        return this.customOrbModifier$attackRecords.has(event.record);
     }
 
-    /** @custom */
+    /**
+     * @custom
+     */
     protected ShouldLaunch(target: CDOTA_BaseNPC | undefined): boolean {
         if (target === undefined) return false;
 
@@ -161,7 +163,7 @@ export class CustomOrbModifier extends CustomModifier {
         if (ability.GetAutoCastState()) {
             if (ability.CastFilterResultTarget !== CDOTA_Ability_Lua.CastFilterResultTarget) {
                 if (ability.CastFilterResultTarget(target) === UnitFilterResult.SUCCESS) {
-                    this.cast = true;
+                    this.customOrbModifier$cast = true;
                 }
             } else {
                 const result = UnitFilter(
@@ -173,11 +175,11 @@ export class CustomOrbModifier extends CustomModifier {
                 );
 
                 if (result === UnitFilterResult.SUCCESS) {
-                    this.cast = true;
+                    this.customOrbModifier$cast = true;
                 }
             }
         }
 
-        return this.cast && ability.CanLaunchOrb(this.GetParent());
+        return this.customOrbModifier$cast && ability.CanLaunchOrb(this.GetParent());
     }
 }

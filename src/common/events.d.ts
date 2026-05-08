@@ -47,7 +47,7 @@ interface EntitiesNetTable {
 // Key Values
 // Ability
 type AbilitiesKeyValueTable = {
-    type: "ability",
+    type: "ability";
     behavior: DOTA_ABILITY_BEHAVIOR;
     damageType: DAMAGE_TYPES;
     targetTeam: DOTA_UNIT_TARGET_TEAM;
@@ -58,7 +58,7 @@ type AbilitiesKeyValueTable = {
     values: {
         [key: string]: ProcessedAbilityValue;
     };
-}
+};
 
 // Item
 type ItemsKeyValueTable = {

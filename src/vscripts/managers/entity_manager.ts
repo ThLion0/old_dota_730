@@ -56,7 +56,7 @@ export class EntityManager extends CustomGameManager {
         const playerId = event.PlayerID;
         if (playerId === undefined || !PlayerResource.IsValidPlayerID(playerId)) return;
 
-        this.updateClientList(playerId)
+        this.updateClientList(playerId);
     }
 
     /* Helpers */

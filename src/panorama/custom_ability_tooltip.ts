@@ -13,8 +13,6 @@ type AbilityTooltipData = {
     abilityButton?: Panel;
 };
 
-
-
 const MAX_NOTES: number = 8;
 
 const DEBUG_ABILITIES: string[] = [
